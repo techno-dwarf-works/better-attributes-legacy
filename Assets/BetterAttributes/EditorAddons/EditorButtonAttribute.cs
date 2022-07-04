@@ -37,16 +37,6 @@ namespace BetterAttributes.EditorAddons
             _displayName = displayName;
         }
 
-        private bool IsValidName()
-        {
-            return !string.IsNullOrWhiteSpace(_displayName) && !string.IsNullOrWhiteSpace(_displayName);
-        }
-
-        public string GetDisplayName(string name)
-        {
-            return IsValidName() ? _displayName : name;
-        }
-
         /// <summary>
         /// Provides Editor button
         /// </summary>
@@ -113,11 +103,21 @@ namespace BetterAttributes.EditorAddons
             invokeParams)
         {
         }
-
+        
         public object[] InvokeParams { get; }
 
         public int Priority { get; }
 
         public int CaptureGroup { get; }
+
+        private bool IsValidName()
+        {
+            return !string.IsNullOrWhiteSpace(_displayName) && !string.IsNullOrWhiteSpace(_displayName);
+        }
+
+        public string GetDisplayName(string name)
+        {
+            return IsValidName() ? _displayName : name;
+        }
     }
 }
