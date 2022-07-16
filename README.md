@@ -2,8 +2,20 @@
 
 This package provides following features:
 
+### Read Only Field
+Provides possibility to disable modification of fields in Unity Inspector but keep it displayed.
+Usage:
+```c#
+[ReadOnlyField] [SerializeField] 
+private SomeClass someClass;
+
+[ReadOnlyField] [SerializeField] 
+private float someFloat;
+```
+
+
 ### Select Implementation 
-Provides possibility to select interface implementation in Unity inspector.
+Provides possibility to select interface implementation in Unity Inspector.
 
 Usage:
 ```c#
@@ -13,7 +25,7 @@ private ISomeInterface someInterface;
 
 ### Editor Buttons
 
-Provides possibility to display button for method in Unity inspector.
+Provides possibility to display button for method in Unity Inspector.
 
 Usages:
 ```c#
