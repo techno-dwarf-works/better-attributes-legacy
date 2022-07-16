@@ -13,9 +13,14 @@ namespace BetterAttributes.Drawers
             // Disabling edit for property
             GUI.enabled = false;
             // Drawing Property
-            EditorGUI.PropertyField(position, property, label);
+            EditorGUI.PropertyField(position, property, label, true);
             // Setting old GUI enabled value
             GUI.enabled = previousGUIState;
+        }
+        
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUI.GetPropertyHeight(property, true);
         }
     }
 }
