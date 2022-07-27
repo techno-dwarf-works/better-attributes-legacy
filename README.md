@@ -19,7 +19,7 @@ Provides possibility to select interface implementation in Unity Inspector.
 
 Usage:
 ```c#
-[SelectImplementation] [SerealizeReference] 
+[SelectImplementation] [SerializeReference] 
 private ISomeInterface someInterface;
 ```
 

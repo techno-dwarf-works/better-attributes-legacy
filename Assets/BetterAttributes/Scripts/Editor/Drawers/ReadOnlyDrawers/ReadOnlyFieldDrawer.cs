@@ -1,18 +1,17 @@
-﻿using BetterAttributes.EditorAddons;
+﻿using BetterAttributes.EditorAddons.ReadOnlyAttributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.Drawers
+namespace BetterAttributes.Drawers.ReadOnlyDrawers
 {
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyFieldDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            var previousGUIState = GUI.enabled;
-            GUI.enabled = false;
+            EditorGUI.BeginDisabledGroup(true);
             EditorGUI.PropertyField(position, property, label, true);
-            GUI.enabled = previousGUIState;
+            EditorGUI.EndDisabledGroup();
         }
         
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
