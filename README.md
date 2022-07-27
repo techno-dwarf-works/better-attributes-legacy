@@ -11,6 +11,9 @@ private SomeClass someClass;
 
 [ReadOnlyField] [SerializeField] 
 private float someFloat;
+
+[ReadOnlyField] [TextArea(5, 10)] [SerializeField] 
+private string someString;
 ```
 
 
