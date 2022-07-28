@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using BetterAttributes.EditorAddons;
-using BetterAttributes.EditorAddons.GizmoAttributes;
-using BetterAttributes.EditorAddons.ReadOnlyAttributes;
-using BetterAttributes.EditorAddons.SelectAttributes;
+using BetterAttributes.Plugin.EditorAddons;
+using BetterAttributes.Plugin.EditorAddons.GizmoAttributes;
+using BetterAttributes.Plugin.EditorAddons.ReadOnlyAttributes;
+using BetterAttributes.Plugin.EditorAddons.SelectAttributes;
 using BetterAttributes.Samples.Interfaces;
 using BetterAttributes.Samples.Models;
 using UnityEngine;

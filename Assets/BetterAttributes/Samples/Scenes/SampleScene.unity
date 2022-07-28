@@ -153,16 +153,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounds:
-    m_Center: {x: 0.62, y: 0, z: 0.9946997}
-    m_Extent: {x: 0.25169834, y: 0.1698918, z: 0.20894857}
-  vector3: {x: 0, y: 0, z: -0.060790002}
-  vector3Local: {x: 1.22, y: 0, z: 0}
-  quaternion: {x: -0.053618938, y: 0, z: 0, w: 0.99856144}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.005, y: 0.005, z: 0.005}
+  vector3Local: {x: 0, y: 0, z: 0}
+  quaternion: {x: 0, y: 0, z: 0, w: 1}
   someClass:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 2000134302979588097
+    rid: -2
   someAbstractClass:
     rid: -2
   someAbstractClasses: []
@@ -172,10 +171,6 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 2000134302979588097
-      type: {class: SomeInterfaceImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp}
-      data:
-        boolField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0
