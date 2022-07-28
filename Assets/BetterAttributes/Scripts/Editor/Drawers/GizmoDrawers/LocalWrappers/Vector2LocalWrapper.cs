@@ -9,13 +9,14 @@ namespace BetterAttributes.Drawers.GizmoDrawers.LocalWrappers
         
         public override void Apply(SceneView sceneView)
         {
-            if (ValidateSerializedObject()) return;
+            if(!ShowInSceneView) return;
+            if (!ValidateSerializedObject()) return;
             if (_serializedProperty.serializedObject.targetObject is MonoBehaviour monoBehaviour)
             {
                 var transform = monoBehaviour.transform;
                 var worldPosition = transform.TransformPoint(_vector2);
-                DrawLabel($"Local {_serializedProperty.name}:\n{_vector2}", _vector2, sceneView);
-                _vector2 = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, Quaternion.identity));
+                DrawLabel($"Local {_serializedProperty.name}:\n{_vector2}", _vector2, _defaultRotation, sceneView);
+                _vector2 = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, _defaultRotation));
                 SetValueAndApply(_vector2);
             }
         }

@@ -9,17 +9,18 @@ using UnityEngine;
 
 namespace BetterAttributes.Samples
 {
-    public class Test : MonoBehaviour
+    [CreateAssetMenu(menuName = "Create TestScriptableObject", fileName = "TestScriptableObject", order = 0)]
+    public class TestScriptableObject : ScriptableObject
     {
-        [GizmoLocal]
+        [Gizmo]
         [SerializeField] private Bounds bounds;
         
-        [GizmoLocal]
-        [SerializeField] private Vector3 vector3Local;
+        [Gizmo]
+        [SerializeField] private Vector3 vector3;
         
-        [GizmoLocal]
+        [Gizmo]
         [SerializeField] private Quaternion quaternion;
-        
+
         [ReadOnlyField] [SerializeField] private SomeClass someClass;
 
         [ReadOnlyField] [SerializeField] private float someFloat;

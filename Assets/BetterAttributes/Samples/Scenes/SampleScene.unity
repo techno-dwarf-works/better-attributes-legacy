@@ -153,10 +153,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bounds:
-    m_Center: {x: 0, y: 0, z: 0.010265231}
-    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
-  vector3: {x: 0.3573967, y: 0, z: 0}
-  quaternion: {x: 0.045437235, y: 0.041635554, z: 0.041635554, w: 0.99723035}
+    m_Center: {x: 0.62, y: 0, z: 0.9946997}
+    m_Extent: {x: 0.25169834, y: 0.1698918, z: 0.20894857}
+  vector3: {x: 0, y: 0, z: -0.060790002}
+  vector3Local: {x: 1.22, y: 0, z: 0}
+  quaternion: {x: -0.053618938, y: 0, z: 0, w: 0.99856144}
   someClass:
     intField: 0
   someFloat: 0
@@ -183,7 +184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123298860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.93}
+  m_LocalPosition: {x: -1.038, y: 0, z: 0.623}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

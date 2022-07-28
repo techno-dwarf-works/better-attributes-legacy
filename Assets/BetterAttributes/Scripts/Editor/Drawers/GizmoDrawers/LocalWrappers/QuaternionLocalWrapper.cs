@@ -9,14 +9,17 @@ namespace BetterAttributes.Drawers.GizmoDrawers.LocalWrappers
 
         public override void Apply(SceneView sceneView)
         {
-            if (ValidateSerializedObject()) return;
+            if(!ShowInSceneView) return;
+            if (!ValidateSerializedObject()) return;
             if (_serializedProperty.serializedObject.targetObject is MonoBehaviour monoBehaviour)
             {
                 var transform = monoBehaviour.transform;
                 var rotation = transform.rotation;
+                var position = transform.position;
                 var worldRotation = rotation * _quaternion;
-                DrawLabel($"Local {_serializedProperty.name}:\n{_quaternion.eulerAngles}", Vector3.zero, sceneView);
-                _quaternion = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, Vector3.zero);
+                DrawLabel($"Local {_serializedProperty.name}:\n{_quaternion.eulerAngles}", position, worldRotation,
+                    sceneView);
+                _quaternion = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
                 SetValueAndApply(_quaternion);
             }
         }
@@ -27,10 +30,10 @@ namespace BetterAttributes.Drawers.GizmoDrawers.LocalWrappers
             base.SetProperty(property);
         }
 
-        private protected override Vector3 GetPosition(Vector3 position, SceneView sceneView)
+        private protected override Vector3 GetPosition(Vector3 position, Quaternion rotation, SceneView sceneView)
         {
-            return _quaternion * (position + Vector3.up * HandleUtility.GetHandleSize(position) +
-                                  sceneView.camera.transform.right * 0.2f * HandleUtility.GetHandleSize(position));
+            return (position + (rotation * Vector3.up) * HandleUtility.GetHandleSize(position) +
+                    sceneView.camera.transform.right * 0.2f * HandleUtility.GetHandleSize(position));
         }
     }
 }

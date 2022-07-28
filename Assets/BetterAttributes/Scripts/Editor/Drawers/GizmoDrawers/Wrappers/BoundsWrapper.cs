@@ -8,9 +8,10 @@ namespace BetterAttributes.Drawers.GizmoDrawers.Wrappers
     {
         public override void Apply(SceneView sceneView)
         {
-            if (ValidateSerializedObject()) return;
-            DrawLabel($"{_serializedProperty.name}:\nCenter: {_bounds.center}\nSize: {_bounds.size}", _bounds.center, sceneView);
-            _bounds.center = Handles.PositionHandle(_bounds.center, Quaternion.identity);
+            if(!ShowInSceneView) return;
+            if (!ValidateSerializedObject()) return;
+            DrawLabel($"{_serializedProperty.name}:\nCenter: {_bounds.center}\nSize: {_bounds.size}", _bounds.center,_defaultRotation, sceneView);
+            _bounds.center = Handles.PositionHandle(_bounds.center, _defaultRotation);
             DrawAndSetSize(_bounds.center);
             ValidateSize();
             Handles.DrawWireCube(_bounds.center, _bounds.size);

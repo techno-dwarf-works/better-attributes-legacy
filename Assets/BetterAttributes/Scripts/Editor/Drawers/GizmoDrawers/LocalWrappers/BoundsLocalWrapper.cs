@@ -9,19 +9,20 @@ namespace BetterAttributes.Drawers.GizmoDrawers.LocalWrappers
     {
         public override void Apply(SceneView sceneView)
         {
-            if (ValidateSerializedObject()) return;
+            if(!ShowInSceneView) return;
+            if (!ValidateSerializedObject()) return;
             if (_serializedProperty.serializedObject.targetObject is MonoBehaviour monoBehaviour)
             {
                 var transform = monoBehaviour.transform;
                 var worldPosition = transform.TransformPoint(_bounds.center);
                 DrawLabel($"{_serializedProperty.name}:\nLocal Center: {_bounds.center}\nSize: {_bounds.size}",
-                    worldPosition, sceneView);
+                    worldPosition, _defaultRotation, sceneView);
                 _bounds.center =
                     transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, Quaternion.identity));
                 DrawAndSetSize(worldPosition);
                 ValidateSize();
                 Handles.DrawWireCube(worldPosition, _bounds.size);
-            
+
                 SetValueAndApply(_bounds);
             }
         }
