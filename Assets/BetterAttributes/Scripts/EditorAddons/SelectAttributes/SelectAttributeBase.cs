@@ -23,12 +23,12 @@ namespace BetterAttributes.EditorAddons.SelectAttributes
     [AttributeUsage(AttributeTargets.Field)]
     public abstract class SelectAttributeBase : PropertyAttribute
     {
-        private Type m_type;
+        private readonly Type _type;
         public bool FindTypesRecursively { get; }
 
         public SelectAttributeBase(Type type, bool findTypesRecursively = false)
         {
-            m_type = type;
+            _type = type;
             FindTypesRecursively = findTypesRecursively;
         }
 
@@ -39,7 +39,7 @@ namespace BetterAttributes.EditorAddons.SelectAttributes
 
         public Type GetFieldType()
         {
-            return m_type;
+            return _type;
         }
 
         public SelectAttributeBase()

@@ -3,8 +3,9 @@
 This package provides following features:
 
 ### Read Only Field
-Provides possibility to disable modification of fields in Unity Inspector but keep it displayed.
-Usage:
+
+Provides possibility to disable modification of fields in Unity Inspector but keep it displayed. Usage:
+
 ```c#
 [ReadOnlyField] [SerializeField] 
 private SomeClass someClass;
@@ -16,14 +17,49 @@ private float someFloat;
 private string someString;
 ```
 
+### Select Implementation
 
-### Select Implementation 
 Provides possibility to select interface implementation in Unity Inspector.
 
 Usage:
+
 ```c#
-[SelectImplementation] [SerealizeReference] 
+[SelectImplementation] [SerializeReference]
 private ISomeInterface someInterface;
+
+[SelectImplementation] [SerializeReference]
+private SomeAbstractClass someAbstractClass;
+
+[SelectImplementation] [SerializeReference]
+private List<SomeAbstractClass> someAbstractClasses;
+
+[SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
+private List<ISomeInterface> someInterfaces;
+```
+
+### Gizmo / GizmoLocal
+
+Provides possibility to set value for Vector3/Vector2/Quaternion/Bounds from scene view by dragging handles.
+
+
+```c#
+[Gizmo]
+[SerializeField] private Bounds bounds;
+        
+[Gizmo]
+[SerializeField] private Vector3 vector3;
+        
+[Gizmo]
+[SerializeField] private Quaternion quaternion;
+
+[GizmoLocal]
+[SerializeField] private Bounds boundsLocal;
+        
+[GizmoLocal]
+[SerializeField] private Vector3 vector3Local;
+        
+[GizmoLocal]
+[SerializeField] private Quaternion quaternionLocal;
 ```
 
 ### Editor Buttons
@@ -31,6 +67,7 @@ private ISomeInterface someInterface;
 Provides possibility to display button for method in Unity Inspector.
 
 Usages:
+
 ```c#
 ///Default usage of attribute.
 [EditorButton]
