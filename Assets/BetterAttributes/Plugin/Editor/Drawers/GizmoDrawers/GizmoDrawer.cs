@@ -13,7 +13,6 @@ namespace BetterAttributes.Plugin.Editor.Drawers.GizmoDrawers
         
         public GizmoDrawer()
         {
-            Debug.Log("Constructed");
             Selection.selectionChanged += SelectionChanged;
             SceneView.duringSceneGui += OnSceneGUIDelegate;
         }
@@ -31,7 +30,6 @@ namespace BetterAttributes.Plugin.Editor.Drawers.GizmoDrawers
             Selection.selectionChanged -= SelectionChanged;
             SceneView.duringSceneGui -= OnSceneGUIDelegate;
             _gizmoWrapper?.Deconstruct();
-            Debug.Log("Deconstructed");
         }
 
         ~GizmoDrawer()
@@ -39,7 +37,6 @@ namespace BetterAttributes.Plugin.Editor.Drawers.GizmoDrawers
             Selection.selectionChanged -= SelectionChanged;
             SceneView.duringSceneGui -= OnSceneGUIDelegate;
             _gizmoWrapper?.Deconstruct();
-            Debug.Log("Deconstructed");
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
