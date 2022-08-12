@@ -21,13 +21,20 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: -2
+    rid: 6242269647978889216
   someAbstractClass:
-    rid: -2
+    rid: 6242269608037056513
   someAbstractClasses: []
   someInterfaces: []
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 6242269608037056513
+      type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp}
+      data:
+        baseIntField: 46546451
+        boolField: 1
+    - rid: 6242269647978889216
+      type: {class: SomeInterfaceImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp}
+      data:
+        intField: 0

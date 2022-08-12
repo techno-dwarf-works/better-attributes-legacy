@@ -23,7 +23,7 @@ namespace BetterAttributes.Samples
         [ReadOnlyField] [SerializeField] private SomeClass someClass;
 
         [ReadOnlyField] [SerializeField] private float someFloat;
-
+        
         [SelectImplementation] [SerializeReference]
         private ISomeInterface someInterface;
 
