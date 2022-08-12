@@ -42,7 +42,7 @@ namespace BetterAttributes.Plugin.Editor.Drawers.GizmoDrawers
             {
                 return serializedObject.targetObject != null;
             }
-            catch (Exception _)
+            catch
             {
                 return false;
             }
