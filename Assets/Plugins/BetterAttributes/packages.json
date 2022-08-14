@@ -1,7 +1,0 @@
-﻿{
-  "name": "com.uurha.betterattributes",
-  "displayName": "Unity Better Attributes",
-  "version": "0.0.6",
-  "unity": "2018.3",
-  "description": "UnityEditor attributes, allows to serialize interfaces, draw handles for Vector3/Vector2/Quaternion/Bounds, create read only fields."
-}

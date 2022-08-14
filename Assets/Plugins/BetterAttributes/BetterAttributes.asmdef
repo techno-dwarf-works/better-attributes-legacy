@@ -1,6 +1,6 @@
 {
     "name": "BetterAttributes",
-    "rootNamespace": "",
+    "rootNamespace": "BetterAttributes",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
