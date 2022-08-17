@@ -23,18 +23,36 @@ MonoBehaviour:
   someInterface:
     rid: 6242269647978889216
   someAbstractClass:
-    rid: 6242269608037056513
-  someAbstractClasses: []
+    rid: -2
+  someAbstractClasses:
+  - rid: 6242269841399742465
+  - rid: 6242269841399742468
+  - rid: 6242269841399742472
   someInterfaces: []
   references:
     version: 2
     RefIds:
-    - rid: 6242269608037056513
-      type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp}
-      data:
-        baseIntField: 46546451
-        boolField: 1
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 6242269647978889216
       type: {class: SomeInterfaceImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp}
       data:
         intField: 0
+    - rid: 6242269841399742465
+      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Scripts.Models, asm: BetterAttributes}
+      data:
+        baseIntField: 0
+        floatField: 0
+        vector3: {x: -0.19336945, y: 0, z: 0}
+    - rid: 6242269841399742468
+      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Scripts.Models, asm: BetterAttributes}
+      data:
+        baseIntField: 0
+        floatField: 0
+        vector3: {x: 0.14698684, y: 0, z: 0}
+    - rid: 6242269841399742472
+      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Scripts.Models, asm: BetterAttributes}
+      data:
+        baseIntField: 0
+        floatField: 0
+        vector3: {x: 0, y: 0, z: -0.2655604}

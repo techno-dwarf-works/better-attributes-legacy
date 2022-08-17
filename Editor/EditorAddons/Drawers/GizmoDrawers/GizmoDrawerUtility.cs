@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
 using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers;
 using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers;
 using BetterAttributes.Runtime.EditorAddons.GizmoAttributes;
 using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
@@ -35,6 +38,17 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
         private static void OnReloadScripts()
         {
             hideTransformRegistered.Clear();
+        }
+        
+        public static void ValidateCachedProperties(Dictionary<SerializedProperty, GizmoWrapper> gizmoWrappers)
+        {
+            foreach (var key in new List<SerializedProperty>(gizmoWrappers.Keys))
+            {
+                if (!ValidType(key.propertyType))
+                {
+                    gizmoWrappers.Remove(key);
+                }
+            }
         }
         
         public static bool IsButtonDrawn(Type type)
