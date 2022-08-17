@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
 {
     public abstract class GizmoWrapper
     {
@@ -35,11 +35,12 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 
         private protected virtual bool ValidateSerializedObject()
         {
-            var serializedObject = _serializedProperty.serializedObject;
+            var serializedObject = _serializedProperty?.serializedObject;
 
             if (serializedObject == null) return false;
             try
             {
+                if (!GizmoDrawerUtility.ValidType(_serializedProperty.propertyType)) return false;
                 return serializedObject.targetObject != null;
             }
             catch
