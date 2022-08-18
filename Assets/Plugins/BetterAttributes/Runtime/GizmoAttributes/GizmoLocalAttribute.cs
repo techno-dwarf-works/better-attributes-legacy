@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.EditorAddons.GizmoAttributes
+namespace BetterAttributes.Runtime.GizmoAttributes
 {
     [Conditional("UNITY_EDITOR")]
     [AttributeUsage(AttributeTargets.Field)]

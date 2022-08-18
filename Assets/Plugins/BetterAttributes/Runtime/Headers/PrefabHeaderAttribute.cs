@@ -16,15 +16,15 @@
 using System;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.EditorAddons.Headers
+namespace BetterAttributes.Runtime.Headers
 {
     /// <summary>
-    /// Replacement for Header("State")
+    /// Replacement for Header("Prefabs")
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    public class StateHeaderAttribute : HeaderAttribute
+    public class PrefabHeaderAttribute : HeaderAttribute
     {
-        public StateHeaderAttribute() : base("State")
+        public PrefabHeaderAttribute() : base("Prefabs")
         {
         }
     }

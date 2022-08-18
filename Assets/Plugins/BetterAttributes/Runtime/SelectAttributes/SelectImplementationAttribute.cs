@@ -15,34 +15,22 @@
 
 using System;
 using System.Diagnostics;
-using UnityEngine;
 
-namespace BetterAttributes.Runtime.EditorAddons.SelectAttributes
+namespace BetterAttributes.Runtime.SelectAttributes
 {
+    /// <summary>
+    /// Attribute for Implementation selection in Inspector.
+    /// Use in pair with [SerializeReference] Attribute.
+    /// </summary>
     [Conditional("UNITY_EDITOR")]
     [AttributeUsage(AttributeTargets.Field)]
-    public abstract class SelectAttributeBase : PropertyAttribute
+    public class SelectImplementationAttribute : SelectAttributeBase
     {
-        private readonly Type _type;
-        public bool FindTypesRecursively { get; }
-
-        public SelectAttributeBase(Type type, bool findTypesRecursively = false)
+        public SelectImplementationAttribute(Type type) : base(type)
         {
-            _type = type;
-            FindTypesRecursively = findTypesRecursively;
         }
 
-        public SelectAttributeBase(bool useTypeExplicitly = false)
-        {
-            FindTypesRecursively = useTypeExplicitly;
-        }
-
-        public Type GetFieldType()
-        {
-            return _type;
-        }
-
-        public SelectAttributeBase()
+        public SelectImplementationAttribute()
         {
         }
     }

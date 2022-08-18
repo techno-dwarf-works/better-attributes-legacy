@@ -16,7 +16,7 @@
 using System;
 using System.Diagnostics;
 
-namespace BetterAttributes.Runtime.EditorAddons
+namespace BetterAttributes.Runtime
 {
     /// <summary>
     /// Displays Button in Inspector

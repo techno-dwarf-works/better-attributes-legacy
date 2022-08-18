@@ -13,7 +13,7 @@
 
 #endregion
 
-using BetterAttributes.Runtime.EditorAddons.Headers;
+using BetterAttributes.Runtime.Headers;
 using UnityEditor;
 using UnityEngine;
 

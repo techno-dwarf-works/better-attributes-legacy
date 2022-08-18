@@ -4,7 +4,7 @@ using System.Text;
 using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
 using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers;
 using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers;
-using BetterAttributes.Runtime.EditorAddons.GizmoAttributes;
+using BetterAttributes.Runtime.GizmoAttributes;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;

@@ -16,15 +16,21 @@
 using System;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.EditorAddons.Headers
+namespace BetterAttributes.Runtime.Headers
 {
     /// <summary>
-    /// Replacement for Header("Prefabs")
+    /// Replacement for Header("Settings")
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    public class PrefabHeaderAttribute : HeaderAttribute
+    public class SettingsHeaderAttribute : HeaderAttribute
     {
-        public PrefabHeaderAttribute() : base("Prefabs")
+        public SettingsHeaderAttribute() : base("Settings")
+        {
+        }
+
+        public SettingsHeaderAttribute(string additionalText, bool preHeader = true) : base(preHeader
+                                                                                                ? $"{additionalText.PrettyCamelCase()} Settings"
+                                                                                                : $"Settings {additionalText.PrettyCamelCase()}")
         {
         }
     }

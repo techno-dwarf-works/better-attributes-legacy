@@ -14,7 +14,7 @@
 #endregion
 
 using System;
-using BetterAttributes.Runtime.EditorAddons.SelectAttributes;
+using BetterAttributes.Runtime.SelectAttributes;
 using UnityEditor;
 
 namespace BetterAttributes.EditorAddons.Drawers.SelectDrawers
