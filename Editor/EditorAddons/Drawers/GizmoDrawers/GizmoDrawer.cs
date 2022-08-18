@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
-using BetterAttributes.Runtime.EditorAddons.GizmoAttributes;
+using BetterAttributes.Runtime.GizmoAttributes;
 using UnityEditor;
 using UnityEngine;
 

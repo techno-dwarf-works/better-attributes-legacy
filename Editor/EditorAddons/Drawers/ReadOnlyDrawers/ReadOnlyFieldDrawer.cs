@@ -1,4 +1,4 @@
-﻿using BetterAttributes.Runtime.EditorAddons.ReadOnlyAttributes;
+﻿using BetterAttributes.Runtime.ReadOnlyAttributes;
 using UnityEditor;
 using UnityEngine;
 

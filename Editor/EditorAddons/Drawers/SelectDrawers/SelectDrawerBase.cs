@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BetterAttributes.Runtime.EditorAddons.SelectAttributes;
+using BetterAttributes.Runtime.SelectAttributes;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;

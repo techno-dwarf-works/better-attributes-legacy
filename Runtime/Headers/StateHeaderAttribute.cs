@@ -14,23 +14,17 @@
 #endregion
 
 using System;
-using System.Diagnostics;
+using UnityEngine;
 
-namespace BetterAttributes.Runtime.EditorAddons.SelectAttributes
+namespace BetterAttributes.Runtime.Headers
 {
     /// <summary>
-    /// Attribute for Implementation selection in Inspector.
-    /// Use in pair with [SerializeReference] Attribute.
+    /// Replacement for Header("State")
     /// </summary>
-    [Conditional("UNITY_EDITOR")]
-    [AttributeUsage(AttributeTargets.Field)]
-    public class SelectImplementationAttribute : SelectAttributeBase
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    public class StateHeaderAttribute : HeaderAttribute
     {
-        public SelectImplementationAttribute(Type type) : base(type)
-        {
-        }
-
-        public SelectImplementationAttribute()
+        public StateHeaderAttribute() : base("State")
         {
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace BetterAttributes.Runtime.EditorAddons
+namespace BetterAttributes.Runtime
 {
     public static class ReflectionExtensions
     {

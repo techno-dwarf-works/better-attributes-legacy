@@ -16,7 +16,7 @@
 using System;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.EditorAddons.Headers
+namespace BetterAttributes.Runtime.Headers
 {
     /// <summary>
     /// Replacement for Header("References")

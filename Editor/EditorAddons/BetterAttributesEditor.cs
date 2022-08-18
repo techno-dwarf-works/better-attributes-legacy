@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BetterAttributes.Runtime.EditorAddons;
+using BetterAttributes.Runtime;
 using UnityEditor;
 using UnityEngine;
 

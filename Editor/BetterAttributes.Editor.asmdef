@@ -1,0 +1,18 @@
+{
+    "name": "BetterAttributes.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:618e123b521db74429ef44b837b020b0"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
