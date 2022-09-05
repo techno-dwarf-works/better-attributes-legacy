@@ -2,12 +2,6 @@
 
 ![image](https://user-images.githubusercontent.com/22265817/181865901-35fea6f6-0b6e-4246-9df5-99e13cb5ed0f.png)
 
-## Install
-Window -> PackageManager -> Add package from GIT url...
-```
-https://github.com/uurha/BetterAttributes.git#upm
-```
-
 This package provides following features:
 
 ### Read Only Field
@@ -128,9 +122,15 @@ private void SomeMethod()
 
 You can check constructors for `EditorButtonAttribute` there more specific options.
 
-## TODOs:
+## Install
+Window -> PackageManager -> Add package from GIT url...
+```
+https://github.com/uurha/BetterExtensions.git#upm
+```
+or if you want some specific version
+```
+https://github.com/uurha/BetterAttributes.git#<version>
+```
+You can check versions [here](https://github.com/uurha/BetterAttributes/releases).
 
-1. SerializedType;
-2. Fix that buttons not working if there another custom editor defined;
-3. Improve `SelectImplementation` drawer;
-
+Note: all versions related to tags. Use tag name, *NOT* release name.
