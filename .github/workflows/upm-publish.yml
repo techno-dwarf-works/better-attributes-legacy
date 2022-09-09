@@ -1,0 +1,26 @@
+name: Publish UPM Package
+
+# Controls when the workflow will run
+on:
+  pull_request:
+    branches: [ "main" ]
+    
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest    
+    steps:
+
+    # Any prerequisite steps
+    - uses: actions/checkout@main
+
+    # Deploy to local repo
+    - name: Deploy
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: upm
+        FOLDER: Assets/Plugins/${GITHUB_REPOSITORY#*/}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
