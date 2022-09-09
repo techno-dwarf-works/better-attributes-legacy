@@ -125,7 +125,7 @@ You can check constructors for `EditorButtonAttribute` there more specific optio
 ## Install
 Window -> PackageManager -> Add package from GIT url...
 ```
-https://github.com/uurha/BetterExtensions.git#upm
+https://github.com/uurha/BetterAttributes.git#upm
 ```
 or if you want some specific version
 ```
