@@ -42,3 +42,5 @@ jobs:
         BRANCH: upm
         FOLDER: Assets/Plugins/${GITHUB_REPOSITORY#*/}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SKIP_EMPTY_COMMITS: true
+        MESSAGE: "{msg}"
