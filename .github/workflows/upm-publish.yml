@@ -8,13 +8,31 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+ deploy:
     name: Deploy
     runs-on: ubuntu-latest    
     steps:
+    
+    - uses: actions/checkout@master
+    - name: Copy the README
+      run: |
+          cp "README.md" "./Assets/Plugins/${GITHUB_REPOSITORY#*/}/README.md"
+    - name: Copy the LICENSE
+      run: |
+          cp "LICENSE" "./Assets/Plugins/${GITHUB_REPOSITORY#*/}/LICENSE"
+    - name: Commit files
+      run: |
+        git config --local user.email ${{secrets.ADMIN_MAIL}}
+        git config --local user.name ${{secrets.ADMIN_NAME}}
+        git add .
+        git commit -m "Update README.md and LICENSE" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     # Any prerequisite steps
-    - uses: actions/checkout@main
+    - uses: actions/checkout@master
 
     # Deploy to local repo
     - name: Deploy
