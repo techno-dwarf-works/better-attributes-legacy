@@ -1,57 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
-using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers;
-using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers;
+using BetterAttributes.EditorAddons.Drawers.Base;
 using BetterAttributes.Runtime.GizmoAttributes;
-using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
-    public static class GizmoDrawerUtility
+    public class GizmoDrawerUtility : BaseUtility<GizmoDrawerUtility>
     {
-        private static Dictionary<SerializedPropertyType, Type> _gizmoWrappers =
-            new Dictionary<SerializedPropertyType, Type>()
-            {
-                { SerializedPropertyType.Vector3, typeof(Vector3Wrapper) },
-                { SerializedPropertyType.Vector2, typeof(Vector2Wrapper) },
-                { SerializedPropertyType.Quaternion, typeof(QuaternionWrapper) },
-                { SerializedPropertyType.Bounds, typeof(BoundsWrapper) }
-            };
-
-        private static Dictionary<SerializedPropertyType, Type> _localGizmoWrappers =
-            new Dictionary<SerializedPropertyType, Type>()
-            {
-                { SerializedPropertyType.Vector3, typeof(Vector3LocalWrapper) },
-                { SerializedPropertyType.Vector2, typeof(Vector2LocalWrapper) },
-                { SerializedPropertyType.Quaternion, typeof(QuaternionLocalWrapper) },
-                { SerializedPropertyType.Bounds, typeof(BoundsLocalWrapper) }
-            };
-
-        private static readonly Dictionary<Type, int> hideTransformRegistered = new Dictionary<Type, int>();
-
-
+        private readonly Dictionary<Type, int> hideTransformRegistered = new Dictionary<Type, int>();
+        
         [DidReloadScripts]
         private static void OnReloadScripts()
         {
-            hideTransformRegistered.Clear();
+            Instance.hideTransformRegistered.Clear();
         }
-        
-        public static void ValidateCachedProperties(Dictionary<SerializedProperty, GizmoWrapper> gizmoWrappers)
-        {
-            foreach (var key in new List<SerializedProperty>(gizmoWrappers.Keys))
-            {
-                if (!ValidType(key.propertyType))
-                {
-                    gizmoWrappers.Remove(key);
-                }
-            }
-        }
-        
-        public static bool IsButtonDrawn(Type type)
+
+        public bool IsButtonDrawn(Type type)
         {
             if (hideTransformRegistered.TryGetValue(type, out var count))
             {
@@ -64,7 +30,7 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
             return false;
         }
 
-        public static void RemoveButtonDrawn(Type type)
+        public void RemoveButtonDrawn(Type type)
         {
             if (hideTransformRegistered.TryGetValue(type, out var count))
             {
@@ -79,44 +45,40 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
             }
         }
 
-        private static Dictionary<SerializedPropertyType, Type> GetWrapperDictionary(Type gizmoType)
+        private protected override WrappersTypeCollection GenerateCollection()
         {
-            Dictionary<SerializedPropertyType, Type> gizmoDictionary;
-            if (gizmoType == typeof(GizmoAttribute))
+            return new WrappersTypeCollection()
             {
-                gizmoDictionary = _gizmoWrappers;
-            }
-            else if (gizmoType == typeof(GizmoLocalAttribute))
-            {
-                gizmoDictionary = _localGizmoWrappers;
-            }
-            else
-            {
-                throw new KeyNotFoundException($"Gizmo supported types not found for {gizmoType}");
-            }
-
-            return gizmoDictionary;
+                {
+                    typeof(GizmoLocalAttribute), new Dictionary<Type, Type>()
+                    {
+                        { typeof(Vector3), typeof(Vector3LocalWrapper) },
+                        { typeof(Vector2), typeof(Vector2LocalWrapper) },
+                        { typeof(Quaternion), typeof(QuaternionLocalWrapper) },
+                        { typeof(Bounds), typeof(BoundsLocalWrapper) }
+                    }
+                },
+                {
+                    typeof(GizmoAttribute), new Dictionary<Type, Type>()
+                    {
+                        { typeof(Vector3), typeof(Vector3Wrapper) },
+                        { typeof(Vector2), typeof(Vector2Wrapper) },
+                        { typeof(Quaternion), typeof(QuaternionWrapper) },
+                        { typeof(Bounds), typeof(BoundsWrapper) }
+                    }
+                }
+            };
         }
 
-        public static GizmoWrapper GetWrapper(SerializedPropertyType type, Type gizmoType)
+        private protected override HashSet<Type> GenerateAvailable()
         {
-            Type wrapperType;
-            if (ValidType(type))
+            return new HashSet<Type>()
             {
-                var gizmoWrappers = GetWrapperDictionary(gizmoType);
-                wrapperType = gizmoWrappers[type];
-            }
-            else
-            {
-                return null;
-            }
-
-            return (GizmoWrapper)Activator.CreateInstance(wrapperType);
-        }
-
-        public static bool ValidType(SerializedPropertyType fieldType)
-        {
-            return _gizmoWrappers.ContainsKey(fieldType);
+                typeof(Vector3),
+                typeof(Vector2),
+                typeof(Quaternion),
+                typeof(Bounds)
+            };
         }
     }
 }

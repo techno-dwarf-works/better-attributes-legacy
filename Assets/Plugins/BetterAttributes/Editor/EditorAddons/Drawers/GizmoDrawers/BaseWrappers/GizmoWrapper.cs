@@ -1,10 +1,11 @@
 ﻿using System;
+using BetterAttributes.EditorAddons.Drawers.Base;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
-    public abstract class GizmoWrapper
+    public abstract class GizmoWrapper : UtilityWrapper
     {
         private protected SerializedProperty _serializedProperty;
         private protected Type _objectType;
@@ -12,18 +13,20 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
         private protected readonly Quaternion _defaultRotation = Quaternion.identity;
         private protected readonly Vector3 _defaultPosition = Vector3.zero;
         private bool _showInSceneView = true;
+        private Type _fieldType;
 
         public bool ShowInSceneView => _showInSceneView;
 
-        public virtual void SetProperty(SerializedProperty property)
+        public virtual void SetProperty(SerializedProperty property, Type fieldType)
         {
+            _fieldType = fieldType;
             _serializedProperty = property;
             _objectType = _serializedProperty.serializedObject.targetObject.GetType();
         }
 
-        public void Deconstruct()
+        public override void Deconstruct()
         {
-            GizmoDrawerUtility.RemoveButtonDrawn(_objectType);
+            GizmoDrawerUtility.Instance.RemoveButtonDrawn(_objectType);
         }
 
         public void SwitchShowMode()
@@ -40,7 +43,7 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
             if (serializedObject == null) return false;
             try
             {
-                if (!GizmoDrawerUtility.ValidType(_serializedProperty.propertyType)) return false;
+                if (!GizmoDrawerUtility.Instance.IsSupported(_fieldType)) return false;
                 return serializedObject.targetObject != null;
             }
             catch
@@ -51,23 +54,16 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
 
         private protected void SetValueAndApply(object value)
         {
-            switch (_serializedProperty.propertyType)
-            {
-                case SerializedPropertyType.Vector2:
-                    _serializedProperty.vector2Value = (Vector2)value;
-                    break;
-                case SerializedPropertyType.Vector3:
-                    _serializedProperty.vector3Value = (Vector3)value;
-                    break;
-                case SerializedPropertyType.Bounds:
-                    _serializedProperty.boundsValue = (Bounds)value;
-                    break;
-                case SerializedPropertyType.Quaternion:
-                    _serializedProperty.quaternionValue = (Quaternion)value;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            if (_fieldType.IsEquivalentTo(typeof(Vector2)))
+                _serializedProperty.vector2Value = (Vector2)value;
+            else if (_fieldType.IsEquivalentTo(typeof(Vector3)))
+                _serializedProperty.vector3Value = (Vector3)value;
+            else if (_fieldType.IsEquivalentTo(typeof(Bounds)))
+                _serializedProperty.boundsValue = (Bounds)value;
+            else if (_fieldType.IsEquivalentTo(typeof(Quaternion)))
+                _serializedProperty.quaternionValue = (Quaternion)value;
+            else
+                throw new ArgumentOutOfRangeException();
 
             _serializedProperty.serializedObject.ApplyModifiedProperties();
         }

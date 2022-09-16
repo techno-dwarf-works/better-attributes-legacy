@@ -1,7 +1,8 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
     public abstract class BoundsBaseWrapper : GizmoWrapper
     {
@@ -26,10 +27,10 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers
             }
         }
 
-        public override void SetProperty(SerializedProperty property)
+        public override void SetProperty(SerializedProperty property, Type fieldType)
         {
             _bounds = property.boundsValue;
-            base.SetProperty(property);
+            base.SetProperty(property, fieldType);
             
             if (_bounds.size == Vector3.zero)
             {

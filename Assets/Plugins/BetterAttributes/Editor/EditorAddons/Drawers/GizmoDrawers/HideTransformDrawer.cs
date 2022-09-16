@@ -7,11 +7,13 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
     {
         private bool _isChecked = false;
         private bool _isButtonDrawn;
-        private SerializedProperty _serializedProperty;
+        private readonly SerializedProperty _serializedProperty;
+        private readonly GizmoDrawerUtility _gizmoDrawerUtility;
 
-        public HideTransformButtonUtility(SerializedProperty property)
+        public HideTransformButtonUtility(SerializedProperty property, GizmoDrawerUtility gizmoDrawerUtility)
         {
             _serializedProperty = property;
+            _gizmoDrawerUtility = gizmoDrawerUtility;
         }
 
         public void DrawHideTransformButton(Rect position)
@@ -20,7 +22,7 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
             var type = monoBehaviour.GetType();
             if (!_isChecked)
             {
-                _isButtonDrawn = GizmoDrawerUtility.IsButtonDrawn(type);
+                _isButtonDrawn = _gizmoDrawerUtility.IsButtonDrawn(type);
                 _isChecked = true;
             }
 
@@ -38,6 +40,11 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
             var copy = original;
             copy.height = EditorGUIUtility.singleLineHeight;
             return copy;
+        }
+
+        public void UpdatePosition(ref Rect position)
+        {
+            position.y += EditorGUIUtility.singleLineHeight;
         }
     }
 }

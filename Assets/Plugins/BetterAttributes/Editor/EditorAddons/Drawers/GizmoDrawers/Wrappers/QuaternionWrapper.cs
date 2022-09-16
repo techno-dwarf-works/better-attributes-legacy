@@ -1,8 +1,8 @@
-﻿using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
     public class QuaternionWrapper : GizmoWrapper
     {
@@ -19,7 +19,7 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers
             SetValueAndApply(_quaternion);
         }
 
-        public override void SetProperty(SerializedProperty property)
+        public override void SetProperty(SerializedProperty property, Type fieldType)
         {
             _quaternion = property.quaternionValue;
             
@@ -29,7 +29,7 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers
                 _quaternion = _defaultRotation;
             }
             
-            base.SetProperty(property);
+            base.SetProperty(property, fieldType);
         }
     }
 }

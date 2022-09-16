@@ -1,8 +1,8 @@
-﻿using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
     public class QuaternionLocalWrapper : GizmoWrapper
     {
@@ -25,10 +25,10 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers
             }
         }
 
-        public override void SetProperty(SerializedProperty property)
+        public override void SetProperty(SerializedProperty property, Type fieldType)
         {
             _quaternion = property.quaternionValue;
-            base.SetProperty(property);
+            base.SetProperty(property, fieldType);
         }
 
         private protected override Vector3 GetPosition(Vector3 position, Quaternion rotation, SceneView sceneView)

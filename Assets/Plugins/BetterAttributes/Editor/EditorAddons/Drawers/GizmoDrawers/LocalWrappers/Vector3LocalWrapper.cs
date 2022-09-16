@@ -1,8 +1,8 @@
-﻿using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
     public class Vector3LocalWrapper : GizmoWrapper
     {
@@ -22,10 +22,10 @@ namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.LocalWrappers
             }
         }
         
-        public override void SetProperty(SerializedProperty property)
+        public override void SetProperty(SerializedProperty property, Type fieldType)
         {
             _vector3 = property.vector3Value;
-            base.SetProperty(property);
+            base.SetProperty(property, fieldType);
         }
     }
 }

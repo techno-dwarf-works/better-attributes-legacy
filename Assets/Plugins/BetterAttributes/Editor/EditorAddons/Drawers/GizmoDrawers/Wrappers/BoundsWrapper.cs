@@ -1,7 +1,6 @@
-﻿using BetterAttributes.EditorAddons.Drawers.GizmoDrawers.BaseWrappers;
-using UnityEditor;
+﻿using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers.Wrappers
+namespace BetterAttributes.EditorAddons.Drawers.GizmoDrawers
 {
     public class BoundsWrapper : BoundsBaseWrapper
     {
