@@ -8,28 +8,34 @@ on:
     types: [closed]
     
   workflow_dispatch:
+    inputs:
+      run_manually:
+        description: 'Run Manually'     
+        required: true
+        default: true
+        type: boolean
 
 jobs:
- deploy:
-    name: Deploy
-    if: github.event.pull_request.merged == true
+ prepare:
+    name: Prepare
+    if: ${{ inputs.run_manually }} || github.event.pull_request.merged == true
     runs-on: ubuntu-latest    
     steps:
     
     - uses: actions/checkout@master
     - name: Copy the README
       run: |
-          cp "README.md" "./Assets/Plugins/${GITHUB_REPOSITORY#*/}/README.md"
+          cp "README.md" "Assets/Plugins/${GITHUB_REPOSITORY#*/}/README.md"
     - name: Copy the LICENSE
       run: |
-          cp "LICENSE" "./Assets/Plugins/${GITHUB_REPOSITORY#*/}/LICENSE"
+          cp "LICENSE" "Assets/Plugins/${GITHUB_REPOSITORY#*/}/LICENSE"
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v11.1
       id: verify-changed-files
       with:
         files: |
-             README.md
-             LICENSE
+             **/README.md
+             **/LICENSE
     - name: Commit files
       if: steps.verify-changed-files.outputs.files_changed == 'true'
       run: |
@@ -43,8 +49,19 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
+ deploy:
+    name: Deploy
+    if: ${{ success() }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
     # Any prerequisite steps
-    - uses: actions/checkout@master
+    - name: Checkout latest
+      uses: actions/checkout@v3
+      with: 
+        fetch-depth: 0
+        ref: main
+        lfs: true
 
     # Deploy to local repo
     - name: Deploy
