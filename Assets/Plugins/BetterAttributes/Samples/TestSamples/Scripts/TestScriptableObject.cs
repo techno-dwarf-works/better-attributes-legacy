@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using BetterAttributes.Runtime;
-using BetterAttributes.Runtime.ReadOnlyAttributes;
-using BetterAttributes.Runtime.SelectAttributes;
+using BetterAttributes.Runtime.Attributes.ReadOnly;
+using BetterAttributes.Runtime.Attributes.Select;
 using BetterAttributes.Samples.Interfaces;
 using BetterAttributes.Samples.Models;
 using UnityEngine;

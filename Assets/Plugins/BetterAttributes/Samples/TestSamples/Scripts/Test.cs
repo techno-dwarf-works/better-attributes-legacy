@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using BetterAttributes.Runtime;
-using BetterAttributes.Runtime.GizmoAttributes;
-using BetterAttributes.Runtime.PreviewAttributes;
-using BetterAttributes.Runtime.ReadOnlyAttributes;
-using BetterAttributes.Runtime.SelectAttributes;
+using BetterAttributes.Runtime.Attributes.Gizmo;
+using BetterAttributes.Runtime.Attributes.Preview;
+using BetterAttributes.Runtime.Attributes.ReadOnly;
+using BetterAttributes.Runtime.Attributes.Rename;
+using BetterAttributes.Runtime.Attributes.Select;
 using BetterAttributes.Samples.Interfaces;
 using BetterAttributes.Samples.Models;
 using UnityEngine;
@@ -12,28 +13,21 @@ namespace BetterAttributes.Samples
 {
     public class Test : MonoBehaviour
     {
-        [PopupPreview] 
-        [SerializeField] private Sprite sprite;
-        
-        [PopupPreview] 
-        [SerializeField] private Transform component;
-        
-        [GizmoLocal]
-        [SerializeField] private Bounds bounds;
-        
-        [GizmoLocal]
-        [SerializeField] private Vector3 vector3Local;
-        
-        [GizmoLocal]
+        [Preview] [SerializeField] private Texture2D texture;
+
+        [Preview] [SerializeField] private PreviewTest component;
+
+        [GizmoLocal] [SerializeField] private Vector3 vector3Local;
+
+        [GizmoLocal] [RenameField("Quaternion Local")] 
         [SerializeField] private Quaternion quaternion;
-        
-        [GizmoLocal]
-        [SerializeField] private SomeClass some;
-        
+
+        [GizmoLocal] [SerializeField] private SomeClass some;
+
         [ReadOnlyField] [SerializeField] private SomeClass someClass;
 
         [ReadOnlyField] [SerializeField] private float someFloat;
-        
+
         [SelectImplementation] [SerializeReference]
         private ISomeInterface someInterface;
 
@@ -45,6 +39,8 @@ namespace BetterAttributes.Samples
 
         [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
+
+        [GizmoLocal] [SerializeField] private Bounds bounds;
 
         ///Default usage of attribute.
         [EditorButton]

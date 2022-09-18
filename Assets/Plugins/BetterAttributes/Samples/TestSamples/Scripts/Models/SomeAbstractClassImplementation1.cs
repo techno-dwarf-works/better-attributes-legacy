@@ -1,5 +1,5 @@
 using System;
-using BetterAttributes.Runtime.GizmoAttributes;
+using BetterAttributes.Runtime.Attributes.Gizmo;
 using UnityEngine;
 
 namespace BetterAttributes.Samples.Models

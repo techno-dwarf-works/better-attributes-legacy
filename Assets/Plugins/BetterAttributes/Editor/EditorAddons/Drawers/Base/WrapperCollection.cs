@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BetterAttributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 
 namespace BetterAttributes.EditorAddons.Drawers.Base
@@ -26,8 +27,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
         public WrapperCollection() : base(new SerializedPropertyComparer())
         {
         }
-        
-        
 
         public void Deconstruct()
         {

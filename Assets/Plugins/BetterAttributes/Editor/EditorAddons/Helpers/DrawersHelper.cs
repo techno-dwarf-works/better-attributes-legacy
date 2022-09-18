@@ -18,7 +18,7 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="message"></param>
         /// <param name="type"></param>
         /// <param name="useSpace"></param>
-        public static void HelpBox(string message, MessageType type, bool useSpace = true)
+        public static void HelpBox(string message, IconType type, bool useSpace = true)
         {
             var style = new GUIStyle(EditorStyles.helpBox) { richText = true, fontSize = 11 };
             HelpBox(message, type, style, useSpace);
@@ -30,7 +30,7 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="message"></param>
         /// <param name="position"></param>
         /// <param name="type"></param>
-        public static void HelpBox(string message, Rect position, MessageType type)
+        public static void HelpBox(string message, Rect position, IconType type)
         {
             var style = new GUIStyle(EditorStyles.helpBox) { richText = true, fontSize = 11, wordWrap = true };
             HelpBox(message, position, type, style);
@@ -45,7 +45,7 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="attributeType"></param>
         public static void NotSupportedAttribute(Rect position, string fieldName, Type fieldType, Type attributeType)
         {
-            HelpBox(NotSupportedMessage(fieldName, fieldType, attributeType), position, MessageType.Error);
+            HelpBox(NotSupportedMessage(fieldName, fieldType, attributeType), position, IconType.ErrorMessage);
         }
 
         private static string NotSupportedMessage(string fieldName, Type fieldType, Type attributeType)
@@ -60,9 +60,9 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="fieldName"></param>
         /// <param name="fieldType"></param>
         /// <param name="attributeType"></param>
-        public static void NotSupportedAttribute(string fieldName, Type fieldType, Type attributeType)
+        public static void NotSupportedAttribute(string fieldName, Type fieldType, Type attributeType, bool useSpace = true)
         {
-            HelpBox(NotSupportedMessage(fieldName, fieldType, attributeType), MessageType.Error);
+            HelpBox(NotSupportedMessage(fieldName, fieldType, attributeType), IconType.ErrorMessage, useSpace);
         }
 
         public static string FormatBold(string text)
@@ -87,9 +87,9 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="type"></param>
         /// <param name="style"></param>
         /// <param name="useSpace"></param>
-        private static void HelpBox(string message, MessageType type, GUIStyle style, bool useSpace)
+        private static void HelpBox(string message, IconType type, GUIStyle style, bool useSpace)
         {
-            var icon = IconName(type);
+            var icon = GetIconName(type);
             if (useSpace)
             {
                 EditorGUILayout.Space(_spaceHeight);
@@ -104,9 +104,9 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="position"></param>
         /// <param name="type"></param>
         /// <param name="style"></param>
-        private static void HelpBox(string message, Rect position, MessageType type, GUIStyle style)
+        private static void HelpBox(string message, Rect position, IconType type, GUIStyle style)
         {
-            var icon = IconName(type);
+            var icon = GetIconName(type);
             var withIcon = EditorGUIUtility.TrTextContentWithIcon(message, icon);
             position.height = style.CalcHeight(withIcon, position.width);
             EditorGUI.LabelField(position, GUIContent.none, withIcon, style);
@@ -152,16 +152,49 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static string IconName(MessageType type)
+        public static string GetIconName(IconType type)
         {
             var icon = type switch
             {
-                MessageType.Info => "console.infoicon",
-                MessageType.Warning => "console.warnicon",
-                MessageType.Error => "console.erroricon",
+                IconType.InfoMessage => "console.infoicon",
+                IconType.WarningMessage => "console.warnicon",
+                IconType.ErrorMessage => "console.erroricon",
+                IconType.Info => "d__Help@2x",
                 _ => ""
             };
             return icon;
         }
+        
+        /// <summary>
+        /// Getting Icon Name from Unity Inspector
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Texture GetIcon(IconType type)
+        {
+            var icon = GetIconName(type);
+            return EditorGUIUtility.IconContent(icon).image;
+        }
+    }
+
+    internal enum IconType
+    {
+        /// <summary>
+        ///   <para>Neutral message.</para>
+        /// </summary>
+        None,
+        /// <summary>
+        ///   <para>Info message.</para>
+        /// </summary>
+        InfoMessage,
+        /// <summary>
+        ///   <para>Warning message.</para>
+        /// </summary>
+        WarningMessage,
+        /// <summary>
+        ///   <para>Error message.</para>
+        /// </summary>
+        ErrorMessage,
+        Info
     }
 }
