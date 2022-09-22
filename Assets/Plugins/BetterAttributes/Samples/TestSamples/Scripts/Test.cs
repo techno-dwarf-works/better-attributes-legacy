@@ -19,7 +19,7 @@ namespace BetterAttributes.Samples
 
         [GizmoLocal] [SerializeField] private Vector3 vector3Local;
 
-        [GizmoLocal] [RenameField("Quaternion Local")] 
+        [GizmoLocal] [RenameField("Quaternion Local Rename")] 
         [SerializeField] private Quaternion quaternion;
 
         [GizmoLocal] [SerializeField] private SomeClass some;
@@ -28,7 +28,7 @@ namespace BetterAttributes.Samples
 
         [ReadOnlyField] [SerializeField] private float someFloat;
 
-        [SelectImplementation] [SerializeReference]
+        [SelectImplementation(DisplayName.Full)] [SerializeReference]
         private ISomeInterface someInterface;
 
         [SelectImplementation] [SerializeReference]
@@ -37,7 +37,7 @@ namespace BetterAttributes.Samples
         [SelectImplementation] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
-        [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
+        [SelectImplementation(typeof(ISomeInterface), DisplayName.Extended)] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
 
         [GizmoLocal] [SerializeField] private Bounds bounds;

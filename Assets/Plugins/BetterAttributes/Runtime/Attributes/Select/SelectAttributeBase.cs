@@ -4,22 +4,32 @@ using UnityEngine;
 
 namespace BetterAttributes.Runtime.Attributes.Select
 {
+    public enum DisplayName
+    {
+        Short, Full, Extended
+    }
+    
     [Conditional("UNITY_EDITOR")]
     [AttributeUsage(AttributeTargets.Field)]
     public abstract class SelectAttributeBase : PropertyAttribute
     {
         private readonly Type _type;
-        public bool FindTypesRecursively { get; }
+        public DisplayName DisplayName { get; } = DisplayName.Short;
 
-        public SelectAttributeBase(Type type, bool findTypesRecursively = false)
+        public SelectAttributeBase(Type type)
         {
             _type = type;
-            FindTypesRecursively = findTypesRecursively;
         }
-
-        public SelectAttributeBase(bool useTypeExplicitly = false)
+        
+        public SelectAttributeBase(Type type, DisplayName displayName)
         {
-            FindTypesRecursively = useTypeExplicitly;
+            _type = type;
+            DisplayName = displayName;
+        }
+        
+        public SelectAttributeBase(DisplayName displayName)
+        {
+            DisplayName = displayName;
         }
 
         public Type GetFieldType()

@@ -15,6 +15,14 @@ namespace BetterAttributes.Runtime.Attributes.Select
         {
         }
 
+        public SelectImplementationAttribute(Type type, DisplayName displayName) : base(type, displayName)
+        {
+        }
+
+        public SelectImplementationAttribute(DisplayName displayName) : base(displayName)
+        {
+        }
+
         public SelectImplementationAttribute()
         {
         }

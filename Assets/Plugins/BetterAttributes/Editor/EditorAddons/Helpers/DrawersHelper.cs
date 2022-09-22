@@ -1,16 +1,13 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace BetterAttributes.EditorAddons.Helpers
 {
     internal static class DrawersHelper
     {
-        private static float _spaceHeight = EditorGUIUtility.singleLineHeight;
+        private static float _spaceHeight = 6f;
+        public static float SpaceHeight => _spaceHeight;
 
         /// <summary>
         /// Override for default Inspector HelpBox with RTF text
@@ -30,7 +27,7 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="message"></param>
         /// <param name="position"></param>
         /// <param name="type"></param>
-        public static void HelpBox(string message, Rect position, IconType type)
+        public static void HelpBox(Rect position, string message, IconType type)
         {
             var style = new GUIStyle(EditorStyles.helpBox) { richText = true, fontSize = 11, wordWrap = true };
             HelpBox(message, position, type, style);
@@ -45,13 +42,13 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="attributeType"></param>
         public static void NotSupportedAttribute(Rect position, string fieldName, Type fieldType, Type attributeType)
         {
-            HelpBox(NotSupportedMessage(fieldName, fieldType, attributeType), position, IconType.ErrorMessage);
+            HelpBox(position, NotSupportedMessage(fieldName, fieldType, attributeType), IconType.ErrorMessage);
         }
 
         private static string NotSupportedMessage(string fieldName, Type fieldType, Type attributeType)
         {
             return
-                $"Field {FormatBold(fieldName)} with {FormatBold(fieldType.Name)} not supported for {FormatBold(attributeType.Name)}";
+                $"Field {FormatBold(fieldName)} of type {FormatBold(fieldType.Name)} not supported for {FormatBold(attributeType.Name)}";
         }
 
         /// <summary>
@@ -60,7 +57,8 @@ namespace BetterAttributes.EditorAddons.Helpers
         /// <param name="fieldName"></param>
         /// <param name="fieldType"></param>
         /// <param name="attributeType"></param>
-        public static void NotSupportedAttribute(string fieldName, Type fieldType, Type attributeType, bool useSpace = true)
+        public static void NotSupportedAttribute(string fieldName, Type fieldType, Type attributeType,
+            bool useSpace = true)
         {
             HelpBox(NotSupportedMessage(fieldName, fieldType, attributeType), IconType.ErrorMessage, useSpace);
         }
@@ -94,6 +92,7 @@ namespace BetterAttributes.EditorAddons.Helpers
             {
                 EditorGUILayout.Space(_spaceHeight);
             }
+
             EditorGUILayout.LabelField(GUIContent.none, EditorGUIUtility.TrTextContentWithIcon(message, icon), style);
         }
 
@@ -147,6 +146,12 @@ namespace BetterAttributes.EditorAddons.Helpers
             return bufferSelected;
         }
 
+        public static GUIStyle GetButtonStyle()
+        {
+            return new GUIStyle(GUI.skin.button)
+                { alignment = TextAnchor.MiddleLeft, fixedHeight = EditorGUIUtility.singleLineHeight };
+        }
+
         /// <summary>
         /// Getting Icon Name from Unity Inspector
         /// </summary>
@@ -160,11 +165,19 @@ namespace BetterAttributes.EditorAddons.Helpers
                 IconType.WarningMessage => "console.warnicon",
                 IconType.ErrorMessage => "console.erroricon",
                 IconType.Info => "d__Help@2x",
+                IconType.View => "d_scenevis_visible_hover@2x",
+                IconType.Close => "d_winbtn_win_close_a@2x",
+                IconType.Search => "d_Search Icon",
+                IconType.WhiteLine => "d_animationanimated",
+                IconType.GrayLine => "d_animationnocurve",
+                IconType.WhiteDropdown => "d_icon dropdown",
+                IconType.GrayDropdown => "icon dropdown",
+                IconType.Checkmark => "d_Valid@2x",
                 _ => ""
             };
             return icon;
         }
-        
+
         /// <summary>
         /// Getting Icon Name from Unity Inspector
         /// </summary>
@@ -175,6 +188,17 @@ namespace BetterAttributes.EditorAddons.Helpers
             var icon = GetIconName(type);
             return EditorGUIUtility.IconContent(icon).image;
         }
+
+        /// <summary>
+        /// Getting Icon Name from Unity Inspector
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static GUIContent GetIconGUIContent(IconType type)
+        {
+            var icon = GetIconName(type);
+            return EditorGUIUtility.IconContent(icon);
+        }
     }
 
     internal enum IconType
@@ -183,18 +207,29 @@ namespace BetterAttributes.EditorAddons.Helpers
         ///   <para>Neutral message.</para>
         /// </summary>
         None,
+
         /// <summary>
         ///   <para>Info message.</para>
         /// </summary>
         InfoMessage,
+
         /// <summary>
         ///   <para>Warning message.</para>
         /// </summary>
         WarningMessage,
+
         /// <summary>
         ///   <para>Error message.</para>
         /// </summary>
         ErrorMessage,
-        Info
+        Info,
+        View,
+        Close,
+        Search,
+        WhiteLine,
+        GrayLine,
+        WhiteDropdown,
+        GrayDropdown,
+        Checkmark
     }
 }

@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3ec95f197def4081b17762f1fd41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texture: {fileID: 0}
+  texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
   vector3Local: {x: 0, y: 0, z: 4.6317034}
   quaternion: {x: 0, y: 0, z: 0, w: 1}
@@ -162,19 +162,31 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: -2
+    rid: 220138102916644881
   someAbstractClass:
-    rid: -2
+    rid: 220138102916644875
   someAbstractClasses: []
-  someInterfaces: []
+  someInterfaces:
+  - rid: 220138102916644877
   bounds:
     m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
     m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 220138102916644875
+      type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
+      data:
+        baseIntField: 0
+        boolField: 0
+    - rid: 220138102916644877
+      type: {class: SomeInterfaceImplementation21, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
+      data:
+        intField: 0
+    - rid: 220138102916644881
+      type: {class: SomeInterfaceImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
+      data:
+        intField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0

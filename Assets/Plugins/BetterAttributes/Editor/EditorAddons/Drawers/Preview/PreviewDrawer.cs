@@ -37,7 +37,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
             EditorGUI.BeginChangeCheck();
             _previewSize = ((PreviewAttribute)attribute).PreviewSize;
             var copy = position;
-            label.image = DrawersHelper.GetIcon(IconType.Info);
+            label.image = DrawersHelper.GetIcon(IconType.View);
             copy.size = GUIStyle.none.CalcSize(label);
             Collection.OnGUI(copy, property, _previewSize, _objectChanged);
 
