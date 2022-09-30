@@ -162,29 +162,29 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 220138102916644881
+    rid: -2
   someAbstractClass:
     rid: 220138102916644875
-  someAbstractClasses: []
+  someAbstractClasses:
+  - rid: -2
   someInterfaces:
-  - rid: 220138102916644877
+  - rid: 220138311990378500
+  - rid: -2
   bounds:
     m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
     m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 220138102916644875
       type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 220138102916644877
-      type: {class: SomeInterfaceImplementation21, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
-      data:
-        intField: 0
-    - rid: 220138102916644881
-      type: {class: SomeInterfaceImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
+    - rid: 220138311990378500
+      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp-firstpass}
       data:
         intField: 0
 --- !u!4 &123298862

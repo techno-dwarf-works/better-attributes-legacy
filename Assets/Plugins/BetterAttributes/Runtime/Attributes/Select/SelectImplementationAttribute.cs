@@ -19,7 +19,15 @@ namespace BetterAttributes.Runtime.Attributes.Select
         {
         }
 
+        public SelectImplementationAttribute(Type type, DisplayGrouping displayGrouping) : base(type, displayGrouping)
+        {
+        }
+
         public SelectImplementationAttribute(DisplayName displayName) : base(displayName)
+        {
+        }
+
+        public SelectImplementationAttribute(DisplayGrouping displayGrouping) : base(displayGrouping)
         {
         }
 

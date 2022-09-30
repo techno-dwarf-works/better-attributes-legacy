@@ -1,61 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BetterAttributes.EditorAddons.Drawers.Base;
 using BetterAttributes.EditorAddons.Helpers;
 using BetterAttributes.Runtime.Attributes.Select;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
-    public class SelectDrawerBase<T> : FieldDrawer where T : SelectAttributeBase
+    public abstract class SelectDrawerBase<T> : FieldDrawer where T : SelectAttributeBase
     {
-        private protected List<Type> _reflectionType;
-        private Type _type;
         private bool _needUpdate;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUI.GetPropertyHeight(property, true);
         }
-
-        private protected void LazyGetAllInheritedType(Type baseType, Type currentObjectType)
-        {
-            if (_reflectionType != null) return;
-
-            _reflectionType = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => p != currentObjectType && CheckType(baseType, p) &&
-                            (p.IsClass || p.IsValueType) &&
-                            !p.IsAbstract && !p.IsSubclassOf(typeof(Object)))
-                .ToList();
-            _reflectionType.Insert(0, null);
-        }
-
-        private bool CheckType(Type baseType, Type p)
-        {
-            return baseType.IsAssignableFrom(p);
-        }
-
-        private IEnumerable<Type> GetDirectInterfaces(Type type)
-        {
-            var allInterfaces = new List<Type>();
-            var childInterfaces = new List<Type>();
-
-            foreach (var i in type.GetInterfaces())
-            {
-                allInterfaces.Add(i);
-                childInterfaces.AddRange(i.GetInterfaces());
-            }
-
-            var directInterfaces = allInterfaces.Except(childInterfaces);
-
-            return directInterfaces;
-        }
-
-        private protected Rect GetPopupPosition(Rect currentPosition)
+        
+        private Rect GetPopupPosition(Rect currentPosition)
         {
             var popupPosition = new Rect(currentPosition);
             popupPosition.width -= EditorGUIUtility.labelWidth;
@@ -76,16 +38,17 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             {
                 if (property.propertyType != SerializedPropertyType.ManagedReference) return false;
                 var att = (T)attribute;
-                var t = property.serializedObject.targetObject.GetType();
-                LazyGetAllInheritedType(att.GetFieldType() ?? fieldInfo.FieldType, t);
                 var popupPosition = GetPopupPosition(position);
-                
-                var referenceValue = property.managedReferenceValue;
-                DrawEnumButton(popupPosition, att.DisplayName, referenceValue);
+                Setup(property, att);
+                var referenceValue = GetValue(property);
+                if (DrawEnumButton(popupPosition, referenceValue))
+                {
+                    ShowDropDown(popupPosition, att.DisplayName, att.DisplayGrouping, referenceValue);
+                }
 
                 if (_needUpdate)
                 {
-                    property.managedReferenceValue = _type == null ? null : Activator.CreateInstance(_type);
+                    UpdateValue(property);
                     _needUpdate = false;
                 }
             }
@@ -97,65 +60,75 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return true;
         }
 
-        private void DrawEnumButton(Rect popupPosition, DisplayName displayName, object referenceValue)
+        
+
+        private object GetValue(SerializedProperty property)
         {
-            var style = DrawersHelper.GetButtonStyle();
+            return property.managedReferenceValue;
+        }
+
+        private bool DrawEnumButton(Rect buttonPosition, object currentValue)
+        {
             var content = DrawersHelper.GetIconGUIContent(IconType.GrayDropdown);
-            content.text = referenceValue == null ? "null" : referenceValue.GetType().Name;
-            if (GUI.Button(popupPosition, content, style))
+
+            content.text = currentValue == null ? "null" : currentValue.GetType().Name;
+            return GUI.Button(buttonPosition, content, Styles.Button);
+        }
+ 
+        private void ShowDropDown(Rect popupPosition, DisplayName displayName, DisplayGrouping displayGrouping,
+            object currentValue)
+        {
+            var copy = popupPosition;
+            copy.y += EditorGUIUtility.singleLineHeight;
+            var popup = DropDownPopup.ShowWindow(GUIUtility.GUIToScreenRect(copy));
+            var items = GenerateItemsTree(displayName, displayGrouping, currentValue);
+
+            popup.SetItems(items);
+        }
+
+        private protected virtual DropDownCollection GenerateItemsTree(DisplayName displayName, DisplayGrouping displayGrouping, object currentValue)
+        {
+            var items = new DropDownCollection(new DropDownSubTree(new GUIContent("Root")));
+            var collection = GetSelectCollection();
+            if (displayGrouping == DisplayGrouping.None)
             {
-                var copy = popupPosition;
-                copy.y += EditorGUIUtility.singleLineHeight;
-                var popup = DropDownPopup.ShowWindow(GUIUtility.GUIToScreenRect(copy));
-                foreach (var type in _reflectionType)
+                foreach (var type in collection)
                 {
                     var guiContent = new GUIContent(ResolveName(type, displayName));
-                    popup.AddItem(guiContent, ResolveState(referenceValue, type), OnSelectItem, type);
+                    var item = new DropDownItem(guiContent, ResolveState(currentValue, type), OnSelectItem, type);
+                    items.AddChild(item);
                 }
             }
-        }
-
-        private string ResolveName(Type type, DisplayName displayName)
-        {
-            switch (displayName)
+            else
             {
-                case DisplayName.Short:
-                    return type == null ? "null" : $"{type.Name}";
-                case DisplayName.Full:
-                    return type == null ? "null" : $"{type.FullName}";
-                case DisplayName.Extended:
-                    return type == null ? "null" : $"{type.Name} : {type}";
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
-            }
-        }
-
-        private void OnSelectItem(object obj)
-        {
-            if (obj == null)
-            {
-                _type = null;
-                _needUpdate = true;
-                return;
-            }
-
-            var type = (Type)obj;
-            if (_type != null)
-            {
-                if (_type == type)
+                foreach (var type in collection)
                 {
-                    return;
+                    var resolveGroupedName = ResolveGroupedName(type, displayGrouping);
+                    items.AddItem(resolveGroupedName, ResolveState(currentValue, type), OnSelectItem,
+                        type);
                 }
             }
 
-            _type = type;
-            _needUpdate = true;
+            return items;
         }
+        
+        private protected abstract void Setup(SerializedProperty property, T currentAttribute);
 
-        private bool ResolveState(object value, Type type)
+        private protected abstract void UpdateValue(SerializedProperty property);
+
+        private protected abstract List<object> GetSelectCollection();
+
+        private protected abstract string ResolveName(object value, DisplayName displayName);
+
+        private protected abstract string[] ResolveGroupedName(object value, DisplayGrouping grouping);
+
+        private protected abstract bool ResolveState(object currentValue, object iteratedValue);
+
+        private protected abstract void OnSelectItem(object obj);
+
+        private protected void SetNeedUpdate()
         {
-            if (type == null && value == null) return true;
-            return value?.GetType() == type;
+            _needUpdate = true;
         }
 
         private protected override Rect PreparePropertyRect(Rect original)

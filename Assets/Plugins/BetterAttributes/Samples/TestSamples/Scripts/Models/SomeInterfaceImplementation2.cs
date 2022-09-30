@@ -2,7 +2,7 @@
 using BetterAttributes.Samples.Interfaces;
 using UnityEngine;
 
-namespace BetterAttributes.Samples.Models
+namespace BetterAttributes.Models
 {
     [Serializable]
     public class SomeInterfaceImplementation2 : ISomeInterface

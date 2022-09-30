@@ -146,12 +146,6 @@ namespace BetterAttributes.EditorAddons.Helpers
             return bufferSelected;
         }
 
-        public static GUIStyle GetButtonStyle()
-        {
-            return new GUIStyle(GUI.skin.button)
-                { alignment = TextAnchor.MiddleLeft, fixedHeight = EditorGUIUtility.singleLineHeight };
-        }
-
         /// <summary>
         /// Getting Icon Name from Unity Inspector
         /// </summary>

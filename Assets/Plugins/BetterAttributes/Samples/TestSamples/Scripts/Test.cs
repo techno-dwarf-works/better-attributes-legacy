@@ -28,16 +28,16 @@ namespace BetterAttributes.Samples
 
         [ReadOnlyField] [SerializeField] private float someFloat;
 
-        [SelectImplementation(DisplayName.Full)] [SerializeReference]
+        [SelectImplementation(DisplayGrouping.GroupedFlat)] [SerializeReference]
         private ISomeInterface someInterface;
 
         [SelectImplementation] [SerializeReference]
         private SomeAbstractClass someAbstractClass;
 
-        [SelectImplementation] [SerializeReference]
+        [SelectImplementation(typeof(SomeAbstractClass), DisplayName.Full)] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
-        [SelectImplementation(typeof(ISomeInterface), DisplayName.Extended)] [SerializeReference]
+        [SelectImplementation(typeof(ISomeInterface), DisplayGrouping.Grouped)] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
 
         [GizmoLocal] [SerializeField] private Bounds bounds;
