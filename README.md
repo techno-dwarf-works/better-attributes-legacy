@@ -1,23 +1,17 @@
 # Better Attributes
 
+
 ![image](https://user-images.githubusercontent.com/22265817/181865901-35fea6f6-0b6e-4246-9df5-99e13cb5ed0f.png)
 
 This package provides following features:
 
-### Read Only Field
+### Select Dropdown
 
-Provides possibility to disable modification of fields in Unity Inspector but keep it displayed. Usage:
-
-```c#
-[ReadOnlyField] [SerializeField] 
-private SomeClass someClass;
-
-[ReadOnlyField] [SerializeField] 
-private float someFloat;
-
-[ReadOnlyField] [TextArea(5, 10)] [SerializeField] 
-private string someString;
-```
+This package contains base class for drawer with better dropdown.<br>
+Better dropdown contains:
+1. Search
+2. Fast navigation
+3. Grouping
 
 ### Select Implementation
 
@@ -32,17 +26,74 @@ private ISomeInterface someInterface;
 [SelectImplementation] [SerializeReference]
 private SomeAbstractClass someAbstractClass;
 
-[SelectImplementation] [SerializeReference]
+[SelectImplementation(typeof(SomeAbstractClass)] [SerializeReference]
 private List<SomeAbstractClass> someAbstractClasses;
 
 [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
 private List<ISomeInterface> someInterfaces;
 ```
 
+### Select Enum
+
+Provides possibility to select enum value with better dropdown.<br>
+Also supports **_flag_** enums.
+
+Usage:
+
+```c#
+[SelectEnum] [SerializeField]
+private KeyCode keyCode;
+```
+
+### Preview
+
+Provides possibility to see object preview by clicking into the field in Unity Inspector.<br>
+Supports preview for **_scene objects_** and **_prefabs_** object as well as **_textures_** and **_sprites_**.
+
+Usage:
+
+```c#
+[Preview] [SerializeField]
+private Sprite sprite;
+
+[Preview] [SerializeField]
+private SomeMonobehaviour someMonobehaviour;
+```
+
+### Read Only Field
+
+Provides possibility to disable modification of fields in Unity Inspector but keep it displayed.
+
+Usage:
+
+```c#
+[ReadOnlyField] [SerializeField] 
+private SomeClass someClass;
+
+[ReadOnlyField] [SerializeField] 
+private float someFloat;
+
+[ReadOnlyField] [TextArea(5, 10)] [SerializeField] 
+private string someString;
+```
+
+### Rename Field
+
+Provides possibility to rename label in Unity Inspector.
+
+Usage:
+
+```c#
+[RenameField("New Name")] [SerializeField]
+private string oldName;
+```
+
 ### Gizmo / GizmoLocal
 
-Provides possibility to set value for Vector3/Vector2/Quaternion/Bounds from scene view by dragging handles.
+Provides possibility to set value for Vector3/Vector2/Quaternion/Bounds from scene view by dragging handles.<br>
+`[GizmoLocal]` works only into `MonoBehaviour` Unity Inspector.
 
+Usage:
 
 ```c#
 [Gizmo]
@@ -133,4 +184,4 @@ https://github.com/uurha/BetterAttributes.git#<version>
 ```
 You can check versions [here](https://github.com/uurha/BetterAttributes/releases).
 
-Note: all versions related to tags. Use tag name, *NOT* release name.
+Note: all versions related to tags. Use tag name, **_NOT_** release name.
