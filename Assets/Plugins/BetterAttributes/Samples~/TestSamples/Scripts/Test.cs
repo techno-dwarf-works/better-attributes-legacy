@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using BetterAttributes.Runtime;
 using BetterAttributes.Runtime.Attributes.Gizmo;
@@ -11,16 +12,28 @@ using UnityEngine;
 
 namespace BetterAttributes.Samples
 {
+    [Flags]
+    public enum MyFlagEnum
+    {
+        First = 1,
+        Second = 2,
+        Third = 4
+    }
+
     public class Test : MonoBehaviour
     {
+        [SelectEnum] [SerializeField] private KeyCode keyCode;
+        
+        [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
+
         [Preview] [SerializeField] private Texture2D texture;
 
         [Preview] [SerializeField] private PreviewTest component;
 
         [GizmoLocal] [SerializeField] private Vector3 vector3Local;
 
-        [GizmoLocal] [RenameField("Quaternion Local Rename")] 
-        [SerializeField] private Quaternion quaternion;
+        [GizmoLocal] [RenameField("Quaternion Local Rename")] [SerializeField]
+        private Quaternion quaternion;
 
         [GizmoLocal] [SerializeField] private SomeClass some;
 

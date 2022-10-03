@@ -11,39 +11,40 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
     public abstract class SelectDrawerBase<T> : FieldDrawer where T : SelectAttributeBase
     {
         private bool _needUpdate;
+        private bool _isSetUp;
+        private DisplayName _displayName;
+        private DisplayGrouping _displayGrouping;
+
+        private protected const string NotSupported = "Not supported";
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUI.GetPropertyHeight(property, true);
         }
         
-        private Rect GetPopupPosition(Rect currentPosition)
-        {
-            var popupPosition = new Rect(currentPosition);
-            popupPosition.width -= EditorGUIUtility.labelWidth;
-            popupPosition.x += EditorGUIUtility.labelWidth;
-            popupPosition.height = EditorGUIUtility.singleLineHeight;
-            return popupPosition;
-        }
-
-
-        private protected override void Deconstruct()
-        {
-            DropDownPopup.CloseInstance();
-        }
-
         private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             try
             {
-                if (property.propertyType != SerializedPropertyType.ManagedReference) return false;
+                if (!CheckSupported(property))
+                {
+                    DrawersHelper.NotSupportedAttribute(property.displayName, fieldInfo.FieldType, attribute.GetType());
+                    return false;
+                }
+
                 var att = (T)attribute;
                 var popupPosition = GetPopupPosition(position);
-                Setup(property, att);
-                var referenceValue = GetValue(property);
-                if (DrawEnumButton(popupPosition, referenceValue))
+                if (!_isSetUp)
                 {
-                    ShowDropDown(popupPosition, att.DisplayName, att.DisplayGrouping, referenceValue);
+                    Setup(property, att);
+                    _displayName = att.DisplayName;
+                    _displayGrouping = att.DisplayGrouping;
+                    SetReady();
+                }
+                var referenceValue = GetCurrentValue(property);
+                if (DrawButton(popupPosition, referenceValue))
+                {
+                    ShowDropDown(popupPosition, referenceValue);
                 }
 
                 if (_needUpdate)
@@ -60,42 +61,48 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return true;
         }
 
-        
-
-        private object GetValue(SerializedProperty property)
+        private Rect GetPopupPosition(Rect currentPosition)
         {
-            return property.managedReferenceValue;
+            var popupPosition = new Rect(currentPosition);
+            popupPosition.width -= EditorGUIUtility.labelWidth;
+            popupPosition.x += EditorGUIUtility.labelWidth;
+            popupPosition.height = EditorGUIUtility.singleLineHeight;
+            return popupPosition;
         }
 
-        private bool DrawEnumButton(Rect buttonPosition, object currentValue)
+        private protected override void Deconstruct()
+        {
+            DropdownWindow.CloseInstance();
+        }
+        
+        private bool DrawButton(Rect buttonPosition, object currentValue)
         {
             var content = DrawersHelper.GetIconGUIContent(IconType.GrayDropdown);
 
-            content.text = currentValue == null ? "null" : currentValue.GetType().Name;
+            content.text = GetButtonName(currentValue);
             return GUI.Button(buttonPosition, content, Styles.Button);
         }
- 
-        private void ShowDropDown(Rect popupPosition, DisplayName displayName, DisplayGrouping displayGrouping,
-            object currentValue)
+
+        private void ShowDropDown(Rect popupPosition, object currentValue)
         {
             var copy = popupPosition;
             copy.y += EditorGUIUtility.singleLineHeight;
-            var popup = DropDownPopup.ShowWindow(GUIUtility.GUIToScreenRect(copy));
-            var items = GenerateItemsTree(displayName, displayGrouping, currentValue);
+            var popup = DropdownWindow.ShowWindow(GUIUtility.GUIToScreenRect(copy), GenerateHeader());
+            var items = GenerateItemsTree(currentValue);
 
             popup.SetItems(items);
         }
 
-        private protected virtual DropDownCollection GenerateItemsTree(DisplayName displayName, DisplayGrouping displayGrouping, object currentValue)
+        private protected virtual DropdownCollection GenerateItemsTree(object currentValue)
         {
-            var items = new DropDownCollection(new DropDownSubTree(new GUIContent("Root")));
+            var items = new DropdownCollection(new DropdownSubTree(new GUIContent("Root")));
             var collection = GetSelectCollection();
-            if (displayGrouping == DisplayGrouping.None)
+            if (_displayGrouping == DisplayGrouping.None)
             {
                 foreach (var type in collection)
                 {
-                    var guiContent = new GUIContent(ResolveName(type, displayName));
-                    var item = new DropDownItem(guiContent, ResolveState(currentValue, type), OnSelectItem, type);
+                    var guiContent = new GUIContent(ResolveName(type, _displayName));
+                    var item = new DropdownItem(guiContent, ResolveState(currentValue, type), OnSelectItem, type);
                     items.AddChild(item);
                 }
             }
@@ -103,32 +110,34 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             {
                 foreach (var type in collection)
                 {
-                    var resolveGroupedName = ResolveGroupedName(type, displayGrouping);
-                    items.AddItem(resolveGroupedName, ResolveState(currentValue, type), OnSelectItem,
-                        type);
+                    var resolveGroupedName = ResolveGroupedName(type, _displayGrouping);
+                    items.AddItem(resolveGroupedName, ResolveState(currentValue, type), OnSelectItem, type);
                 }
             }
 
             return items;
         }
-        
+
+        private protected abstract GUIContent GenerateHeader();
+        private protected abstract object GetCurrentValue(SerializedProperty property);
+        private protected abstract bool CheckSupported(SerializedProperty property);
+        private protected abstract string GetButtonName(object currentValue);
         private protected abstract void Setup(SerializedProperty property, T currentAttribute);
-
-        private protected abstract void UpdateValue(SerializedProperty property);
-
         private protected abstract List<object> GetSelectCollection();
-
         private protected abstract string ResolveName(object value, DisplayName displayName);
-
         private protected abstract string[] ResolveGroupedName(object value, DisplayGrouping grouping);
-
         private protected abstract bool ResolveState(object currentValue, object iteratedValue);
-
         private protected abstract void OnSelectItem(object obj);
+        private protected abstract void UpdateValue(SerializedProperty property);
 
         private protected void SetNeedUpdate()
         {
             _needUpdate = true;
+        }
+
+        private void SetReady()
+        {
+            _isSetUp = true;
         }
 
         private protected override Rect PreparePropertyRect(Rect original)

@@ -8,15 +8,16 @@ using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Helpers
 {
-    public class DropDownPopup : EditorWindow
+    public class DropdownWindow : EditorWindow
     {
         private Vector2 _scrollPosition;
         private string _searchText;
         private Vector2 _display;
         private int _maxLines = 10;
 
-        private TreeNode<DropDownBase> _currentNode;
-        private Stack<TreeNode<DropDownBase>> _previousItems = new Stack<TreeNode<DropDownBase>>();
+        private TreeNode<DropdownBase> _currentNode;
+        private Stack<TreeNode<DropdownBase>> _previousItems = new Stack<TreeNode<DropdownBase>>();
+        private GUIContent _header;
 
         [DidReloadScripts]
         private static void OnDidReloadScripts()
@@ -26,22 +27,23 @@ namespace BetterAttributes.EditorAddons.Helpers
 
         public static void CloseInstance()
         {
-            if (HasOpenInstances<DropDownPopup>())
+            if (HasOpenInstances<DropdownWindow>())
             {
-                var window = GetWindow<DropDownPopup>();
+                var window = GetWindow<DropdownWindow>();
                 window.ResetPopup();
                 window.Close();
             }
         }
 
-        public static DropDownPopup ShowWindow(Rect displayPosition)
+        public static DropdownWindow ShowWindow(Rect displayPosition, GUIContent header)
         {
-            var window = HasOpenInstances<DropDownPopup>()
-                ? GetWindow<DropDownPopup>()
-                : CreateInstance<DropDownPopup>();
+            var window = HasOpenInstances<DropdownWindow>()
+                ? GetWindow<DropdownWindow>()
+                : CreateInstance<DropdownWindow>();
             window.ResetPopup();
             window.ShowPopup();
             window.SetPosition(displayPosition);
+            window._header = header;
             return window;
         }
 
@@ -59,22 +61,6 @@ namespace BetterAttributes.EditorAddons.Helpers
             _searchText = string.Empty;
         }
 
-        public void SetItems(DropDownCollection collection)
-        {
-            ResetPopup();
-            SetCurrentDrawItems(collection);
-        }
-
-        internal void SetCurrentDrawItems(TreeNode<DropDownBase> node)
-        {
-            if (_currentNode != null)
-            {
-                _previousItems.Push(_currentNode);
-            }
-
-            _currentNode = node;
-        }
-
         private void OnLostFocus()
         {
             CloseInstance();
@@ -83,11 +69,11 @@ namespace BetterAttributes.EditorAddons.Helpers
         private void OnGUI()
         {
             EditorGUILayout.BeginVertical();
-            _searchText = DropDownGUI.DrawSearchField(_searchText, false);
+            _searchText = DropdownGUI.DrawSearchField(_searchText, false);
             var buffer = SearchResult(_currentNode, _searchText);
 
             var hasParent = _currentNode.Parent != null;
-            DropDownGUI.DrawHeader(hasParent ? _currentNode.Value.Content : new GUIContent("Available Types"),
+            DropdownGUI.DrawHeader(hasParent ? _currentNode.Value.Content : _header,
                 hasParent, OnBackClicked);
             var close = AnalyseUserInput(buffer);
             if (!close)
@@ -102,17 +88,33 @@ namespace BetterAttributes.EditorAddons.Helpers
             Close();
         }
 
-        private void OnBackClicked()
-        {
-            _currentNode = _previousItems.Pop();
-        }
-
         private void Update()
         {
             Repaint();
         }
 
-        private bool DrawItems(List<TreeNode<DropDownBase>> buffer, GUIStyle buttonStyle)
+        private void OnBackClicked()
+        {
+            _currentNode = _previousItems.Pop();
+        }
+
+        public void SetItems(DropdownCollection collection)
+        {
+            ResetPopup();
+            SetCurrentDrawItems(collection);
+        }
+
+        internal void SetCurrentDrawItems(TreeNode<DropdownBase> node)
+        {
+            if (_currentNode != null)
+            {
+                _previousItems.Push(_currentNode);
+            }
+
+            _currentNode = node;
+        }
+
+        private bool DrawItems(List<TreeNode<DropdownBase>> buffer, GUIStyle buttonStyle)
         {
             _scrollPosition =
                 EditorGUILayout.BeginScrollView(_scrollPosition, GUIStyle.none, GUI.skin.verticalScrollbar);
@@ -125,18 +127,18 @@ namespace BetterAttributes.EditorAddons.Helpers
             {
                 var bufferContent = item.Value.Content;
                 size = Vector2.Max(buttonStyle.CalcSize(bufferContent), size);
-                if (DropDownGUI.DrawItem(item, item.Children.Count > 0, true))
+                if (DropdownGUI.DrawItem(item, item.Children.Count > 0, true))
                     shouldClose = item.Value.Invoke(this);
             }
 
-            ResolveSize(size, _currentNode.Children.Count);
+            ResolveSize(size);
 
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndScrollView();
             return shouldClose;
         }
 
-        private List<TreeNode<DropDownBase>> SearchResult(TreeNode<DropDownBase> rootNode, string searchText)
+        private List<TreeNode<DropdownBase>> SearchResult(TreeNode<DropdownBase> rootNode, string searchText)
         {
             var buffer = string.IsNullOrEmpty(searchText) || string.IsNullOrWhiteSpace(searchText)
                 ? rootNode.Children.ToList()
@@ -145,7 +147,7 @@ namespace BetterAttributes.EditorAddons.Helpers
             return buffer;
         }
 
-        private bool RecursiveSearch(TreeNode<DropDownBase> node, string searchText)
+        private bool RecursiveSearch(TreeNode<DropdownBase> node, string searchText)
         {
             var isFound = node.Value.Contains(searchText);
             if (node.Children.Count > 0)
@@ -156,7 +158,7 @@ namespace BetterAttributes.EditorAddons.Helpers
             return isFound;
         }
 
-        private bool AnalyseUserInput(List<TreeNode<DropDownBase>> buffer)
+        private bool AnalyseUserInput(List<TreeNode<DropdownBase>> buffer)
         {
             if (Event.current.type != EventType.KeyDown)
             {
@@ -167,44 +169,76 @@ namespace BetterAttributes.EditorAddons.Helpers
             switch (currentKeyCode)
             {
                 case KeyCode.Return:
-                    var first = buffer.FirstOrDefault();
-                    if (first != null)
-                    {
-                        return first.Value.Invoke(this);
-                    }
-                    break;
+                    return CaseReturn(buffer);
                 case KeyCode.Escape:
-                    if(string.IsNullOrEmpty(_searchText))
-                    {
-                        if (_previousItems.Count > 0)
-                        {
-                            OnBackClicked();
-                            return _previousItems.Count <= 0;
-                        }
-
-                        return true;
-                    }
-                    else
-                    {
-                        _searchText = string.Empty;
-                        DropDownGUI.ClearSearchField();
-                    }
-                    break;
+                    return CaseEscape();
             }
 
             return false;
         }
 
-        private void ResolveSize(Vector2 size, int currentItems)
+        private bool CaseReturn(List<TreeNode<DropdownBase>> buffer)
+        {
+            var first = buffer.FirstOrDefault();
+            return first != null && first.Value.Invoke(this);
+        }
+
+        private bool CaseEscape()
+        {
+            if (!string.IsNullOrEmpty(_searchText))
+            {
+                if (_previousItems.Count <= 0) return true;
+                OnBackClicked();
+                return _previousItems.Count <= 0;
+            }
+
+            _searchText = string.Empty;
+            DropdownGUI.ClearSearchField();
+
+            return false;
+        }
+
+        private void ResolveSize(Vector2 size)
         {
             var width = Mathf.Max(position.width, size.x + 50f);
-            var height = Mathf.Max(position.height, EditorGUIUtility.singleLineHeight *
-                (Mathf.Max(_maxLines, currentItems) + 1) + DrawersHelper.SpaceHeight);
+            var height = EditorGUIUtility.singleLineHeight * _maxLines + DrawersHelper.SpaceHeight;
             var copy = position;
             copy.position = _display;
             copy.width = width;
             copy.height = height;
-            position = copy;
+            position = Reposition(copy);
+        }
+
+        private Rect Reposition(Rect copy)
+        {
+            var mainWindowSize = EditorGUIUtility.GetMainWindowPosition();
+            if (copy.x < mainWindowSize.x)
+            {
+                var newX = mainWindowSize.min.x;
+                copy.position = new Vector2(newX, copy.position.y);
+            }
+
+            if (copy.y < mainWindowSize.y)
+            {
+                var newY = mainWindowSize.min.y;
+                copy.position = new Vector2(position.x, newY);
+            }
+
+            var height = mainWindowSize.y + mainWindowSize.height;
+            if (copy.y + copy.height > height)
+            {
+                var newY = height - copy.height;
+                copy.position = new Vector2(position.x, newY);
+            }
+
+            var width = mainWindowSize.x + mainWindowSize.width;
+            if (copy.x + copy.width > width)
+            {
+                var newX = width - copy.width;
+                copy.position = new Vector2(newX, copy.position.y);
+            }
+
+            return copy;
         }
     }
 }

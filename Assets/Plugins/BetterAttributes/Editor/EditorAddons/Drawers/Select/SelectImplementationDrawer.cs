@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BetterAttributes.Runtime.Attributes.Select;
 using UnityEditor;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select
@@ -50,8 +51,27 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return baseType.IsAssignableFrom(p);
         }
 
-        private protected override void Setup(SerializedProperty property,
-            SelectImplementationAttribute currentAttribute)
+        private protected override bool CheckSupported(SerializedProperty property)
+        {
+            return property.propertyType == SerializedPropertyType.ManagedReference;
+        }
+
+        private protected override GUIContent GenerateHeader()
+        {
+            return new GUIContent("Available Types");
+        }
+
+        private protected override object GetCurrentValue(SerializedProperty property)
+        {
+            return property.managedReferenceValue;
+        }
+
+        private protected override string GetButtonName(object currentValue)
+        {
+            return currentValue == null ? "null" : currentValue.GetType().Name;
+        }
+
+        private protected override void Setup(SerializedProperty property, SelectImplementationAttribute currentAttribute)
         {
             var currentObjectType = property.serializedObject.targetObject.GetType();
             LazyGetAllInheritedType(currentAttribute.GetFieldType() ?? fieldInfo.FieldType, currentObjectType);
@@ -93,7 +113,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 }
             }
 
-            return new string[] { "Not Supported" };
+            return new string[] { NotSupported };
         }
 
         private protected override List<object> GetSelectCollection()
@@ -121,7 +141,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 }
             }
 
-            return "Not supported";
+            return NotSupported;
         }
 
         private protected override bool ResolveState(object currentValue, object iteratedValue)

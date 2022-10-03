@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Helpers
 {
-    public class DropDownCollection : TreeNode<DropDownBase>
+    public class DropdownCollection : TreeNode<DropdownBase>
     {
         public void AddItem(string[] keys, bool state, Action<object> onSelect, object value)
         {
@@ -17,7 +17,7 @@ namespace BetterAttributes.EditorAddons.Helpers
             {
                 if (item == null)
                 {
-                    item = AddChild(new DropDownSubTree(new GUIContent(firstKey)));
+                    item = AddChild(new DropdownSubTree(new GUIContent(firstKey)));
                     Iterate(item, state, onSelect, value, queue);
                 }
                 else
@@ -31,7 +31,7 @@ namespace BetterAttributes.EditorAddons.Helpers
             }
         }
 
-        private void Iterate(TreeNode<DropDownBase> item, bool state, Action<object> onSelect, object value,
+        private void Iterate(TreeNode<DropdownBase> item, bool state, Action<object> onSelect, object value,
             Queue<string> queue)
         {
             var bufferItem = item;
@@ -57,19 +57,19 @@ namespace BetterAttributes.EditorAddons.Helpers
             }
         }
 
-        private static TreeNode<DropDownBase> AddLeaf(TreeNode<DropDownBase> item, string bufferKey, bool state,
+        private static TreeNode<DropdownBase> AddLeaf(TreeNode<DropdownBase> item, string bufferKey, bool state,
             Action<object> onSelect, object type)
         {
-            return item.AddChild(new DropDownItem(new GUIContent(bufferKey), state, onSelect, type));
+            return item.AddChild(new DropdownItem(new GUIContent(bufferKey), state, onSelect, type));
         }
 
-        private static TreeNode<DropDownBase> AddBranch(TreeNode<DropDownBase> item, string bufferKey)
+        private static TreeNode<DropdownBase> AddBranch(TreeNode<DropdownBase> item, string bufferKey)
         {
-            var treeNode = item.AddChild(new DropDownSubTree(new GUIContent(bufferKey)));
+            var treeNode = item.AddChild(new DropdownSubTree(new GUIContent(bufferKey)));
             return treeNode;
         }
 
-        public DropDownCollection(DropDownBase value) : base(value)
+        public DropdownCollection(DropdownBase value) : base(value)
         {
         }
     }

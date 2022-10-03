@@ -14,39 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
   vector3: {x: 0, y: 0, z: 0}
-  quaternion: {x: 0, y: 0, z: 0, w: 0}
+  quaternion: {x: 0, y: 0, z: 0, w: 1}
   someClass:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 220137916210872320
+    rid: -2
   someAbstractClass:
-    rid: 220137916210872321
-  someAbstractClasses:
-  - rid: 220137916210872322
-  someInterfaces:
-  - rid: 220137916210872323
+    rid: -2
+  someAbstractClasses: []
+  someInterfaces: []
   references:
     version: 2
     RefIds:
-    - rid: 220137916210872320
-      type: {class: SomeInterfaceImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
-      data:
-        intField: 0
-    - rid: 220137916210872321
-      type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
-      data:
-        baseIntField: 0
-        boolField: 0
-    - rid: 220137916210872322
-      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
-      data:
-        baseIntField: 0
-        floatField: 0
-        vector3: {x: 0, y: 0, z: 0}
-    - rid: 220137916210872323
-      type: {class: SomeInterfaceImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
-      data:
-        boolField: 0
+    - rid: -2
+      type: {class: , ns: , asm: }

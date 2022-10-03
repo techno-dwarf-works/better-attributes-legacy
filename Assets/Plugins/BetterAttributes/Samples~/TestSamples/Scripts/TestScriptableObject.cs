@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BetterAttributes.Runtime;
+using BetterAttributes.Runtime.Attributes.Gizmo;
 using BetterAttributes.Runtime.Attributes.ReadOnly;
 using BetterAttributes.Runtime.Attributes.Select;
 using BetterAttributes.Samples.Interfaces;
@@ -11,13 +12,13 @@ namespace BetterAttributes.Samples
     [CreateAssetMenu(menuName = "Create TestScriptableObject", fileName = "TestScriptableObject", order = 0)]
     public class TestScriptableObject : ScriptableObject
     {
-        //[Gizmo]
+        [Gizmo]
         [SerializeField] private Bounds bounds;
         
-        //[Gizmo]
+        [Gizmo]
         [SerializeField] private Vector3 vector3;
         
-        //[Gizmo]
+        [Gizmo]
         [SerializeField] private Quaternion quaternion;
 
         [ReadOnlyField] [SerializeField] private SomeClass someClass;

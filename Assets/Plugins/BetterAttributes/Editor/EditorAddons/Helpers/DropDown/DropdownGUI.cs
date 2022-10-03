@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Helpers
 {
-    internal static class DropDownGUI
+    internal static class DropdownGUI
     {
         private static Vector2 iconSize = new Vector2(13f, 13f);
 
-        public static bool DrawItem(TreeNode<DropDownBase> item, bool hasChildren, bool enabled)
+        public static bool DrawItem(TreeNode<DropdownBase> item, bool hasChildren, bool enabled)
         {
             var content = item.Value.Content;
             var image1 = content.image;

@@ -5,20 +5,20 @@ using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Helpers
 {
-    public class DropDownSubTree : DropDownBase, INodeValue<DropDownBase>
+    public class DropdownSubTree : DropdownBase, INodeValue<DropdownBase>
     {
-        private TreeNode<DropDownBase> _node;
+        private TreeNode<DropdownBase> _node;
 
-        public DropDownSubTree(GUIContent content) : base(content)
+        public DropdownSubTree(GUIContent content) : base(content)
         {
         }
 
-        public void SetNode(TreeNode<DropDownBase> node)
+        public void SetNode(TreeNode<DropdownBase> node)
         {
             _node = node;
         }
 
-        internal override bool Invoke(DropDownPopup downPopup)
+        internal override bool Invoke(DropdownWindow downPopup)
         {
             downPopup.SetCurrentDrawItems(_node);
             return false;

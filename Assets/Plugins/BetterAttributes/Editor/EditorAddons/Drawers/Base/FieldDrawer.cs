@@ -34,7 +34,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
             PostDraw(position, property, label);
         }
 
-        private protected void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        private protected virtual void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
             var preparePropertyRect = PreparePropertyRect(position);
             EditorGUI.PropertyField(preparePropertyRect, property, label, true);
