@@ -88,7 +88,7 @@ Usage:
 private string oldName;
 ```
 
-### Gizmo / GizmoLocal
+### Gizmo / Gizmo Local
 
 Provides possibility to set value for Vector3/Vector2/Quaternion/Bounds from scene view by dragging handles.<br>
 `[GizmoLocal]` works only into `MonoBehaviour` Unity Inspector.
