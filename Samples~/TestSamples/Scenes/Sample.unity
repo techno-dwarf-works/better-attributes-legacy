@@ -152,25 +152,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3ec95f197def4081b17762f1fd41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.005, y: 0.005, z: 0.005}
-  vector3Local: {x: 0, y: 0, z: 0}
+  keyCode: 8
+  myFlagEnumTest: 6
+  texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
+  vector3Local: {x: 0, y: 0, z: 4.6317034}
   quaternion: {x: 0, y: 0, z: 0, w: 1}
+  some:
+    intField: 0
   someClass:
     intField: 0
   someFloat: 0
   someInterface:
     rid: -2
   someAbstractClass:
-    rid: -2
-  someAbstractClasses: []
-  someInterfaces: []
+    rid: 220138102916644875
+  someAbstractClasses:
+  - rid: -2
+  someInterfaces:
+  - rid: 220138311990378500
+  - rid: -2
+  bounds:
+    m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
+    m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 220138102916644875
+      type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
+      data:
+        baseIntField: 0
+        boolField: 0
+    - rid: 220138311990378500
+      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp-firstpass}
+      data:
+        intField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0
@@ -179,7 +197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123298860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.038, y: 0, z: 0.623}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -363,4 +381,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1418057088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1418057091}
+  - component: {fileID: 1418057090}
+  - component: {fileID: 1418057089}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1418057089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418057088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1418057090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418057088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1418057091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418057088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

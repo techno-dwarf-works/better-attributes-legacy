@@ -1,8 +1,8 @@
 ﻿using System;
-using BetterAttributes.Samples.Scripts.Interfaces;
+using BetterAttributes.Samples.Interfaces;
 using UnityEngine;
 
-namespace BetterAttributes.Samples.Scripts.Models
+namespace BetterAttributes.Models
 {
     [Serializable]
     public class SomeInterfaceImplementation2 : ISomeInterface

@@ -1,40 +1,59 @@
+using System;
 using System.Collections.Generic;
-using BetterAttributes.Runtime.EditorAddons;
-using BetterAttributes.Runtime.EditorAddons.GizmoAttributes;
-using BetterAttributes.Runtime.EditorAddons.ReadOnlyAttributes;
-using BetterAttributes.Runtime.EditorAddons.SelectAttributes;
-using BetterAttributes.Samples.Scripts.Interfaces;
-using BetterAttributes.Samples.Scripts.Models;
+using BetterAttributes.Runtime;
+using BetterAttributes.Runtime.Attributes.Gizmo;
+using BetterAttributes.Runtime.Attributes.Preview;
+using BetterAttributes.Runtime.Attributes.ReadOnly;
+using BetterAttributes.Runtime.Attributes.Rename;
+using BetterAttributes.Runtime.Attributes.Select;
+using BetterAttributes.Samples.Interfaces;
+using BetterAttributes.Samples.Models;
 using UnityEngine;
 
-namespace BetterAttributes.Samples.Scripts
+namespace BetterAttributes.Samples
 {
+    [Flags]
+    public enum MyFlagEnum
+    {
+        First = 1,
+        Second = 2,
+        Third = 4
+    }
+
     public class Test : MonoBehaviour
     {
-        [GizmoLocal]
-        [SerializeField] private Bounds bounds;
+        [SelectEnum] [SerializeField] private KeyCode keyCode;
         
-        [GizmoLocal]
-        [SerializeField] private Vector3 vector3Local;
-        
-        [GizmoLocal]
-        [SerializeField] private Quaternion quaternion;
-        
+        [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
+
+        [Preview] [SerializeField] private Texture2D texture;
+
+        [Preview] [SerializeField] private PreviewTest component;
+
+        [GizmoLocal] [SerializeField] private Vector3 vector3Local;
+
+        [GizmoLocal] [RenameField("Quaternion Local Rename")] [SerializeField]
+        private Quaternion quaternion;
+
+        [GizmoLocal] [SerializeField] private SomeClass some;
+
         [ReadOnlyField] [SerializeField] private SomeClass someClass;
 
         [ReadOnlyField] [SerializeField] private float someFloat;
-        
-        [SelectImplementation] [SerializeReference]
+
+        [SelectImplementation(DisplayGrouping.GroupedFlat)] [SerializeReference]
         private ISomeInterface someInterface;
 
         [SelectImplementation] [SerializeReference]
         private SomeAbstractClass someAbstractClass;
 
-        [SelectImplementation] [SerializeReference]
+        [SelectImplementation(typeof(SomeAbstractClass), DisplayName.Full)] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
-        [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
+        [SelectImplementation(typeof(ISomeInterface), DisplayGrouping.Grouped)] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
+
+        [GizmoLocal] [SerializeField] private Bounds bounds;
 
         ///Default usage of attribute.
         [EditorButton]
