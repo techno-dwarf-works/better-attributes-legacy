@@ -13,46 +13,21 @@ MonoBehaviour:
   m_Name: TestScriptableObject
   m_EditorClassIdentifier: 
   bounds:
-    m_Center: {x: 0.6819261, y: 0, z: 0}
-    m_Extent: {x: 0.33601853, y: 0.33333242, z: 0.42030293}
-  vector3: {x: 0, y: 0, z: 0.8797705}
-  quaternion: {x: -0.07201992, y: 0, z: 0, w: 0.9974032}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
+  vector3: {x: 0, y: 0, z: 0}
+  quaternion: {x: 0, y: 0, z: 0, w: 1}
   someClass:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 6242269647978889216
+    rid: -2
   someAbstractClass:
     rid: -2
-  someAbstractClasses:
-  - rid: 6242269841399742465
-  - rid: 6242269841399742468
-  - rid: 6242269841399742472
+  someAbstractClasses: []
   someInterfaces: []
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6242269647978889216
-      type: {class: SomeInterfaceImplementation1, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp}
-      data:
-        intField: 0
-    - rid: 6242269841399742465
-      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Scripts.Models, asm: BetterAttributes}
-      data:
-        baseIntField: 0
-        floatField: 0
-        vector3: {x: -0.19336945, y: 0, z: 0}
-    - rid: 6242269841399742468
-      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Scripts.Models, asm: BetterAttributes}
-      data:
-        baseIntField: 0
-        floatField: 0
-        vector3: {x: 0.14698684, y: 0, z: 0}
-    - rid: 6242269841399742472
-      type: {class: SomeAbstractClassImplementation1, ns: BetterAttributes.Samples.Scripts.Models, asm: BetterAttributes}
-      data:
-        baseIntField: 0
-        floatField: 0
-        vector3: {x: 0, y: 0, z: -0.2655604}

@@ -1,8 +1,8 @@
 using System;
-using BetterAttributes.Runtime.EditorAddons.GizmoAttributes;
+using BetterAttributes.Runtime.Attributes.Gizmo;
 using UnityEngine;
 
-namespace BetterAttributes.Samples.Scripts.Models
+namespace BetterAttributes.Samples.Models
 {
     [Serializable]
     public class SomeAbstractClassImplementation1 : SomeAbstractClass

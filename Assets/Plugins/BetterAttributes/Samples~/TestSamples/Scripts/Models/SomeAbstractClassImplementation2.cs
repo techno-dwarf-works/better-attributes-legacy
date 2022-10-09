@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace BetterAttributes.Samples.Scripts.Models
+namespace BetterAttributes.Samples.Models
 {
     [Serializable]
     public class SomeAbstractClassImplementation2 : SomeAbstractClass
