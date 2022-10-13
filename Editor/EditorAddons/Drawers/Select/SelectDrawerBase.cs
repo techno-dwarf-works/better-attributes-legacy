@@ -51,6 +51,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 {
                     UpdateValue(property);
                     _needUpdate = false;
+                    AfterValueUpdated(property);
                 }
             }
             catch (Exception e)
@@ -129,6 +130,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected abstract bool ResolveState(object currentValue, object iteratedValue);
         private protected abstract void OnSelectItem(object obj);
         private protected abstract void UpdateValue(SerializedProperty property);
+        private protected abstract void AfterValueUpdated(SerializedProperty property);
 
         private protected void SetNeedUpdate()
         {
