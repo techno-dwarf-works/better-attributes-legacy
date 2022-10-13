@@ -106,7 +106,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 property.enumValueFlag = currentEnum.ToFlagInt();
             }
         }
-
         private protected override object GetCurrentValue(SerializedProperty property)
         {
             if (!_isFlag) return _enumValues[property.enumValueIndex].ToString();
@@ -160,6 +159,11 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             }
 
             return false;
+        }
+
+        private protected override void AfterValueUpdated(SerializedProperty property)
+        {
+            _enumValue = (Enum)Enum.ToObject(_enumType, 0);
         }
 
         private protected override void OnSelectItem(object obj)
