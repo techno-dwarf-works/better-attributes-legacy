@@ -124,6 +124,11 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return iteratedValue is Type type && currentValue?.GetType() == type;
         }
 
+        private protected override void AfterValueUpdated(SerializedProperty property)
+        {
+            _type = null;
+        }
+
         private protected override void OnSelectItem(object obj)
         {
             if (obj == null)
