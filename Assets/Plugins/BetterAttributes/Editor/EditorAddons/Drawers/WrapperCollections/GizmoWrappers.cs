@@ -11,7 +11,7 @@ namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
         {
             foreach (var gizmo in Values)
             {
-                gizmo.Item1.Apply(sceneView);
+                gizmo.Wrapper.Apply(sceneView);
             }
         }
 
@@ -19,7 +19,7 @@ namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
         {
             if (TryGetValue(property, out var gizmoWrapper))
             {
-                gizmoWrapper.Item1.SetProperty(property, fieldType);
+                gizmoWrapper.Wrapper.SetProperty(property, fieldType);
             }
         }
 
@@ -27,7 +27,7 @@ namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
         {
             if (TryGetValue(property, out var gizmoWrapper))
             {
-                return gizmoWrapper.Item1.ShowInSceneView;
+                return gizmoWrapper.Wrapper.ShowInSceneView;
             }
 
             return false;
@@ -37,7 +37,7 @@ namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
         {
             if (TryGetValue(property, out var gizmoWrapper))
             {
-                gizmoWrapper.Item1.SwitchShowMode();
+                gizmoWrapper.Wrapper.SwitchShowMode();
             }
         }
     }

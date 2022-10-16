@@ -23,10 +23,5 @@ namespace BetterAttributes.EditorAddons.Helpers
             downPopup.SetCurrentDrawItems(_node);
             return false;
         }
-
-        public override bool Contains(string searchText, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-        {
-            return Content.text.Contains(searchText, comparison);
-        }
     }
 }

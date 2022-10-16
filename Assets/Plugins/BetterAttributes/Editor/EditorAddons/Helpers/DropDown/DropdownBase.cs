@@ -18,7 +18,15 @@ namespace BetterAttributes.EditorAddons.Helpers
             return Content.text.Equals(value);
         }
 
-        public abstract bool Contains(string searchText,
-            StringComparison comparison = StringComparison.OrdinalIgnoreCase);
+
+        public bool Contains(string searchText,
+            StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+#if UNITY_2021_1_OR_NEWER
+            return Content.text.Contains(searchText, comparison);
+#else
+            return Content.text.IndexOf(searchText, 0, StringComparison.OrdinalIgnoreCase) != -1;
+#endif
+        }
     }
 }

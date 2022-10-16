@@ -1,4 +1,5 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Utilities;
+﻿using System;
+using BetterAttributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,9 +17,14 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
             base.OnGUI(position, property, label);
         }
 
+        private protected virtual Type GetFieldType()
+        {
+            return fieldInfo.FieldType;
+        }
+        
         private protected bool ValidateCachedProperties<THandler>(SerializedProperty property, BaseUtility<THandler> handler) where THandler : new()
         {
-            var fieldType = fieldInfo.FieldType;
+            var fieldType = GetFieldType();
             var contains = _wrappers.ContainsKey(property);
             if (contains)
             {
@@ -27,7 +33,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
             else
             {
                 var gizmoWrapper = handler.GetUtilityWrapper<T>(fieldType, attribute.GetType());
-                _wrappers.Add(property, (gizmoWrapper, fieldType));
+                _wrappers.Add(property, new WrapperCollectionValue<T>(gizmoWrapper, fieldType));
             }
 
             return contains;

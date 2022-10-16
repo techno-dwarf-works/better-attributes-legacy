@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using BetterAttributes.EditorAddons.Drawers.Base;
+using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
+using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
 using BetterAttributes.Runtime.Attributes.Select;
 using UnityEditor;
 using UnityEngine;
@@ -9,14 +12,34 @@ using UnityEngine;
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
     [CustomPropertyDrawer(typeof(SelectEnumAttribute))]
-    public class SelectEnumDrawer : SelectDrawerBase<SelectEnumAttribute>
+    public class SelectEnumDrawer : SelectDrawerBase<SelectEnumAttribute, SelectEnumWrapper>
     {
         private List<object> _enumValues;
         private bool _isFlag;
-        private Enum _enumValue;
+        private SelectedItem<Enum> _enumValue;
         private Type _enumType;
-        private const string NoneValue = "None";
-        private const string EverythingValue = "Everything";
+
+        private protected SelectEnumWrapperCollection Collection => _wrappers as SelectEnumWrapperCollection;
+
+        private struct PredefinedValues
+        {
+            public PredefinedValues(string name, int value)
+            {
+                Name = name;
+                Value = value;
+            }
+
+            public string Name { get; }
+            public int Value { get; }
+        }
+
+        private PredefinedValues None = new PredefinedValues("None", 0);
+        private PredefinedValues EverythingValue = new PredefinedValues("Everything", -1);
+
+        private protected override WrapperCollection<SelectEnumWrapper> GenerateCollection()
+        {
+            return new SelectEnumWrapperCollection();
+        }
 
         private protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -34,93 +57,77 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return new GUIContent("Options");
         }
 
-        private protected override string GetButtonName(object currentValue)
-        {
-            if (_isFlag)
-            {
-                if (currentValue.ToString().Equals(NoneValue))
-                {
-                    return NoneValue;
-                }
-
-                if (currentValue.ToString().Equals(EverythingValue))
-                {
-                    return EverythingValue;
-                }
-            }
-
-            if (Enum.TryParse(_enumType, (string)currentValue, out var eEnum))
-            {
-                return eEnum.ToString();
-            }
-
-            return NotSupported;
-        }
-
         private protected override void Setup(SerializedProperty property, SelectEnumAttribute currentAttribute)
         {
-            _isFlag = fieldInfo.FieldType.GetCustomAttribute<FlagsAttribute>() != null;
-            var buffer = property.enumNames.ToList();
+            _enumType = fieldInfo.FieldType;
+            _isFlag = _enumType.GetCustomAttribute<FlagsAttribute>() != null;
+            Collection[property].Wrapper.SetIsFlag(_isFlag);
+            var ints = _enumType.GetAllValues();
             if (_isFlag)
             {
-                if (!buffer.Contains(NoneValue))
+                None = new PredefinedValues("None", EnumExtensions.FlagNone);
+                if (!ints.Contains(None.Value))
                 {
-                    buffer.Insert(0, NoneValue);
+                    ints.Insert(0, None.Value);
                 }
 
-                if (!buffer.Contains(EverythingValue))
+                var everything = _enumType.EverythingFlag().ToFlagInt();
+                EverythingValue = new PredefinedValues("Everything", everything);
+                if (!ints.Contains(EverythingValue.Value))
                 {
-                    buffer.Insert(buffer.Count, EverythingValue);
+                    ints.Insert(ints.Count, EverythingValue.Value);
                 }
             }
 
-            _enumValues = buffer.Cast<object>().ToList();
-            _enumType = fieldInfo.FieldType;
+            _enumValues = ints.Cast<object>().ToList();
+        }
+
+        private protected override string GetButtonName(object currentValue)
+        {
+            var intValue = (int)currentValue;
+            if (_isFlag)
+            {
+                if (intValue.Equals(None.Value))
+                {
+                    return None.Name;
+                }
+
+                if (intValue.Equals(EverythingValue.Value))
+                {
+                    return EverythingValue.Name;
+                }
+            }
+
+            var value = Enum.ToObject(_enumType, intValue);
+            return value.ToString();
         }
 
         private protected override void UpdateValue(SerializedProperty property)
         {
-            if (!_isFlag)
-            {
-                property.enumValueIndex = _enumValues.IndexOf(_enumValue.ToString());
-            }
-            else
-            {
-                var currentEnum = (Enum)Enum.ToObject(_enumType, property.enumValueFlag);
-                if (_enumValue.IsFlagNone())
-                {
-                    currentEnum = _enumValue;
-                }
-                else
-                {
-                    if (currentEnum.HasFlag(_enumValue))
-                    {
-                        currentEnum = currentEnum.Remove(_enumValue);
-                    }
-                    else
-                    {
-                        currentEnum = currentEnum.Add(_enumValue);
-                    }
-                }
-
-                property.enumValueFlag = currentEnum.ToFlagInt();
-            }
+            Collection.Update(_enumValue.Property, _enumValue.Data);
         }
+
         private protected override object GetCurrentValue(SerializedProperty property)
         {
-            if (!_isFlag) return _enumValues[property.enumValueIndex].ToString();
-            
-            if (property.enumValueFlag == EnumExtensions.FlagNone)
+            if (!_isFlag) return _enumValues[property.enumValueIndex];
+            int currentEnum;
+#if UNITY_2021_1_OR_NEWER
+            currentEnum = property.enumValueFlag;
+#else
+            currentEnum = property.intValue;
+#endif
+
+            if (currentEnum == EnumExtensions.FlagNone)
             {
-                return NoneValue;
+                return None.Value;
             }
 
-            if (property.enumValueFlag == _enumType.AllFlags().ToFlagInt())
+            if (currentEnum == EverythingValue.Value)
             {
-                return EverythingValue;
+                return EverythingValue.Value;
             }
-            return Enum.ToObject(_enumType, property.enumValueFlag).ToString();
 
+            return ((Enum)Enum.ToObject(_enumType, currentEnum)).ToFlagInt();
         }
 
         private protected override List<object> GetSelectCollection()
@@ -135,8 +142,20 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
         private protected override string ResolveName(object value, DisplayName displayName)
         {
-            if (value is string eEnum)
+            if (value is int intValue)
             {
+                var eEnum = Enum.ToObject(_enumType, intValue);
+
+                if (intValue == EverythingValue.Value)
+                {
+                    return EverythingValue.Name;
+                }
+
+                if (intValue == None.Value)
+                {
+                    return None.Name;
+                }
+
                 switch (displayName)
                 {
                     case DisplayName.Short:
@@ -153,9 +172,17 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
         private protected override bool ResolveState(object currentValue, object iteratedValue)
         {
-            if (currentValue is string stringCurrent && iteratedValue is string stringIterated)
+            if (currentValue is int intCurrent && iteratedValue is int intIterated)
             {
-                return stringCurrent.Contains(stringIterated);
+                if (_isFlag)
+                {
+                    if (intIterated == None.Value || intIterated == EverythingValue.Value)
+                    {
+                        return intCurrent == intIterated;
+                    }
+                }
+
+                return (intCurrent & intIterated) != 0;
             }
 
             return false;
@@ -163,32 +190,26 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
         private protected override void AfterValueUpdated(SerializedProperty property)
         {
-            _enumValue = (Enum)Enum.ToObject(_enumType, 0);
+            _enumValue = null;
         }
 
         private protected override void OnSelectItem(object obj)
         {
-            if (!(obj is string name)) return;
-            if (_isFlag)
+            if (obj is SelectedItem<object> value && value.Data is int intValue)
             {
-                var intValue = 0;
-                switch (name)
+                if (_isFlag)
                 {
-                    case NoneValue:
+                    if (intValue == None.Value)
+                    {
                         intValue = EnumExtensions.FlagNone;
-                        break;
-                    case EverythingValue:
-                        intValue = _enumType.AllFlags().ToFlagInt();
-                        break;
+                    }
+                    else if (intValue == EverythingValue.Value)
+                    {
+                        intValue = EverythingValue.Value;
+                    }
                 }
 
-                _enumValue = (Enum)Enum.ToObject(_enumType, intValue);
-                SetNeedUpdate();
-            }
-
-            if (Enum.TryParse(_enumType, name, out var objectEnum) && objectEnum is Enum eEnum)
-            {
-                _enumValue = eEnum;
+                _enumValue = new SelectedItem<Enum>(value.Property, (Enum)Enum.ToObject(_enumType, intValue));
                 SetNeedUpdate();
             }
         }

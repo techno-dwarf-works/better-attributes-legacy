@@ -12,12 +12,12 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
     [CustomPropertyDrawer(typeof(GizmoLocalAttribute))]
     public class GizmoDrawer : MultiFieldDrawer<GizmoWrapper>
     {
-        private WrapperCollections.GizmoWrappers Collection
+        private GizmoWrappers Collection
         {
             get
             {
                 _wrappers ??= GenerateCollection();
-                return _wrappers as WrapperCollections.GizmoWrappers;
+                return _wrappers as GizmoWrappers;
             }
         }
 
@@ -59,7 +59,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
 
         private protected override WrapperCollection<GizmoWrapper> GenerateCollection()
         {
-            return new WrapperCollections.GizmoWrappers();
+            return new GizmoWrappers();
         }
 
         private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
