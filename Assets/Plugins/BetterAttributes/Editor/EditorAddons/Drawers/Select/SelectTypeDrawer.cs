@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BetterAttributes.EditorAddons.Drawers.Base;
+using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
+using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
 using BetterAttributes.Runtime.Attributes.Select;
 using UnityEditor;
 using UnityEngine;
@@ -8,10 +11,17 @@ using Object = UnityEngine.Object;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
-    public abstract class SelectTypeDrawer : SelectDrawerBase<SelectImplementationAttribute>
+    public abstract class SelectTypeDrawer : SelectDrawerBase<SelectImplementationAttribute, SelectTypeWrapper>
     {
-        private protected Type _type;
+        private protected SelectedItem<Type> _type;
         private List<object> _reflectionTypes;
+
+        private protected SelectTypeWrapperCollection Collection => _wrappers as SelectTypeWrapperCollection;
+
+        private protected override WrapperCollection<SelectTypeWrapper> GenerateCollection()
+        {
+            return new SelectTypeWrapperCollection();
+        }
 
         private void LazyGetAllInheritedType(Type baseType, Type currentObjectType)
         {
@@ -47,13 +57,18 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
         private protected override string GetButtonName(object currentValue)
         {
-            return currentValue == null ? "null" : currentValue.GetType().Name;
+            if (currentValue is Type type)
+            {
+                return type.Name;
+            }
+
+            return "null";
         }
 
         private protected override void Setup(SerializedProperty property, SelectImplementationAttribute currentAttribute)
         {
             var currentObjectType = property.serializedObject.targetObject.GetType();
-            LazyGetAllInheritedType(currentAttribute.GetFieldType() ?? fieldInfo.FieldType, currentObjectType);
+            LazyGetAllInheritedType(GetFieldType(), currentObjectType);
         }
 
         private protected override string[] ResolveGroupedName(object value, DisplayGrouping grouping)
@@ -121,7 +136,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected override bool ResolveState(object currentValue, object iteratedValue)
         {
             if (iteratedValue == null && currentValue == null) return true;
-            return iteratedValue is Type type && currentValue?.GetType() == type;
+            return iteratedValue is Type type && currentValue is Type currentType && currentType == type;
         }
 
         private protected override void AfterValueUpdated(SerializedProperty property)
@@ -138,16 +153,16 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 return;
             }
 
-            var type = (Type)obj;
-            if (_type != null)
+            var type = (SelectedItem<object>)obj;
+            if (_type != default)
             {
-                if (_type == type)
+                if (_type.Equals(type))
                 {
                     return;
                 }
             }
 
-            _type = type;
+            _type = new SelectedItem<Type>(type.Property, type.Data as Type);
             SetNeedUpdate();
         }
     }

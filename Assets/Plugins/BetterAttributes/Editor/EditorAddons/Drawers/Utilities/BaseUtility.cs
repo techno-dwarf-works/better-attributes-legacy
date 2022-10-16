@@ -7,7 +7,9 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
     public abstract class UtilityWrapper
     {
         public abstract void Deconstruct();
-    }
+    } 
+    
+    
     
     public abstract class BaseUtility<THandler> where THandler : new()
     {
@@ -52,11 +54,11 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
         
         public void ValidateCachedProperties<T>(WrapperCollection<T> gizmoWrappers) where T : UtilityWrapper
         {
-            foreach (var (key, value) in gizmoWrappers)
+            foreach (var value in gizmoWrappers)
             {
-                if (!IsSupported(value.Item2))
+                if (!IsSupported(value.Value.Type))
                 {
-                    gizmoWrappers.Remove(key);
+                    gizmoWrappers.Remove(value.Key);
                 }
             }
         }
@@ -74,8 +76,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
 
             var gizmoWrappers = GetWrapperDictionary(attributeType);
             var wrapperType = gizmoWrappers[type];
-
-            if (wrapperType.IsAssignableFrom(typeof(T))) return null;
 
             return (T)Activator.CreateInstance(wrapperType);
         }
