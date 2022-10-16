@@ -9,28 +9,12 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
 {
     public class PreviewUtility : BaseUtility<PreviewUtility>
     {
-        private class AssignableFromComparer : IEqualityComparer<Type>
-        {
-            public bool Equals(Type x, Type y)
-            {
-                if (ReferenceEquals(x, y)) return true;
-                if (ReferenceEquals(x, null)) return false;
-                if (ReferenceEquals(y, null)) return false;
-                return x.IsAssignableFrom(y) || x == y;
-            }
-
-            public int GetHashCode(Type obj)
-            {
-                return 0;
-            }
-        }
-        
         private protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection()
             {
                 {
-                    typeof(PreviewAttribute), new Dictionary<Type, Type>(new AssignableFromComparer())
+                    typeof(PreviewAttribute), new Dictionary<Type, Type>(AssignableFromComparer.Instance)
                     {
                         { typeof(Sprite), typeof(SpriteWrapper) },
                         { typeof(Texture2D), typeof(TextureWrapper) },
@@ -42,7 +26,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
 
         private protected override HashSet<Type> GenerateAvailable()
         {
-            return new HashSet<Type>(new AssignableFromComparer())
+            return new HashSet<Type>(AssignableFromComparer.Instance)
             {
                 typeof(Sprite),
                 typeof(Texture),

@@ -11,8 +11,8 @@ namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
         {
             foreach (var value in Values)
             {
-                value.Item1.IsObjectUpdated(objectChanged);
-                value.Item1.OnGUI(position, property, previewSize);
+                value.Wrapper.IsObjectUpdated(objectChanged);
+                value.Wrapper.OnGUI(position, property, previewSize);
             }
         }
     }
