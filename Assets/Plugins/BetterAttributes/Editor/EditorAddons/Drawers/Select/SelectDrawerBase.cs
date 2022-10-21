@@ -10,28 +10,6 @@ using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
-    public class SelectedItem<T>
-    {
-        public SelectedItem(SerializedProperty property, T data)
-        {
-            Property = property;
-            Data = data;
-        }
-
-        public SerializedProperty Property { get; }
-        public T Data { get; }
-
-        public bool Equals(SelectedItem<T> other)
-        {
-            return SerializedPropertyComparer.Instance.Equals(Property, other.Property) && Data.Equals(other.Data);
-        }
-
-        public bool Equals(SelectedItem<object> other)
-        {
-            return SerializedPropertyComparer.Instance.Equals(Property, other.Property) && Data.Equals(other.Data);
-        }
-    }
-
     public abstract class SelectDrawerBase<TAttribute, TWrapper> : MultiFieldDrawer<TWrapper> where TAttribute : SelectAttributeBase where TWrapper : BaseSelectWrapper
     {
         private bool _needUpdate;
@@ -109,6 +87,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected override void Deconstruct()
         {
             DropdownWindow.CloseInstance();
+            _wrappers?.Deconstruct();
         }
 
         private bool DrawButton(Rect buttonPosition, object currentValue)
