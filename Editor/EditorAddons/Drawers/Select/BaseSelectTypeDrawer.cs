@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
-    public abstract class SelectTypeDrawer : SelectDrawerBase<SelectImplementationAttribute, SelectTypeWrapper>
+    public abstract class BaseSelectTypeDrawer : SelectDrawerBase<SelectImplementationAttribute, SelectTypeWrapper>
     {
         private protected SelectedItem<Type> _type;
         private List<object> _reflectionTypes;

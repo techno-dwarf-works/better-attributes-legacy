@@ -9,7 +9,7 @@ using UnityEditor;
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
     [CustomPropertyDrawer(typeof(SelectImplementationAttribute))]
-    public class SelectImplementationDrawer : SelectTypeDrawer
+    public class SelectImplementationDrawer : BaseSelectTypeDrawer
     {
         private protected override object GetCurrentValue(SerializedProperty property)
         {
