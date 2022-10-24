@@ -174,6 +174,27 @@ private void SomeMethod()
 You can check constructors for `EditorButtonAttribute` there more specific options.
 
 ## Install
+Project Settins -> Package Manager -> Scoped registries
+</br>
+
+![image](https://user-images.githubusercontent.com/22265817/197616090-163dc7ee-99ce-414e-8c20-0264923e955a.png)
+
+```json
+"scopedRegistries": [
+    {
+      "name": "Arcueid Plugins",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.uurha"
+      ]
+    }
+  ]
+```
+
+Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> BetterAttributes
+
+or
+
 Window -> PackageManager -> Add package from GIT url...
 ```
 https://github.com/uurha/BetterAttributes.git#upm
