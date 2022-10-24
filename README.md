@@ -177,7 +177,7 @@ You can check constructors for `EditorButtonAttribute` there more specific optio
 Project Settins -> Package Manager -> Scoped registries
 </br>
 
-![image](https://user-images.githubusercontent.com/22265817/197616090-163dc7ee-99ce-414e-8c20-0264923e955a.png)
+![image](https://user-images.githubusercontent.com/22265817/197618796-e4f99403-e119-4f35-8320-b233696496d9.png)
 
 ```json
 "scopedRegistries": [
