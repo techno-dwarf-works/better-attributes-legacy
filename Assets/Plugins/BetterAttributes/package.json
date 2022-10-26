@@ -10,6 +10,7 @@
   },
   "changelogUrl": "https://github.com/uurha/BetterAttributes",
   "documentationUrl": "https://github.com/uurha/BetterAttributes/blob/main/README.md",
+  "license": "MIT",
   "samples": [
     {
       "displayName": "Default samples",
