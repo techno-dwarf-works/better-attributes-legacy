@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using BetterAttributes.Runtime;
+using BetterExtensions.Runtime.Extension;
 using UnityEditor;
 using UnityEngine;
 

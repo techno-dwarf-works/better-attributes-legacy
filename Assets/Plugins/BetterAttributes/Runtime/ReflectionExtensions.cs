@@ -7,15 +7,9 @@ namespace BetterAttributes.Runtime
 {
     public static class ReflectionExtensions
     {
-#if UNITY_EDITOR
         public const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic |
                                           BindingFlags.Static | BindingFlags.Instance |
                                           BindingFlags.DeclaredOnly;
-
-        public static string PrettyMemberName(this MemberInfo input)
-        {
-            return input.Name.PrettyCamelCase();
-        }
 
         public static Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>>
             GetSortedMethodAttributes(this Type type)
@@ -56,6 +50,5 @@ namespace BetterAttributes.Runtime
                     .ToDictionary(key => key, value => value.GetCustomAttributes<T>(true))
                     .Concat(GetMethodsAttributes<T>(t.BaseType));
         }
-#endif
     }
 }
