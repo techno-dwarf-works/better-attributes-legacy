@@ -6,6 +6,7 @@ using BetterAttributes.EditorAddons.Drawers.Base;
 using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
 using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
 using BetterAttributes.Runtime.Attributes.Select;
+using BetterExtensions.Runtime.Extension;
 using UnityEditor;
 using UnityEngine;
 
