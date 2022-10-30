@@ -1,4 +1,5 @@
 ﻿using BetterAttributes.EditorAddons.Helpers;
+using BetterExtensions.Runtime.Extension;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,14 +10,14 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
         private protected override Texture GenerateTexture(Object drawnObject, float size)
         {
             Texture2D externalTexture = null;
-            if (drawnObject.Is<Texture>(out var texture))
+            if (drawnObject.Cast<Texture>(out var texture))
             {
                 externalTexture = Texture2D.CreateExternalTexture(texture.width, texture.height, TextureFormat.RGB24,
                     false, false,
                     texture.GetNativeTexturePtr());
             }
 
-            if (drawnObject.Is<Texture2D>(out var texture2D))
+            if (drawnObject.Cast<Texture2D>(out var texture2D))
             {
                 externalTexture = texture2D;
             }

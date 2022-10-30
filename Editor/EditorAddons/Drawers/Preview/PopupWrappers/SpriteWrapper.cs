@@ -1,4 +1,5 @@
 ﻿using BetterAttributes.EditorAddons.Helpers;
+using BetterExtensions.Runtime.Extension;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
     {
         private protected override Texture GenerateTexture(Object drawnObject, float size)
         {
-            if (drawnObject.Is<Sprite>(out var sprite))
+            if (drawnObject.Cast<Sprite>(out var sprite))
             {
                 var spriteRenderer = new GameObject().AddComponent<SpriteRenderer>();
                 spriteRenderer.material = new Material(Shader.Find("Sprites/Default"));

@@ -174,14 +174,21 @@ private void SomeMethod()
 You can check constructors for `EditorButtonAttribute` there more specific options.
 
 ## Install
-Window -> PackageManager -> Add package from GIT url...
-```
-https://github.com/uurha/BetterAttributes.git#upm
-```
-or if you want some specific version
-```
-https://github.com/uurha/BetterAttributes.git#<version>
-```
-You can check versions [here](https://github.com/uurha/BetterAttributes/releases).
+Project Settings -> Package Manager -> Scoped registries
+</br>
 
-Note: all versions related to tags. Use tag name, **_NOT_** release name.
+![image](https://user-images.githubusercontent.com/22265817/197618796-e4f99403-e119-4f35-8320-b233696496d9.png)
+
+```json
+"scopedRegistries": [
+    {
+      "name": "Arcueid Plugins",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.uurha"
+      ]
+    }
+  ]
+```
+
+Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> BetterAttributes

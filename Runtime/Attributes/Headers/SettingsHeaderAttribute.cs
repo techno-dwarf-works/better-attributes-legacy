@@ -1,4 +1,5 @@
 ﻿using System;
+using BetterExtensions.Runtime.Extension;
 using UnityEngine;
 
 namespace BetterAttributes.Runtime.Attributes.Headers
