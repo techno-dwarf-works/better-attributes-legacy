@@ -175,15 +175,14 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         {
             if (currentValue is int intCurrent && iteratedValue is int intIterated)
             {
-                if (_isFlag)
+                if (!_isFlag) return intCurrent == intIterated;
+                
+                if (intIterated == None.Value || intIterated == EverythingValue.Value)
                 {
-                    if (intIterated == None.Value || intIterated == EverythingValue.Value)
-                    {
-                        return intCurrent == intIterated;
-                    }
+                    return intCurrent == intIterated;
                 }
-
                 return (intCurrent & intIterated) != 0;
+
             }
 
             return false;
