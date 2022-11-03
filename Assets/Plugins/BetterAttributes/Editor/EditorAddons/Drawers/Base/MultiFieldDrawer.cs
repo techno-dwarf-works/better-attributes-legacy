@@ -9,8 +9,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
     {
         private protected WrapperCollection<T> _wrappers;
 
+        /// <summary>
+        /// Method generates explicit typed collection inherited from <see cref="BetterAttributes.EditorAddons.Drawers.Base.WrapperCollection"/> 
+        /// </summary>
+        /// <returns></returns>
         private protected abstract WrapperCollection<T> GenerateCollection();
 
+        
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             _wrappers ??= GenerateCollection();
@@ -22,6 +27,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
             return fieldInfo.FieldType;
         }
         
+        /// <summary>
+        /// Validates if <see cref="_wrappers"/> contains property by <see cref="BetterAttributes.EditorAddons.Drawers.Comparers.SerializedPropertyComparer"/>
+        /// </summary>
+        /// <param name="property">SerializedProperty what will be stored into <see cref="_wrappers"/></param>
+        /// <param name="handler"><see cref="BetterAttributes.EditorAddons.Drawers.Utilities.BaseUtility"/> used to validate current stored wrappers and gets instance for recently added property</param>
+        /// <typeparam name="THandler"></typeparam>
+        /// <returns>Returns true if wrapper for <paramref name="property"/> was already stored into <see cref="_wrappers"/></returns>
         private protected bool ValidateCachedProperties<THandler>(SerializedProperty property, BaseUtility<THandler> handler) where THandler : new()
         {
             var fieldType = GetFieldType();

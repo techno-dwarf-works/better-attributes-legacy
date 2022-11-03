@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3ec95f197def4081b17762f1fd41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyCode: 8
-  myFlagEnumTest: 6
+  keyCode: 46
+  myFlagEnumTest: 5
   texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
   vector3Local: {x: 0, y: 0, z: 4.6317034}

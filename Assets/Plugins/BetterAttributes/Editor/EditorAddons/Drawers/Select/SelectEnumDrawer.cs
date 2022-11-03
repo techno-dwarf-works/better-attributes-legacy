@@ -20,7 +20,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private SelectedItem<Enum> _enumValue;
         private Type _enumType;
 
-        private protected SelectEnumWrapperCollection Collection => _wrappers as SelectEnumWrapperCollection;
+        private protected SelectEnumWrappers Collection => _wrappers as SelectEnumWrappers;
 
         private struct PredefinedValues
         {
@@ -39,7 +39,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
         private protected override WrapperCollection<SelectEnumWrapper> GenerateCollection()
         {
-            return new SelectEnumWrapperCollection();
+            return new SelectEnumWrappers();
         }
 
         private protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)

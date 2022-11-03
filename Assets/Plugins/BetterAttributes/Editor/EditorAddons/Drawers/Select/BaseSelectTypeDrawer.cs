@@ -16,11 +16,11 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected SelectedItem<Type> _type;
         private List<object> _reflectionTypes;
 
-        private protected SelectTypeWrapperCollection Collection => _wrappers as SelectTypeWrapperCollection;
+        private protected SelectTypeWrappers Collection => _wrappers as SelectTypeWrappers;
 
         private protected override WrapperCollection<SelectTypeWrapper> GenerateCollection()
         {
-            return new SelectTypeWrapperCollection();
+            return new SelectTypeWrappers();
         }
 
         private void LazyGetAllInheritedType(Type baseType, Type currentObjectType)
