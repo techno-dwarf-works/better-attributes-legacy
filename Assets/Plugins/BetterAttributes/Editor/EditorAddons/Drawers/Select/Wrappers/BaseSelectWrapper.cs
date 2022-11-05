@@ -6,7 +6,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select.Wrappers
     public class BaseSelectWrapper : UtilityWrapper
     {
         private protected SerializedProperty _property;
-        
+
         public override void Deconstruct()
         {
             _property = null;

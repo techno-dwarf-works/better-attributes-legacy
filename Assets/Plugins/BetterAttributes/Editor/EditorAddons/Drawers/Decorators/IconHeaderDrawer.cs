@@ -1,4 +1,5 @@
-﻿using BetterAttributes.Runtime.Attributes.Headers;
+﻿using System.IO;
+using BetterAttributes.Runtime.Attributes.Headers;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,29 +8,34 @@ namespace BetterAttributes.EditorAddons.Drawers.Decorators
     [CustomPropertyDrawer(typeof(IconHeaderAttribute))]
     internal sealed class IconHeaderDrawer : DecoratorDrawer
     {
+        private Texture _loadedTexture;
+        private float _height;
+
         public override void OnGUI(Rect position)
         {
             position.yMin += EditorGUIUtility.singleLineHeight * 0.5f;
             position = EditorGUI.IndentedRect(position);
-            if (attribute is IconHeaderAttribute iconHeaderAttribute)
+            if (!(attribute is IconHeaderAttribute iconHeaderAttribute)) return;
+            if (_loadedTexture == null)
             {
-                Texture loadedTexture = null;
-                if (iconHeaderAttribute.UseResources)
-                {
-                    loadedTexture = Resources.Load<Texture>(iconHeaderAttribute.Path);
-                }
-                else
-                {
-                    loadedTexture = AssetDatabase.LoadAssetAtPath<Texture>(iconHeaderAttribute.Path);
-                }
-
-                GUI.Label(position, iconHeaderAttribute, EditorStyles.boldLabel);
+                var path = AssetDatabase.GUIDToAssetPath(iconHeaderAttribute.Guid);
+                _loadedTexture = AssetDatabase.LoadAssetAtPath<Texture>(path);
             }
+
+            var texture = (Texture)Texture2D.whiteTexture;
+            if (_loadedTexture != null)
+            {
+                texture = _loadedTexture;
+            }
+
+            var imageAspect = texture.width / (float)texture.height;
+            _height = EditorGUIUtility.currentViewWidth / imageAspect;
+            GUI.DrawTexture(position, texture, ScaleMode.ScaleToFit, iconHeaderAttribute.UseTransparency, imageAspect);
         }
 
         public override float GetHeight()
         {
-            return EditorGUIUtility.singleLineHeight * 1.5f;
+            return _height;
         }
     }
 }

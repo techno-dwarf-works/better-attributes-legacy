@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace BetterAttributes.Runtime.Attributes.Headers
 {
+    /// <summary>
+    /// Draws texture by path in Unity Inspector
+    /// </summary>
+    /// <remarks>Quick way to use this attribute -> ContextMenu on Texture Importer -> Convert To IconHeaderAttribute</remarks>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    [Conditional(ConstantDefines.Editor)]
     public class IconHeaderAttribute : PropertyAttribute
     {
-        public string Path { get; }
-        public bool UseResources { get; set; }
+        public string Guid { get; }
+        public bool UseTransparency { get; set; } = true;
 
-        public IconHeaderAttribute(string path)
+        public IconHeaderAttribute(string assetGuid)
         {
-            Path = path;
+            Guid = assetGuid;
         }
     }
 }

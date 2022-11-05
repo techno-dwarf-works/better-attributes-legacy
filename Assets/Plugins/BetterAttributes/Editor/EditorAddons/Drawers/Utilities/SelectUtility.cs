@@ -9,8 +9,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
 {
     public class SelectUtility : BaseUtility<SelectUtility>
     {
-        
-        
         private protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection(TypeComparer.Instance)

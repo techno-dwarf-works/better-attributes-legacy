@@ -20,7 +20,10 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private SelectedItem<Enum> _enumValue;
         private Type _enumType;
 
-        private protected SelectEnumWrappers Collection => _wrappers as SelectEnumWrappers;
+        private PredefinedValues _none = new PredefinedValues("None", 0);
+        private PredefinedValues _everythingValue = new PredefinedValues("Everything", -1);
+
+        private SelectEnumWrappers Collection => _wrappers as SelectEnumWrappers;
 
         private struct PredefinedValues
         {
@@ -34,9 +37,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             public int Value { get; }
         }
 
-        private PredefinedValues None = new PredefinedValues("None", 0);
-        private PredefinedValues EverythingValue = new PredefinedValues("Everything", -1);
-
         private protected override WrapperCollection<SelectEnumWrapper> GenerateCollection()
         {
             return new SelectEnumWrappers();
@@ -45,7 +45,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
             var preparePropertyRect = PreparePropertyRect(position);
-            EditorGUI.PrefixLabel(preparePropertyRect, label);
+            EditorGUI.LabelField(preparePropertyRect, label, EditorStyles.label);
         }
 
         private protected override bool CheckSupported(SerializedProperty property)
@@ -66,17 +66,17 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             var ints = _enumType.GetAllValues();
             if (_isFlag)
             {
-                None = new PredefinedValues("None", EnumExtensions.FlagNone);
-                if (!ints.Contains(None.Value))
+                _none = new PredefinedValues("None", EnumExtensions.FlagNone);
+                if (!ints.Contains(_none.Value))
                 {
-                    ints.Insert(0, None.Value);
+                    ints.Insert(0, _none.Value);
                 }
 
                 var everything = _enumType.EverythingFlag().ToFlagInt();
-                EverythingValue = new PredefinedValues("Everything", everything);
-                if (!ints.Contains(EverythingValue.Value))
+                _everythingValue = new PredefinedValues("Everything", everything);
+                if (!ints.Contains(_everythingValue.Value))
                 {
-                    ints.Insert(ints.Count, EverythingValue.Value);
+                    ints.Insert(ints.Count, _everythingValue.Value);
                 }
             }
 
@@ -88,14 +88,14 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             var intValue = (int)currentValue;
             if (_isFlag)
             {
-                if (intValue.Equals(None.Value))
+                if (intValue.Equals(_none.Value))
                 {
-                    return None.Name;
+                    return _none.Name;
                 }
 
-                if (intValue.Equals(EverythingValue.Value))
+                if (intValue.Equals(_everythingValue.Value))
                 {
-                    return EverythingValue.Name;
+                    return _everythingValue.Name;
                 }
             }
 
@@ -120,12 +120,12 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
             if (currentEnum == EnumExtensions.FlagNone)
             {
-                return None.Value;
+                return _none.Value;
             }
 
-            if (currentEnum == EverythingValue.Value)
+            if (currentEnum == _everythingValue.Value)
             {
-                return EverythingValue.Value;
+                return _everythingValue.Value;
             }
 
             return ((Enum)Enum.ToObject(_enumType, currentEnum)).ToFlagInt();
@@ -147,14 +147,14 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             {
                 var eEnum = Enum.ToObject(_enumType, intValue);
 
-                if (intValue == EverythingValue.Value)
+                if (intValue == _everythingValue.Value)
                 {
-                    return EverythingValue.Name;
+                    return _everythingValue.Name;
                 }
 
-                if (intValue == None.Value)
+                if (intValue == _none.Value)
                 {
-                    return None.Name;
+                    return _none.Name;
                 }
 
                 switch (displayName)
@@ -176,13 +176,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             if (currentValue is int intCurrent && iteratedValue is int intIterated)
             {
                 if (!_isFlag) return intCurrent == intIterated;
-                
-                if (intIterated == None.Value || intIterated == EverythingValue.Value)
+
+                if (intIterated == _none.Value || intIterated == _everythingValue.Value)
                 {
                     return intCurrent == intIterated;
                 }
-                return (intCurrent & intIterated) != 0;
 
+                return (intCurrent & intIterated) != 0;
             }
 
             return false;
@@ -199,13 +199,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             {
                 if (_isFlag)
                 {
-                    if (intValue == None.Value)
+                    if (intValue == _none.Value)
                     {
                         intValue = EnumExtensions.FlagNone;
                     }
-                    else if (intValue == EverythingValue.Value)
+                    else if (intValue == _everythingValue.Value)
                     {
-                        intValue = EverythingValue.Value;
+                        intValue = _everythingValue.Value;
                     }
                 }
 

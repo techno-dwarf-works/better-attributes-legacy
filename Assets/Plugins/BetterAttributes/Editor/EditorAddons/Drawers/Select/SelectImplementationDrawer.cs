@@ -27,7 +27,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return currentValue;
 #endif
         }
-        
+
         private static Assembly GetAssembly(string name)
         {
             return AppDomain.CurrentDomain.GetAssemblies()

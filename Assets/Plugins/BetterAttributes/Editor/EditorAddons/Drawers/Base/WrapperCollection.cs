@@ -5,7 +5,8 @@ using UnityEditor;
 
 namespace BetterAttributes.EditorAddons.Drawers.Base
 {
-    public class WrapperCollection<T> : Dictionary<SerializedProperty, WrapperCollectionValue<T>> where T : UtilityWrapper
+    public class WrapperCollection<T> : Dictionary<SerializedProperty, WrapperCollectionValue<T>>
+        where T : UtilityWrapper
     {
         public WrapperCollection() : base(SerializedPropertyComparer.Instance)
         {

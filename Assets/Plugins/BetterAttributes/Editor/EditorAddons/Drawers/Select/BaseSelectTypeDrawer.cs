@@ -65,7 +65,8 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return "null";
         }
 
-        private protected override void Setup(SerializedProperty property, SelectImplementationAttribute currentAttribute)
+        private protected override void Setup(SerializedProperty property,
+            SelectImplementationAttribute currentAttribute)
         {
             var currentObjectType = property.serializedObject.targetObject.GetType();
             LazyGetAllInheritedType(GetFieldType(), currentObjectType);
@@ -78,7 +79,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 return new string[] { "null" };
             }
 
-            if(value is Type type)
+            if (value is Type type)
             {
                 if (string.IsNullOrEmpty(type.FullName))
                 {

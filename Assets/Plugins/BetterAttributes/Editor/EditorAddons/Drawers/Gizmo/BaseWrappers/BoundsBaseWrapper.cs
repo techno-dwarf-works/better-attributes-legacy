@@ -31,7 +31,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
         {
             _bounds = property.boundsValue;
             base.SetProperty(property, fieldType);
-            
+
             if (_bounds.size == Vector3.zero)
             {
                 _bounds.size = Vector3.one / 10f;

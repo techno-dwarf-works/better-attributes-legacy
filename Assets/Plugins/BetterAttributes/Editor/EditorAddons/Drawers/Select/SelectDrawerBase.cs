@@ -10,7 +10,8 @@ using UnityEngine;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select
 {
-    public abstract class SelectDrawerBase<TAttribute, TWrapper> : MultiFieldDrawer<TWrapper> where TAttribute : SelectAttributeBase where TWrapper : BaseSelectWrapper
+    public abstract class SelectDrawerBase<TAttribute, TWrapper> : MultiFieldDrawer<TWrapper>
+        where TAttribute : SelectAttributeBase where TWrapper : BaseSelectWrapper
     {
         private bool _needUpdate;
         private bool _isSetUp;
@@ -26,7 +27,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
         private protected override Type GetFieldType()
         {
-            return (attribute as SelectAttributeBase)?.GetFieldType() ?? fieldInfo.FieldType;
+            return (attribute as SelectAttributeBase)?.GetFieldType() ?? base.GetFieldType();
         }
 
         private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)

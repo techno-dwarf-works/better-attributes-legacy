@@ -73,7 +73,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
         private Bounds GetSceneBound(GameObject root)
         {
             var bounds = new Bounds();
-            
+
             var renderers = root.GetComponentsInChildren<Renderer>(false);
             var center = renderers.Aggregate(Vector3.zero, (current, transform) => current + transform.bounds.center);
             bounds.center = center / renderers.Length;

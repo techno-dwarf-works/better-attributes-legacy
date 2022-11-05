@@ -20,7 +20,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
 
             return null;
         }
-        
+
         private protected override void UpdateTexture()
         {
             _previewScene.Render();

@@ -9,6 +9,10 @@ namespace BetterAttributes.EditorAddons.Helpers
         private static float _spaceHeight = 6f;
         public static float SpaceHeight => _spaceHeight;
 
+        public const int MouseButtonLeft = 0;
+        public const int MouseButtonRight = 1;
+        public const int MouseButtonMiddle = 2;
+
         /// <summary>
         /// Override for default Inspector HelpBox with RTF text
         /// </summary>
@@ -165,11 +169,69 @@ namespace BetterAttributes.EditorAddons.Helpers
                 IconType.WhiteLine => "d_animationanimated",
                 IconType.GrayLine => "d_animationnocurve",
                 IconType.WhiteDropdown => "d_icon dropdown",
-                IconType.GrayDropdown => "icon dropdown",
+                IconType.GrayDropdown => "icon dropdown@2x",
                 IconType.Checkmark => "d_Valid@2x",
+                IconType.GrayPlayButton => "d_PlayButton",
+                IconType.PlusMore => "d_Toolbar Plus More@2x",
+                IconType.Minus => "d_Toolbar Minus@2x",
                 _ => ""
             };
             return icon;
+        }
+
+        public static bool IsLeftButtonDown()
+        {
+            return IsMouseButton(EventType.MouseDown, MouseButtonLeft);
+        }
+
+        public static bool IsRightButtonDown()
+        {
+            return IsMouseButton(EventType.MouseDown, MouseButtonRight);
+        }
+
+        public static bool IsMiddleButtonDown()
+        {
+            return IsMouseButton(EventType.MouseDown, MouseButtonMiddle);
+        }
+
+        public static bool IsLeftButtonUp()
+        {
+            return IsMouseButton(EventType.MouseUp, MouseButtonLeft);
+        }
+
+        public static bool IsRightButtonUp()
+        {
+            return IsMouseButton(EventType.MouseUp, MouseButtonRight);
+        }
+
+        public static bool IsMiddleButtonUp()
+        {
+            return IsMouseButton(EventType.MouseUp, MouseButtonMiddle);
+        }
+
+        public static bool IsMouseButton(EventType eventType, int mouseButton)
+        {
+            var current = Event.current;
+            return current.type == eventType && current.button == mouseButton && current.isMouse;
+        }
+
+        public static Rect GetClickRect(Rect position, GUIContent label)
+        {
+            var copy = position;
+            copy.size = GUIStyle.none.CalcSize(label);
+            return copy;
+        }
+
+        public static bool IsClickedAt(Rect position)
+        {
+            var current = Event.current;
+            var contains = position.Contains(current.mousePosition);
+            if (contains && IsLeftButtonDown())
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -224,6 +286,9 @@ namespace BetterAttributes.EditorAddons.Helpers
         GrayLine,
         WhiteDropdown,
         GrayDropdown,
-        Checkmark
+        Checkmark,
+        GrayPlayButton,
+        PlusMore,
+        Minus
     }
 }

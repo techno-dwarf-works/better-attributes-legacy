@@ -21,7 +21,7 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: -2
+    rid: 6147899586227994624
   someAbstractClass:
     rid: -2
   someAbstractClasses: []
@@ -31,3 +31,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 6147899586227994624
+      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp-firstpass}
+      data:
+        intField: 0

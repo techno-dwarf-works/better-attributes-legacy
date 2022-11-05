@@ -10,7 +10,6 @@ namespace BetterAttributes.EditorAddons.Drawers.ReadOnly
     {
         private protected override void Deconstruct()
         {
-            
         }
 
         private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)

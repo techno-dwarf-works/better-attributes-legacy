@@ -3,7 +3,8 @@ using UnityEditor;
 
 namespace BetterAttributes.EditorAddons.Drawers.Comparers
 {
-    public class SerializedPropertyComparer : BaseComparer<SerializedPropertyComparer, SerializedProperty>, IEqualityComparer<SerializedProperty>
+    public class SerializedPropertyComparer : BaseComparer<SerializedPropertyComparer, SerializedProperty>,
+        IEqualityComparer<SerializedProperty>
     {
         public bool Equals(SerializedProperty x, SerializedProperty y)
         {
