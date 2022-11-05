@@ -9,10 +9,10 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
     public class Vector2LocalWrapper : GizmoWrapper
     {
         private Vector2 _vector2;
-        
+
         public override void Apply(SceneView sceneView)
         {
-            if(!ShowInSceneView) return;
+            if (!ShowInSceneView) return;
             if (!ValidateSerializedObject()) return;
             if (_serializedProperty.IsTargetComponent(out var component))
             {
@@ -23,7 +23,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
                 SetValueAndApply(_vector2);
             }
         }
-        
+
         public override void SetProperty(SerializedProperty property, Type fieldType)
         {
             _vector2 = property.vector2Value;

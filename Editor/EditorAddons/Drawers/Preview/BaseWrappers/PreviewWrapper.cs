@@ -14,7 +14,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
         private Vector2 _currentMousePosition;
         private Vector2 _currentScreenMousePosition;
         private protected readonly PreviewSceneRenderer _previewScene;
-        
+
         private protected abstract void UpdateTexture();
 
         protected PreviewWrapper()
@@ -65,15 +65,17 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
         private void CheckInteraction(Rect position, SerializedProperty serializedProperty, float size)
         {
             var contains = position.Contains(_currentMousePosition);
-            switch (Event.current.type)
+            if (contains && DrawersHelper.IsLeftButtonDown())
             {
-                case EventType.MouseDown when contains:
-                    MouseDownCase(serializedProperty, size);
-                    break;
-                case EventType.MouseUp:
-                case EventType.MouseDrag when !contains && _isMouseDown:
+                MouseDownCase(serializedProperty, size);
+            }
+            else
+            {
+                var isLeftDrag = DrawersHelper.IsMouseButton(EventType.MouseDrag, DrawersHelper.MouseButtonLeft);
+                if (DrawersHelper.IsLeftButtonUp() || isLeftDrag && !contains && _isMouseDown)
+                {
                     Deconstruct();
-                    break;
+                }
             }
         }
 
@@ -83,7 +85,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
             {
                 _previewScene.Construct();
                 var texture = GenerateTexture(serializedProperty.objectReferenceValue, size);
-                if(texture == null) return;
+                if (texture == null) return;
                 EditorPopup.Initialize(texture,
                     new Rect(_currentScreenMousePosition, Vector2.one * size));
                 _isMouseDown = true;

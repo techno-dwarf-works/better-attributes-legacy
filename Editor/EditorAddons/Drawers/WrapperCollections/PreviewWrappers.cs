@@ -9,10 +9,10 @@ namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
     {
         public void OnGUI(Rect position, SerializedProperty property, float previewSize, bool objectChanged)
         {
-            foreach (var value in Values)
+            if (TryGetValue(property, out var wrapper))
             {
-                value.Wrapper.IsObjectUpdated(objectChanged);
-                value.Wrapper.OnGUI(position, property, previewSize);
+                wrapper.Wrapper.IsObjectUpdated(objectChanged);
+                wrapper.Wrapper.OnGUI(position, property, previewSize);
             }
         }
     }

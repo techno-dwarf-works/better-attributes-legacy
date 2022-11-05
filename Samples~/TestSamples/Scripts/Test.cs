@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using BetterAttributes.Runtime;
+using BetterAttributes.Runtime.Attributes.DrawInspector;
 using BetterAttributes.Runtime.Attributes.Gizmo;
+using BetterAttributes.Runtime.Attributes.Headers;
 using BetterAttributes.Runtime.Attributes.Preview;
 using BetterAttributes.Runtime.Attributes.ReadOnly;
 using BetterAttributes.Runtime.Attributes.Rename;
@@ -22,13 +24,16 @@ namespace BetterAttributes.Samples
 
     public class Test : MonoBehaviour
     {
+        [IconHeader("78b772f3f305147419de3cc97ca72bd7")] 
         [SelectEnum] [SerializeField] private KeyCode keyCode;
-        
+
         [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
 
+        [DrawInspector] [SerializeField] private PreviewTest component;
         [Preview] [SerializeField] private Texture2D texture;
 
-        [Preview] [SerializeField] private PreviewTest component;
+        [DrawInspector] [SerializeField] private List<TestScriptableObject> scriptableObjectList;
+        [DrawInspector] [SerializeField] private TestScriptableObject[] scriptableObjectArray;
 
         [GizmoLocal] [SerializeField] private Vector3 vector3Local;
 
