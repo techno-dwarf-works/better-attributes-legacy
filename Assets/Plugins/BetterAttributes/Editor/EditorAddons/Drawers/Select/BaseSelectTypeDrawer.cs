@@ -16,11 +16,11 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected SelectedItem<Type> _type;
         private List<object> _reflectionTypes;
 
-        private protected SelectTypeWrapperCollection Collection => _wrappers as SelectTypeWrapperCollection;
+        private protected SelectTypeWrappers Collection => _wrappers as SelectTypeWrappers;
 
         private protected override WrapperCollection<SelectTypeWrapper> GenerateCollection()
         {
-            return new SelectTypeWrapperCollection();
+            return new SelectTypeWrappers();
         }
 
         private void LazyGetAllInheritedType(Type baseType, Type currentObjectType)
@@ -65,7 +65,8 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return "null";
         }
 
-        private protected override void Setup(SerializedProperty property, SelectImplementationAttribute currentAttribute)
+        private protected override void Setup(SerializedProperty property,
+            SelectImplementationAttribute currentAttribute)
         {
             var currentObjectType = property.serializedObject.targetObject.GetType();
             LazyGetAllInheritedType(GetFieldType(), currentObjectType);
@@ -78,7 +79,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 return new string[] { "null" };
             }
 
-            if(value is Type type)
+            if (value is Type type)
             {
                 if (string.IsNullOrEmpty(type.FullName))
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using BetterExtensions.Runtime.Extension;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace BetterAttributes.Runtime.Attributes.Headers
     /// Replacement for Header("Settings")
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    [Conditional(ConstantDefines.Editor)]
     public class SettingsHeaderAttribute : HeaderAttribute
     {
         public SettingsHeaderAttribute() : base("Settings")
@@ -15,8 +17,8 @@ namespace BetterAttributes.Runtime.Attributes.Headers
         }
 
         public SettingsHeaderAttribute(string additionalText, bool preHeader = true) : base(preHeader
-                                                                                                ? $"{additionalText.PrettyCamelCase()} Settings"
-                                                                                                : $"Settings {additionalText.PrettyCamelCase()}")
+            ? $"{additionalText.PrettyCamelCase()} Settings"
+            : $"Settings {additionalText.PrettyCamelCase()}")
         {
         }
     }

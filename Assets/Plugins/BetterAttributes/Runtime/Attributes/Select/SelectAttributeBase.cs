@@ -17,7 +17,7 @@ namespace BetterAttributes.Runtime.Attributes.Select
         GroupedFlat = 3
     }
 
-    [Conditional("UNITY_EDITOR")]
+    [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public abstract class SelectAttributeBase : PropertyAttribute
     {

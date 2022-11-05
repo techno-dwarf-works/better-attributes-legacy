@@ -8,7 +8,7 @@ namespace BetterAttributes.Runtime.Attributes.Preview
     /// Attribute for preview in Inspector.
     /// Click on question mark or label to see preview.
     /// </summary>
-    [Conditional("UNITY_EDITOR")]
+    [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class PreviewAttribute : PropertyAttribute
     {

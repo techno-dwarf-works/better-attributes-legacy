@@ -12,7 +12,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
 
         public override void Apply(SceneView sceneView)
         {
-            if(!ShowInSceneView) return;
+            if (!ShowInSceneView) return;
             if (!ValidateSerializedObject()) return;
             if (_serializedProperty.IsTargetComponent(out var component))
             {

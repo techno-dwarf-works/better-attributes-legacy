@@ -22,13 +22,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
         public override void SetProperty(SerializedProperty property, Type fieldType)
         {
             _quaternion = property.quaternionValue;
-            
+
             var num = Mathf.Sqrt(Quaternion.Dot(_quaternion, _quaternion));
             if (num < (double)Mathf.Epsilon)
             {
                 _quaternion = _defaultRotation;
             }
-            
+
             base.SetProperty(property, fieldType);
         }
     }

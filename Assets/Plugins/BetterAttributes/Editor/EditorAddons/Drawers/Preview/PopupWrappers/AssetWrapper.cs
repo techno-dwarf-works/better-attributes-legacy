@@ -10,7 +10,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Preview
     {
         private bool _objectChecked;
         private bool _state;
-        
+
         private protected override bool ValidateObject(Object drawnObject)
         {
             var baseValid = base.ValidateObject(drawnObject);

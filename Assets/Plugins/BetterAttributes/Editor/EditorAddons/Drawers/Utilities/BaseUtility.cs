@@ -7,17 +7,15 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
     public abstract class UtilityWrapper
     {
         public abstract void Deconstruct();
-    } 
-    
-    
-    
+    }
+
     public abstract class BaseUtility<THandler> where THandler : new()
     {
         private static THandler _instance;
 
         private protected HashSet<Type> _availableTypes;
         private protected WrappersTypeCollection _gizmoWrappersCollection;
-        
+
         public static THandler Instance
         {
             get
@@ -35,13 +33,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
         {
             Construct();
         }
-        
+
         private void Construct()
         {
             _gizmoWrappersCollection = GenerateCollection();
             _availableTypes = GenerateAvailable();
         }
-        
+
         private protected Dictionary<Type, Type> GetWrapperDictionary(Type type)
         {
             if (_gizmoWrappersCollection.TryGetValue(type, out var dictionary))
@@ -51,7 +49,12 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
 
             throw new KeyNotFoundException($"Supported types not found for {type}");
         }
-        
+
+        /// <summary>
+        /// Validates stored properties if their <see cref="BetterAttributes.EditorAddons.Drawers.Base.WrapperCollectionValue.Type"/> supported
+        /// </summary>
+        /// <param name="gizmoWrappers"></param>
+        /// <typeparam name="T"></typeparam>
         public void ValidateCachedProperties<T>(WrapperCollection<T> gizmoWrappers) where T : UtilityWrapper
         {
             foreach (var value in gizmoWrappers)
@@ -63,11 +66,51 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
             }
         }
 
+        /// <summary>
+        /// Type collection for <see cref="GetUtilityWrapper"/>.
+        /// <example> Example:
+        /// <code>
+        /// return new WrappersTypeCollection()
+        /// {
+        ///     {
+        ///         typeof(SupportedAttributeType), new ()
+        ///         {
+        ///             { typeof(SupportedType), typeof(WrapperForSupportedType) },
+        ///             { typeof(SupportedType2), typeof(WrapperForSupportedType2) }
+        ///         }
+        ///     }
+        /// };
+        /// </code>
+        /// </example>
+        /// <seealso cref="GenerateAvailable"/>
+        /// </summary>
+        /// <returns></returns>
         private protected abstract WrappersTypeCollection GenerateCollection();
 
+        /// <summary>
+        /// Types collection for <see cref="IsSupported"/> checks
+        /// <example> Example:
+        /// <code>
+        ///  return new HashSet(BaseComparer.Instance)
+        ///  {
+        ///     typeof(SupportedType),
+        ///     typeof(SupportedType2)
+        ///  };
+        /// </code>
+        /// </example>
+        /// <seealso cref="GenerateCollection"/>
+        /// </summary>
+        /// <returns></returns>
         private protected abstract HashSet<Type> GenerateAvailable();
 
-        public virtual T GetUtilityWrapper<T>(Type type, Type attributeType) where T : UtilityWrapper
+        /// <summary>
+        /// Generate ready to use wrapper's instance by dictionary from <see cref="GetWrapperDictionary"/>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="attributeType"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T GetUtilityWrapper<T>(Type type, Type attributeType) where T : UtilityWrapper
         {
             if (!IsSupported(type))
             {
@@ -80,6 +123,12 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
             return (T)Activator.CreateInstance(wrapperType);
         }
 
+        /// <summary>
+        /// Checks if type available in utility
+        /// <seealso cref="GenerateAvailable"/>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public virtual bool IsSupported(Type type)
         {
             return _availableTypes.Contains(type);
