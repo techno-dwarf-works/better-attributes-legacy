@@ -7,7 +7,7 @@ namespace BetterAttributes.Runtime.Attributes.Select
     /// Attribute for Implementation selection in Inspector.
     /// Use in pair with [SerializeReference] Attribute.
     /// </summary>
-    [Conditional("UNITY_EDITOR")]
+    [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class SelectImplementationAttribute : SelectAttributeBase
     {

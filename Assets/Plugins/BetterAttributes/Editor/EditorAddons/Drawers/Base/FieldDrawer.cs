@@ -25,6 +25,16 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
 
         private protected abstract void Deconstruct();
 
+        /// <summary>
+        /// Internal method called by Unity
+        /// Execution order:
+        /// <example>
+        /// if(!<see cref="PreDraw"/>) -> <see cref="DrawField"/> -> <see cref="PostDraw"/>
+        /// </example>
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="property"></param>
+        /// <param name="label"></param>
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             if (!PreDraw(ref position, property, label)) return;

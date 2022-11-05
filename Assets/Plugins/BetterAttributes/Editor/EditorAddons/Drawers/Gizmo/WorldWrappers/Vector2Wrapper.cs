@@ -10,7 +10,7 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
 
         public override void Apply(SceneView sceneView)
         {
-            if(!ShowInSceneView) return;
+            if (!ShowInSceneView) return;
             if (!ValidateSerializedObject()) return;
             DrawLabel($"{_serializedProperty.name}:\n{_vector2}", _vector2, _defaultRotation, sceneView);
             _vector2 = Handles.PositionHandle(_vector2, _defaultRotation);

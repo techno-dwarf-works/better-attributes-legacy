@@ -7,12 +7,10 @@ namespace BetterAttributes.EditorAddons.Drawers.Base
     {
         public WrappersTypeCollection() : base()
         {
-            
         }
 
         public WrappersTypeCollection(IEqualityComparer<Type> equalityComparer) : base(equalityComparer)
         {
-            
         }
     }
 }

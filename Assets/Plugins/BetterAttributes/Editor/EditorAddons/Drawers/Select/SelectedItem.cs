@@ -1,4 +1,5 @@
 ﻿using BetterAttributes.EditorAddons.Drawers.Base;
+using BetterAttributes.EditorAddons.Drawers.Comparers;
 using UnityEditor;
 
 namespace BetterAttributes.EditorAddons.Drawers.Select

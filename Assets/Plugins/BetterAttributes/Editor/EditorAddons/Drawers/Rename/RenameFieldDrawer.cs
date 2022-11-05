@@ -10,7 +10,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Rename
     {
         private protected override void Deconstruct()
         {
-            
         }
 
         private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
@@ -27,7 +26,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Rename
 
         private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
-            
         }
     }
 }
