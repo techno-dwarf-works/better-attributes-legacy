@@ -2,6 +2,9 @@
 using BetterAttributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 using UnityEngine;
+#if UNITY_2022_1_OR_NEWER
+using GizmoUtility = BetterAttributes.EditorAddons.Drawers.Utilities.GizmoUtility;
+#endif
 
 namespace BetterAttributes.EditorAddons.Drawers.Gizmo
 {
