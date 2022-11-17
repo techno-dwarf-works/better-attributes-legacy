@@ -24,10 +24,12 @@ namespace BetterAttributes.EditorAddons.Helpers
             {
                 isClicked = Event.current.type == EventType.MouseDown && isHover;
             }
+
             if (Event.current.type != EventType.Repaint)
             {
                 return isClicked;
             }
+
             var image2 = content.image;
 
             if (hasChildren)

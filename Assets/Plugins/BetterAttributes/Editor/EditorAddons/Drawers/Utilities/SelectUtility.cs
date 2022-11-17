@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BetterAttributes.EditorAddons.Drawers.Base;
+using BetterAttributes.EditorAddons.Drawers.Comparers;
 using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
 using BetterAttributes.Runtime.Attributes.Select;
 
@@ -8,8 +9,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Utilities
 {
     public class SelectUtility : BaseUtility<SelectUtility>
     {
-        
-        
         private protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection(TypeComparer.Instance)

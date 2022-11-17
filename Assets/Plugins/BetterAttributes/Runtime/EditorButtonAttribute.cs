@@ -7,7 +7,7 @@ namespace BetterAttributes.Runtime
     /// Displays Button in Inspector
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    [Conditional("UNITY_EDITOR")]
+    [Conditional(ConstantDefines.Editor)]
     public class EditorButtonAttribute : Attribute
     {
         private readonly string _displayName;

@@ -47,25 +47,6 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
             _wrappers?.Deconstruct();
         }
 
-        private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
-        {
-            if (EditorGUI.EndChangeCheck())
-            {
-                Collection.SetProperty(property, fieldInfo.FieldType);
-            }
-
-            if (GUI.Button(PrepareButtonRect(position), Collection.ShowInSceneView(property) ? "Hide" : "Show"))
-            {
-                Collection.SwitchShowMode(property);
-                SceneView.RepaintAll();
-            }
-        }
-
-        private protected override WrapperCollection<GizmoWrapper> GenerateCollection()
-        {
-            return new GizmoWrappers();
-        }
-
         private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             var fieldType = fieldInfo.FieldType;
@@ -99,6 +80,24 @@ namespace BetterAttributes.EditorAddons.Drawers.Gizmo
             return true;
         }
 
+        private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        {
+            if (EditorGUI.EndChangeCheck())
+            {
+                Collection.SetProperty(property, fieldInfo.FieldType);
+            }
+
+            if (GUI.Button(PrepareButtonRect(position), Collection.ShowInSceneView(property) ? "Hide" : "Show"))
+            {
+                Collection.SwitchShowMode(property);
+                SceneView.RepaintAll();
+            }
+        }
+
+        private protected override WrapperCollection<GizmoWrapper> GenerateCollection()
+        {
+            return new GizmoWrappers();
+        }
 
         private protected override Rect PreparePropertyRect(Rect original)
         {

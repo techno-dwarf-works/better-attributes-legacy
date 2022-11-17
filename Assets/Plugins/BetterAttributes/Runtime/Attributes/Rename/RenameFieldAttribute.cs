@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BetterAttributes.Runtime.Attributes.Rename
 {
-    [Conditional("UNITY_EDITOR")]
+    [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class RenameFieldAttribute : PropertyAttribute
     {
