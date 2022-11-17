@@ -5,7 +5,7 @@
 
 This package provides following features:
 
-### Select Dropdown
+## Select Dropdown
 
 This package contains base class for drawer with better dropdown.<br>
 Better dropdown contains:
@@ -13,7 +13,7 @@ Better dropdown contains:
 2. Fast navigation
 3. Grouping
 
-### Select Implementation
+## Select Implementation
 
 Provides possibility to select interface implementation in Unity Inspector.
 
@@ -33,7 +33,7 @@ private List<SomeAbstractClass> someAbstractClasses;
 private List<ISomeInterface> someInterfaces;
 ```
 
-### Select Enum
+## Select Enum
 
 Provides possibility to select enum value with better dropdown.<br>
 Also supports **_flag_** enums.
@@ -45,7 +45,7 @@ Usage:
 private KeyCode keyCode;
 ```
 
-### Preview
+## Preview
 
 Provides possibility to see object preview by clicking into the field in Unity Inspector.<br>
 Supports preview for **_scene objects_** and **_prefabs_** object as well as **_textures_** and **_sprites_**.
@@ -60,7 +60,7 @@ private Sprite sprite;
 private SomeMonobehaviour someMonobehaviour;
 ```
 
-### Read Only Field
+## Read Only Field
 
 Provides possibility to disable modification of fields in Unity Inspector but keep it displayed.
 
@@ -77,7 +77,30 @@ private float someFloat;
 private string someString;
 ```
 
-### Rename Field
+## Icon Header
+
+Provides possibility to Draw fullsized texture about field in Unity Inspector.
+To get texture guid open TextureImport window and right open context menu -> Conver To IconHeaderAttribute.
+
+Usage:
+
+```c#
+[IconHeader("TEXTURE_GUID")] [SerializeField]
+private string oldName;
+```
+
+## Draw Inspector
+
+Provides possibility to Draw fullsized Inspector below field with type inheretex from UnityEngine.Object.
+
+Usage:
+
+```c#
+[DrawInspector] [SerializeField]
+private SomeScriptable scriptable;
+```
+
+## Rename Field
 
 Provides possibility to rename label in Unity Inspector.
 
@@ -88,7 +111,7 @@ Usage:
 private string oldName;
 ```
 
-### Gizmo / Gizmo Local
+## Gizmo / Gizmo Local
 
 Provides possibility to set value for Vector3/Vector2/Quaternion/Bounds from scene view by dragging handles.<br>
 `[GizmoLocal]` works only into `MonoBehaviour` Unity Inspector.
@@ -115,7 +138,7 @@ Usage:
 [SerializeField] private Quaternion quaternionLocal;
 ```
 
-### Editor Buttons
+## Editor Buttons
 
 Provides possibility to display button for method in Unity Inspector.
 
