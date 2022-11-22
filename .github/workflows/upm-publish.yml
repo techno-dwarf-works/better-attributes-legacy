@@ -69,7 +69,7 @@ jobs:
       env:
         REPO: self
         BRANCH: upm
-        FOLDER: Assets/Plugins/${GITHUB_REPOSITORY#*/}
+        FOLDER: Assets/Plugins/${{ github.event.repository.name }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SKIP_EMPTY_COMMITS: true
         MESSAGE: "{msg}"
