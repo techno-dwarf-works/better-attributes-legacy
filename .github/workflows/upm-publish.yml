@@ -25,10 +25,10 @@ jobs:
     - uses: actions/checkout@master
     - name: Copy the README
       run: |
-          cp "README.md" "Assets/Plugins/${GITHUB_REPOSITORY#*/}/README.md"
+          cp "README.md" "Assets/Plugins/${{ github.event.repository.name }}/README.md"
     - name: Copy the LICENSE
       run: |
-          cp "LICENSE" "Assets/Plugins/${GITHUB_REPOSITORY#*/}/LICENSE"
+          cp "LICENSE" "Assets/Plugins/${{ github.event.repository.name }}/LICENSE"
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v11.1
       id: verify-changed-files
