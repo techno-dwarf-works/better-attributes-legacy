@@ -1,9 +1,10 @@
 ﻿using System;
-using BetterAttributes.Runtime.Tree;
+using System.Reflection;
+using Better.Attributes.Runtime.Tree;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     internal static class DropdownGUI
     {
@@ -24,6 +25,15 @@ namespace BetterAttributes.EditorAddons.Helpers
             {
                 isClicked = Event.current.type == EventType.MouseDown && isHover;
             }
+            
+            if (isHover)
+            {
+                if (!string.IsNullOrEmpty(content.tooltip))
+                {
+                    var method = typeof(GUIStyle).GetMethod("SetMouseTooltip",BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                    method?.Invoke(null, new object[] { content.tooltip, rect });
+                }
+            }
 
             if (Event.current.type != EventType.Repaint)
             {
@@ -38,6 +48,7 @@ namespace BetterAttributes.EditorAddons.Helpers
                 {
                     width = iconSize.x + 1f
                 }, GUIContent.none, false, false, isHover, isHover);
+                
                 rect.x += iconSize.x + 1f;
                 rect.width -= iconSize.x + 1f;
                 content.image = null;

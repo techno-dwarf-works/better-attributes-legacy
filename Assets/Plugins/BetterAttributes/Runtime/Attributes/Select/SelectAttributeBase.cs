@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.Select
+namespace Better.Attributes.Runtime.Select
 {
     public enum DisplayName
     {

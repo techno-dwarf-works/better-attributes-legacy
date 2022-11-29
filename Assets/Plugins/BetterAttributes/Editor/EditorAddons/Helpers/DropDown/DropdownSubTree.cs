@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using BetterAttributes.Runtime.Tree;
+﻿using Better.Attributes.Runtime.Tree;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     public class DropdownSubTree : DropdownBase, INodeValue<DropdownBase>
     {

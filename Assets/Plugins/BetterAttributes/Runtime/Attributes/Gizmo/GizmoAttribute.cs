@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.Gizmo
+namespace Better.Attributes.Runtime.Gizmo
 {
     /// <summary>
     /// Attribute to draw handles in scene view

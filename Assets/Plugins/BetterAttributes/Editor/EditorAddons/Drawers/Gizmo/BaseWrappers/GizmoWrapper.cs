@@ -1,12 +1,12 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
-using GizmoUtility = BetterAttributes.EditorAddons.Drawers.Utilities.GizmoUtility;
+using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
 #endif
 
-namespace BetterAttributes.EditorAddons.Drawers.Gizmo
+namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     public abstract class GizmoWrapper : UtilityWrapper
     {

@@ -1,12 +1,12 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
-using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
-using BetterAttributes.EditorAddons.Helpers;
-using BetterAttributes.Runtime.Attributes.Preview;
+﻿using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+using Better.Attributes.EditorAddons.Helpers;
+using Better.Attributes.Runtime.Preview;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Preview
+namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
     [CustomPropertyDrawer(typeof(PreviewAttribute))]
     public class PreviewDrawer : MultiFieldDrawer<BasePreviewWrapper>

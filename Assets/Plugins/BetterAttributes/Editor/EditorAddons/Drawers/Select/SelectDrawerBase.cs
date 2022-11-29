@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
-using BetterAttributes.EditorAddons.Helpers;
-using BetterAttributes.Runtime.Attributes.Select;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Helpers;
+using Better.Attributes.Runtime.Select;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select
+namespace Better.Attributes.EditorAddons.Drawers.Select
 {
     public abstract class SelectDrawerBase<TAttribute, TWrapper> : MultiFieldDrawer<TWrapper>
         where TAttribute : SelectAttributeBase where TWrapper : BaseSelectWrapper
@@ -118,8 +118,13 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             {
                 foreach (var type in collection)
                 {
-                    var guiContent = new GUIContent(ResolveName(type, _displayName));
-                    var item = new DropdownItem(guiContent, ResolveState(currentValue, type), OnSelectItem,
+                    var guiContent = ResolveName(type, _displayName);
+                    if (guiContent.image == null && ResolveState(currentValue, type))
+                    {
+                        guiContent.image = DrawersHelper.GetIcon(IconType.Checkmark);
+                    }
+
+                    var item = new DropdownItem(guiContent, OnSelectItem,
                         new SelectedItem<object>(serializedProperty, type));
                     items.AddChild(item);
                 }
@@ -143,8 +148,8 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
         private protected abstract string GetButtonName(object currentValue);
         private protected abstract void Setup(SerializedProperty property, TAttribute currentAttribute);
         private protected abstract List<object> GetSelectCollection();
-        private protected abstract string ResolveName(object value, DisplayName displayName);
-        private protected abstract string[] ResolveGroupedName(object value, DisplayGrouping grouping);
+        private protected abstract GUIContent ResolveName(object value, DisplayName displayName);
+        private protected abstract GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping);
         private protected abstract bool ResolveState(object currentValue, object iteratedValue);
         private protected abstract void OnSelectItem(object obj);
         private protected abstract void UpdateValue(SerializedProperty property);

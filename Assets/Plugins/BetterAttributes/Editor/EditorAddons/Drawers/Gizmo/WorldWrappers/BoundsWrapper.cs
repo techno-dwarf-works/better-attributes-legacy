@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.Gizmo
+namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     public class BoundsWrapper : BoundsBaseWrapper
     {

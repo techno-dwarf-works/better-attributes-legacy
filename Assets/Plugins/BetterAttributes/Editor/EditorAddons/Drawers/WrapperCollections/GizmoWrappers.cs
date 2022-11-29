@@ -1,9 +1,9 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Gizmo;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
+namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
     public class GizmoWrappers : WrapperCollection<GizmoWrapper>
     {

@@ -1,13 +1,13 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
-using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
-using BetterAttributes.EditorAddons.Helpers;
-using BetterAttributes.Runtime.Attributes.DrawInspector;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+using Better.Attributes.EditorAddons.Helpers;
+using Better.Attributes.Runtime.DrawInspector;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.DrawInspector
+namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 {
     [CustomPropertyDrawer(typeof(DrawInspectorAttribute))]
     public class DrawInspectorDrawer : MultiFieldDrawer<DrawInspectorWrapper>

@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BetterAttributes.Runtime.Tree;
+using Better.Attributes.Runtime.Tree;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     public class DropdownCollection : TreeNode<DropdownBase>
     {
-        public void AddItem(string[] keys, bool state, Action<object> onSelect, object value)
+        public void AddItem(GUIContent[] keys, bool state, Action<object> onSelect, object value)
         {
-            var queue = new Queue<string>(keys);
+            var queue = new Queue<GUIContent>(keys);
             var firstKey = queue.Dequeue();
-            var item = Children.FirstOrDefault(x => x.Value.Equals(firstKey));
+            var item = Children.FirstOrDefault(x => ValidateEquals(x, firstKey));
             if (queue.Count > 0)
             {
                 if (item == null)
@@ -31,14 +31,19 @@ namespace BetterAttributes.EditorAddons.Helpers
             }
         }
 
+        private static bool ValidateEquals(TreeNode<DropdownBase> x, GUIContent firstKey)
+        {
+            return x.Value.Content.text.Equals(firstKey.text);
+        }
+
         private void Iterate(TreeNode<DropdownBase> item, bool state, Action<object> onSelect, object value,
-            Queue<string> queue)
+            Queue<GUIContent> queue)
         {
             var bufferItem = item;
             while (queue.Count > 0)
             {
                 var bufferKey = queue.Dequeue();
-                var first = bufferItem.Children.FirstOrDefault(x => x.Value.Equals(bufferKey));
+                var first = bufferItem.Children.FirstOrDefault(x => ValidateEquals(x, bufferKey));
                 if (first == null)
                 {
                     var node = queue.Count <= 0
@@ -57,15 +62,19 @@ namespace BetterAttributes.EditorAddons.Helpers
             }
         }
 
-        private static TreeNode<DropdownBase> AddLeaf(TreeNode<DropdownBase> item, string bufferKey, bool state,
+        private static TreeNode<DropdownBase> AddLeaf(TreeNode<DropdownBase> item, GUIContent bufferKey, bool state,
             Action<object> onSelect, object type)
         {
-            return item.AddChild(new DropdownItem(new GUIContent(bufferKey), state, onSelect, type));
+            if (bufferKey.image == null && state)
+            {
+                bufferKey.image = DrawersHelper.GetIcon(IconType.Checkmark);
+            }
+            return item.AddChild(new DropdownItem(bufferKey, onSelect, type));
         }
 
-        private static TreeNode<DropdownBase> AddBranch(TreeNode<DropdownBase> item, string bufferKey)
+        private static TreeNode<DropdownBase> AddBranch(TreeNode<DropdownBase> item, GUIContent bufferKey)
         {
-            var treeNode = item.AddChild(new DropdownSubTree(new GUIContent(bufferKey)));
+            var treeNode = item.AddChild(new DropdownSubTree(bufferKey));
             return treeNode;
         }
 

@@ -1,8 +1,7 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Comparers;
+﻿using Better.Attributes.EditorAddons.Drawers.Comparers;
 using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select
+namespace Better.Attributes.EditorAddons.Drawers.Select
 {
     public class SelectedItem<T>
     {

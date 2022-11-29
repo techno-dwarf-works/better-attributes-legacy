@@ -1,9 +1,9 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
+namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
     public class SelectEnumWrappers : WrapperCollection<SelectEnumWrapper>
     {

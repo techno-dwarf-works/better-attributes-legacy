@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace BetterAttributes.Runtime.Attributes.Select
+namespace Better.Attributes.Runtime.Select
 {
     /// <summary>
     /// Attribute for Implementation selection in Inspector.

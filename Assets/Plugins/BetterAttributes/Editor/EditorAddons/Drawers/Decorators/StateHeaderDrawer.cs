@@ -1,8 +1,8 @@
-﻿using BetterAttributes.Runtime.Attributes.Headers;
+﻿using Better.Attributes.Runtime.Headers;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Decorators
+namespace Better.Attributes.EditorAddons.Drawers.Decorators
 {
     [CustomPropertyDrawer(typeof(StateHeaderAttribute))]
     internal sealed class StateHeaderDrawer : DecoratorDrawer
