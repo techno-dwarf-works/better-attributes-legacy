@@ -7,6 +7,8 @@ using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
 using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
+#else
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 #endif
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
