@@ -1,10 +1,10 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Utilities;
-using BetterAttributes.EditorAddons.Helpers;
+﻿using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Helpers;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BetterAttributes.EditorAddons.Drawers.Preview
+namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
     public abstract class BasePreviewWrapper : UtilityWrapper
     {

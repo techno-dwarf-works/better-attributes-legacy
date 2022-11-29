@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.Preview
+namespace Better.Attributes.Runtime.Preview
 {
     /// <summary>
     /// Attribute for preview in Inspector.

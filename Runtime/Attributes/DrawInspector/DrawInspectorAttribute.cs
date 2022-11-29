@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.DrawInspector
+namespace Better.Attributes.Runtime.DrawInspector
 {
     /// <summary>
     /// Replaces object field with nested inspector

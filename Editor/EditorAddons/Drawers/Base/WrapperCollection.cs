@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using BetterAttributes.EditorAddons.Drawers.Comparers;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Comparers;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.Base
+namespace Better.Attributes.EditorAddons.Drawers.Base
 {
     public class WrapperCollection<T> : Dictionary<SerializedProperty, WrapperCollectionValue<T>>
         where T : UtilityWrapper

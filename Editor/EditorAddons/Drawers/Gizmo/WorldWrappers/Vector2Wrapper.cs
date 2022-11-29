@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Gizmo
+namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     public class Vector2Wrapper : GizmoWrapper
     {

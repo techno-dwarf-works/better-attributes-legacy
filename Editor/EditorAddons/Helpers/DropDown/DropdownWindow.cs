@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using BetterAttributes.Runtime.Tree;
+using Better.Attributes.Runtime.Tree;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     public class DropdownWindow : EditorWindow
     {

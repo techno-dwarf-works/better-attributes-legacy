@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.Comparers
+namespace Better.Attributes.EditorAddons.Drawers.Comparers
 {
     public class SerializedPropertyComparer : BaseComparer<SerializedPropertyComparer, SerializedProperty>,
         IEqualityComparer<SerializedProperty>

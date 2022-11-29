@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.Rename
+namespace Better.Attributes.Runtime.Rename
 {
     [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]

@@ -1,9 +1,8 @@
-﻿using BetterAttributes.EditorAddons.Helpers;
-using BetterExtensions.Runtime.Extension;
+﻿using Better.Extensions.Runtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BetterAttributes.EditorAddons.Drawers.Preview
+namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
     public class SpriteWrapper : PreviewWrapper
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BetterAttributes.Samples
+namespace Samples
 {
     public class PreviewTest : MonoBehaviour
     {

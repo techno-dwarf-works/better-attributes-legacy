@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select.Wrappers
+namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
     public class SelectTypeWrapper : BaseSelectWrapper
     {

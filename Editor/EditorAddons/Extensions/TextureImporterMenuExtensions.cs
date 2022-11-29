@@ -1,9 +1,8 @@
 ﻿using System;
-using BetterAttributes.Runtime.Attributes.Headers;
+using Better.Attributes.Runtime.Headers;
 using UnityEditor;
-using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Extensions
+namespace Better.Attributes.EditorAddons.Extensions
 {
     internal static class TextureImporterMenuExtensions
     {

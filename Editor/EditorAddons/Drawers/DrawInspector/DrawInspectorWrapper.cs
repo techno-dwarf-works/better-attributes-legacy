@@ -1,10 +1,9 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
-using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BetterAttributes.EditorAddons.Drawers.DrawInspector
+namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 {
     [Serializable]
     public class DrawInspectorWrapper : UtilityWrapper

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using BetterExtensions.Runtime.Extension;
+using Better.Extensions.Runtime;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.Headers
+namespace Better.Attributes.Runtime.Headers
 {
     /// <summary>
     /// Replacement for Header("Settings")

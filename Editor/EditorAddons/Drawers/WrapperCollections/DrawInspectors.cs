@@ -1,9 +1,8 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.DrawInspector;
+﻿using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.DrawInspector;
 using UnityEditor;
-using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.WrapperCollections
+namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
     public class DrawInspectors : WrapperCollection<DrawInspectorWrapper>
     {

@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using BetterAttributes.EditorAddons.Helpers;
+using Better.Attributes.EditorAddons.Helpers;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Preview
+namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
     public abstract class PreviewWrapper : BasePreviewWrapper
     {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BetterAttributes.Runtime;
-using BetterExtensions.Runtime.Extension;
+using Better.Attributes.Runtime;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons
+namespace Better.Attributes.EditorAddons
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Object), true)]
