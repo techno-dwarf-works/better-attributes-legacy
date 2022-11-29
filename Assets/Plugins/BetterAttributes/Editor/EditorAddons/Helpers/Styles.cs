@@ -1,9 +1,7 @@
-﻿using System;
-using UnityEditor;
-using UnityEditor.Experimental;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     public class Styles
     {

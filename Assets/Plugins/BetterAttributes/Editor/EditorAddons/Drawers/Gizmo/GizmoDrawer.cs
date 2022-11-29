@@ -1,16 +1,15 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
-using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
-using BetterAttributes.EditorAddons.Helpers;
-using BetterAttributes.Runtime.Attributes.Gizmo;
-using BetterExtensions.EditorAddons;
+﻿using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+using Better.Attributes.EditorAddons.Helpers;
+using Better.Attributes.Runtime.Gizmo;
+using Better.Extensions.EditorAddons;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
-using GizmoUtility = BetterAttributes.EditorAddons.Drawers.Utilities.GizmoUtility;
+using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
 #endif
 
-namespace BetterAttributes.EditorAddons.Drawers.Gizmo
+namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     [CustomPropertyDrawer(typeof(GizmoAttribute))]
     [CustomPropertyDrawer(typeof(GizmoLocalAttribute))]

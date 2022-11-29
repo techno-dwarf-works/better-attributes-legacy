@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
-using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
-using BetterAttributes.Runtime.Attributes.Select;
+using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+using Better.Attributes.Runtime.Select;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select
+namespace Better.Attributes.EditorAddons.Drawers.Select
 {
     public abstract class BaseSelectTypeDrawer : SelectDrawerBase<SelectImplementationAttribute, SelectTypeWrapper>
     {
@@ -72,38 +73,38 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             LazyGetAllInheritedType(GetFieldType(), currentObjectType);
         }
 
-        private protected override string[] ResolveGroupedName(object value, DisplayGrouping grouping)
+        private protected override GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping)
         {
             if (value == null)
             {
-                return new string[] { "null" };
+                return new GUIContent[] { new GUIContent("null") };
             }
 
             if (value is Type type)
             {
                 if (string.IsNullOrEmpty(type.FullName))
                 {
-                    return new string[] { type.Name };
+                    return new GUIContent[] { new GUIContent(type.Name) };
                 }
 
                 var split = type.FullName.Split('.');
                 if (split.Length <= 1)
                 {
-                    return new string[] { type.Name };
+                    return new GUIContent[] { new GUIContent(type.Name) };
                 }
 
                 switch (grouping)
                 {
                     case DisplayGrouping.Grouped:
-                        return split;
+                        return split.Select(x => new GUIContent(x)).ToArray();
                     case DisplayGrouping.GroupedFlat:
-                        return new string[] { split.First(), split.Last() };
+                        return new GUIContent[] { new GUIContent(split.First()), new GUIContent(split.Last()) };
                     default:
                         throw new ArgumentOutOfRangeException(nameof(grouping), grouping, null);
                 }
             }
 
-            return new string[] { NotSupported };
+            return new GUIContent[] { new GUIContent(NotSupported) };
         }
 
         private protected override List<object> GetSelectCollection()
@@ -111,11 +112,11 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return _reflectionTypes;
         }
 
-        private protected override string ResolveName(object value, DisplayName displayName)
+        private protected override GUIContent ResolveName(object value, DisplayName displayName)
         {
             if (value == null)
             {
-                return "null";
+                return new GUIContent("null");
             }
 
             if (value is Type type)
@@ -123,15 +124,15 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
                 switch (displayName)
                 {
                     case DisplayName.Short:
-                        return $"{type.Name}";
+                        return new GUIContent($"{type.Name}");
                     case DisplayName.Full:
-                        return $"{type.FullName}";
+                        return new GUIContent($"{type.FullName}");
                     default:
                         throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
                 }
             }
 
-            return NotSupported;
+            return new GUIContent(NotSupported);
         }
 
         private protected override bool ResolveState(object currentValue, object iteratedValue)

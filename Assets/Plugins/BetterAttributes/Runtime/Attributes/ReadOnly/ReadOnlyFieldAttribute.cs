@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.ReadOnly
+namespace Better.Attributes.Runtime.ReadOnly
 {
     /// <summary>
     /// Attribute to disable field editing in Inspector 

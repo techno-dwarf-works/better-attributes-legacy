@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     internal static class DrawersHelper
     {

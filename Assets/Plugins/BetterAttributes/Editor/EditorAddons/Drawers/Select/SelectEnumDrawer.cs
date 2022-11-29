@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Select.Wrappers;
-using BetterAttributes.EditorAddons.Drawers.WrapperCollections;
-using BetterAttributes.Runtime.Attributes.Select;
-using BetterExtensions.Runtime.Extension;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+using Better.Attributes.Runtime.Select;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select
+namespace Better.Attributes.EditorAddons.Drawers.Select
 {
     [CustomPropertyDrawer(typeof(SelectEnumAttribute))]
     public class SelectEnumDrawer : SelectDrawerBase<SelectEnumAttribute, SelectEnumWrapper>
@@ -136,12 +136,12 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
             return _enumValues;
         }
 
-        private protected override string[] ResolveGroupedName(object value, DisplayGrouping grouping)
+        private protected override GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping)
         {
-            return new string[] { NotSupported };
+            return new GUIContent[] { new GUIContent(NotSupported) };
         }
 
-        private protected override string ResolveName(object value, DisplayName displayName)
+        private protected override GUIContent ResolveName(object value, DisplayName displayName)
         {
             if (value is int intValue)
             {
@@ -149,26 +149,26 @@ namespace BetterAttributes.EditorAddons.Drawers.Select
 
                 if (intValue == _everythingValue.Value)
                 {
-                    return _everythingValue.Name;
+                    return new GUIContent(_everythingValue.Name);
                 }
 
                 if (intValue == _none.Value)
                 {
-                    return _none.Name;
+                    return new GUIContent(_none.Name);
                 }
 
                 switch (displayName)
                 {
                     case DisplayName.Short:
-                        return $"{eEnum}";
+                        return new GUIContent($"{eEnum}");
                     case DisplayName.Full:
-                        return $"{_enumType.Name}.{eEnum}";
+                        return new GUIContent($"{_enumType.Name}.{eEnum}");
                     default:
                         throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
                 }
             }
 
-            return NotSupported;
+            return new GUIContent(NotSupported);
         }
 
         private protected override bool ResolveState(object currentValue, object iteratedValue)

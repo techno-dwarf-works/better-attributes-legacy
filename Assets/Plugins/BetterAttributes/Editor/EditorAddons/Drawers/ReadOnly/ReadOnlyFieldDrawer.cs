@@ -1,9 +1,9 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.Runtime.Attributes.ReadOnly;
+﻿using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.Runtime.ReadOnly;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.ReadOnly
+namespace Better.Attributes.EditorAddons.Drawers.ReadOnly
 {
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyFieldDrawer : FieldDrawer

@@ -1,7 +1,7 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 
-namespace BetterAttributes.EditorAddons.Drawers.Base
+namespace Better.Attributes.EditorAddons.Drawers.Base
 {
     public class WrapperCollectionValue<T> where T : UtilityWrapper
     {

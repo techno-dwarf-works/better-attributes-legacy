@@ -1,11 +1,10 @@
 ﻿using System;
-using BetterAttributes.Samples.Interfaces;
 using UnityEngine;
 
 namespace Samples.Models
 {
     [Serializable]
-    public class SomeInterfaceImplementation17 : ISomeInterface
+    public class SomeClass
     {
         [SerializeField] private int intField;
     }

@@ -1,4 +1,4 @@
-﻿namespace BetterAttributes.Runtime
+﻿namespace Better.Attributes.Runtime
 {
     public class ConstantDefines
     {

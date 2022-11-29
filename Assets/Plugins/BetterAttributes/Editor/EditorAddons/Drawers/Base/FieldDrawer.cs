@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Base
+namespace Better.Attributes.EditorAddons.Drawers.Base
 {
     public abstract class FieldDrawer : PropertyDrawer
     {

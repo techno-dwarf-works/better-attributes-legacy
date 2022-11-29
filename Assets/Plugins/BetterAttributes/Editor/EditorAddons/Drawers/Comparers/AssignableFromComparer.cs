@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BetterAttributes.EditorAddons.Drawers.Comparers
+namespace Better.Attributes.EditorAddons.Drawers.Comparers
 {
     public class AssignableFromComparer : BaseComparer<AssignableFromComparer, Type>, IEqualityComparer<Type>
     {

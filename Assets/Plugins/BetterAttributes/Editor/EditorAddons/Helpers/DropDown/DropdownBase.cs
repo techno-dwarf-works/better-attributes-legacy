@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Helpers
+namespace Better.Attributes.EditorAddons.Helpers
 {
     public abstract class DropdownBase
     {

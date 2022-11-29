@@ -1,7 +1,7 @@
 ﻿using System;
-using BetterExtensions.Runtime.Extension;
+using Better.Extensions.Runtime;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select.Wrappers
+namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
     public class SelectEnumWrapper : BaseSelectWrapper
     {

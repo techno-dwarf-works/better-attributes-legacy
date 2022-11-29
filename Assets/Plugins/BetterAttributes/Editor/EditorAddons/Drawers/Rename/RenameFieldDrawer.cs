@@ -1,9 +1,9 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.Runtime.Attributes.Rename;
+﻿using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.Runtime.Rename;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Rename
+namespace Better.Attributes.EditorAddons.Drawers.Rename
 {
     [CustomPropertyDrawer(typeof(RenameFieldAttribute))]
     public class RenameFieldDrawer : FieldDrawer

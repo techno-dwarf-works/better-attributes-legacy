@@ -1,7 +1,7 @@
-﻿using BetterAttributes.EditorAddons.Drawers.Utilities;
+﻿using Better.Attributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 
-namespace BetterAttributes.EditorAddons.Drawers.Select.Wrappers
+namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
     public class BaseSelectWrapper : UtilityWrapper
     {

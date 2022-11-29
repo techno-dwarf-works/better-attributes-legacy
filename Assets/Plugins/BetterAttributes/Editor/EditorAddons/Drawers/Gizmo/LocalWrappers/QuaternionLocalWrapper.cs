@@ -1,10 +1,9 @@
 ﻿using System;
-using BetterAttributes.EditorAddons.Helpers;
-using BetterExtensions.EditorAddons;
+using Better.Extensions.EditorAddons;
 using UnityEditor;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Gizmo
+namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     public class QuaternionLocalWrapper : GizmoWrapper
     {

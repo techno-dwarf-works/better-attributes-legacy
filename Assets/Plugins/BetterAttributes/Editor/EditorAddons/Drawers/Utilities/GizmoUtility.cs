@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using BetterAttributes.EditorAddons.Drawers.Base;
-using BetterAttributes.EditorAddons.Drawers.Gizmo;
-using BetterAttributes.Runtime.Attributes.Gizmo;
+using Better.Attributes.EditorAddons.Drawers.Base;
+using Better.Attributes.EditorAddons.Drawers.Gizmo;
+using Better.Attributes.Runtime.Gizmo;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
-namespace BetterAttributes.EditorAddons.Drawers.Utilities
+namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {
     public class GizmoUtility : BaseUtility<GizmoUtility>
     {

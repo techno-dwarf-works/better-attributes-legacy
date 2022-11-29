@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace BetterAttributes.Runtime.Attributes.Headers
+namespace Better.Attributes.Runtime.Headers
 {
     /// <summary>
     /// Draws texture by path in Unity Inspector

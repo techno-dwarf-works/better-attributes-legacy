@@ -1,4 +1,4 @@
-﻿namespace BetterAttributes.Samples.Interfaces
+﻿namespace Samples.Interfaces
 {
     public interface ISomeInterface
     {

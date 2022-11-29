@@ -1,64 +1,41 @@
-using System;
 using System.Collections.Generic;
-using BetterAttributes.Runtime;
-using BetterAttributes.Runtime.Attributes.DrawInspector;
-using BetterAttributes.Runtime.Attributes.Gizmo;
-using BetterAttributes.Runtime.Attributes.Headers;
-using BetterAttributes.Runtime.Attributes.Preview;
-using BetterAttributes.Runtime.Attributes.ReadOnly;
-using BetterAttributes.Runtime.Attributes.Rename;
-using BetterAttributes.Runtime.Attributes.Select;
-using BetterAttributes.Samples.Interfaces;
-using BetterAttributes.Samples.Models;
+using Better.Attributes.Runtime;
+using Better.Attributes.Runtime.Gizmo;
+using Better.Attributes.Runtime.ReadOnly;
+using Better.Attributes.Runtime.Select;
+using Samples.Interfaces;
+using Samples.Models;
 using UnityEngine;
 
-namespace BetterAttributes.Samples
+namespace Samples
 {
-    [Flags]
-    public enum MyFlagEnum
+    [CreateAssetMenu(menuName = "Create TestScriptableObject", fileName = "TestScriptableObject", order = 0)]
+    public class TestScriptableObject : ScriptableObject
     {
-        First = 1,
-        Second = 2,
-        Third = 4
-    }
-
-    public class Test : MonoBehaviour
-    {
-        [IconHeader("78b772f3f305147419de3cc97ca72bd7")] 
-        [SelectEnum] [SerializeField] private KeyCode keyCode;
-
-        [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
-
-        [DrawInspector] [SerializeField] private PreviewTest component;
-        [Preview] [SerializeField] private Texture2D texture;
-
-        [DrawInspector] [SerializeField] private List<TestScriptableObject> scriptableObjectList;
-        [DrawInspector] [SerializeField] private TestScriptableObject[] scriptableObjectArray;
-
-        [GizmoLocal] [SerializeField] private Vector3 vector3Local;
-
-        [GizmoLocal] [RenameField("Quaternion Local Rename")] [SerializeField]
-        private Quaternion quaternion;
-
-        [GizmoLocal] [SerializeField] private SomeClass some;
+        [Gizmo]
+        [SerializeField] private Bounds bounds;
+        
+        [Gizmo]
+        [SerializeField] private Vector3 vector3;
+        
+        [Gizmo]
+        [SerializeField] private Quaternion quaternion;
 
         [ReadOnlyField] [SerializeField] private SomeClass someClass;
 
         [ReadOnlyField] [SerializeField] private float someFloat;
 
-        [SelectImplementation(DisplayGrouping.GroupedFlat)] [SerializeReference]
+        [SelectImplementation] [SerializeReference]
         private ISomeInterface someInterface;
 
         [SelectImplementation] [SerializeReference]
         private SomeAbstractClass someAbstractClass;
 
-        [SelectImplementation(typeof(SomeAbstractClass), DisplayName.Full)] [SerializeReference]
+        [SelectImplementation(typeof(SomeAbstractClass))] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
-        [SelectImplementation(typeof(ISomeInterface), DisplayGrouping.Grouped)] [SerializeReference]
+        [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
-
-        [GizmoLocal] [SerializeField] private Bounds bounds;
 
         ///Default usage of attribute.
         [EditorButton]
