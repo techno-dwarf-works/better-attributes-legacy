@@ -12,7 +12,10 @@ namespace Better.Attributes.EditorAddons.Helpers
         public event Action Closed;
         public event Action FocusLost;
 
-        public static EditorPopup Initialize(Texture texture, Rect position, bool needUpdate, bool destroyTexture = false)
+        public event Action Destroyed;
+
+        public static EditorPopup Initialize(Texture texture, Rect position, bool needUpdate,
+            bool destroyTexture = false)
         {
             var window = HasOpenInstances<EditorPopup>() ? GetWindow<EditorPopup>() : CreateInstance<EditorPopup>();
             window.position = position;
@@ -22,8 +25,9 @@ namespace Better.Attributes.EditorAddons.Helpers
             window.ShowPopup();
             return window;
         }
-        
-        public static EditorPopup InitializeAsWindow(Texture texture, Rect position, bool needUpdate, bool destroyTexture = false)
+
+        public static EditorPopup InitializeAsWindow(Texture texture, Rect position, bool needUpdate,
+            bool destroyTexture = false)
         {
             var window = HasOpenInstances<EditorPopup>() ? GetWindow<EditorPopup>() : CreateInstance<EditorPopup>();
             window.position = position;
@@ -51,6 +55,11 @@ namespace Better.Attributes.EditorAddons.Helpers
             FocusLost?.Invoke();
         }
 
+        private void OnDestroy()
+        {
+            Destroyed?.Invoke();
+        }
+
         public static void CloseInstance()
         {
             if (!HasOpenInstances<EditorPopup>()) return;
@@ -60,6 +69,7 @@ namespace Better.Attributes.EditorAddons.Helpers
             {
                 Destroy(window._texture);
             }
+
             window.Close();
         }
 
