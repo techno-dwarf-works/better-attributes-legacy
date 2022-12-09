@@ -215,4 +215,4 @@ Project Settings -> Package Manager -> Scoped registries
   ]
 ```
 
-Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> BetterAttributes
+Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> Better Attributes
