@@ -24,7 +24,7 @@ namespace Samples
 
     public class Test : MonoBehaviour
     {
-        [IconHeader("78b772f3f305147419de3cc97ca72bd7")] 
+        [IconHeader("78b772f3f305147419de3cc97ca72bd7")]
         [SelectEnum] [SerializeField] private KeyCode keyCode;
 
         [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
