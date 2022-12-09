@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Helpers
@@ -6,18 +7,37 @@ namespace Better.Attributes.EditorAddons.Helpers
     public class EditorPopup : EditorWindow
     {
         private Texture _texture;
+        private bool _needUpdate = true;
+        private bool _destroyTexture;
+        public event Action Closed;
+        public event Action FocusLost;
 
-        public static void Initialize(Texture texture, Rect position)
+        public static EditorPopup Initialize(Texture texture, Rect position, bool needUpdate, bool destroyTexture = false)
         {
             var window = HasOpenInstances<EditorPopup>() ? GetWindow<EditorPopup>() : CreateInstance<EditorPopup>();
             window.position = position;
             window._texture = texture;
+            window._needUpdate = needUpdate;
+            window._destroyTexture = destroyTexture;
             window.ShowPopup();
+            return window;
+        }
+        
+        public static EditorPopup InitializeAsWindow(Texture texture, Rect position, bool needUpdate, bool destroyTexture = false)
+        {
+            var window = HasOpenInstances<EditorPopup>() ? GetWindow<EditorPopup>() : CreateInstance<EditorPopup>();
+            window.position = position;
+            window._texture = texture;
+            window._needUpdate = needUpdate;
+            window._destroyTexture = destroyTexture;
+            window.ShowUtility();
+            return window;
         }
 
         private void Update()
         {
-            Repaint();
+            if (_needUpdate)
+                Repaint();
         }
 
         private void OnGUI()
@@ -26,20 +46,28 @@ namespace Better.Attributes.EditorAddons.Helpers
                 GUI.DrawTexture(new Rect(0, 0, position.width, position.height), _texture, ScaleMode.ScaleToFit, true);
         }
 
+        private void OnLostFocus()
+        {
+            FocusLost?.Invoke();
+        }
+
         public static void CloseInstance()
         {
             if (!HasOpenInstances<EditorPopup>()) return;
             var window = GetWindow<EditorPopup>();
+            window.Closed?.Invoke();
+            if (window._destroyTexture)
+            {
+                Destroy(window._texture);
+            }
             window.Close();
         }
 
-        public static void UpdatePosition(Vector2 newPosition)
+        public void UpdatePosition(Vector2 newPosition)
         {
-            if (!HasOpenInstances<EditorPopup>()) return;
-            var window = GetWindow<EditorPopup>();
-            var rect = window.position;
+            var rect = position;
             rect.position = newPosition;
-            window.position = rect;
+            position = rect;
         }
     }
 }

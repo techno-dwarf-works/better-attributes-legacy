@@ -50,13 +50,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             CheckInteraction(position, serializedProperty, size);
         }
 
-        private async void UpdateTextureLoop(CancellationToken cancellationToken)
+        private async void UpdateTextureLoop(EditorPopup editorPopup, CancellationToken cancellationToken)
         {
             await Task.Yield();
             while (_isMouseDown && !cancellationToken.IsCancellationRequested)
             {
                 UpdateTexture();
-                EditorPopup.UpdatePosition(_currentScreenMousePosition);
+                editorPopup.UpdatePosition(_currentScreenMousePosition);
                 await Task.Yield();
                 if (cancellationToken.IsCancellationRequested) break;
             }
@@ -72,7 +72,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             else
             {
                 var isLeftDrag = DrawersHelper.IsMouseButton(EventType.MouseDrag, DrawersHelper.MouseButtonLeft);
-                if (DrawersHelper.IsLeftButtonUp() || isLeftDrag && !contains && _isMouseDown)
+                var isLeftUp = DrawersHelper.IsLeftButtonUp();
+                if (isLeftUp || isLeftDrag && !contains && _isMouseDown)
                 {
                     Deconstruct();
                 }
@@ -86,12 +87,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
                 _previewScene.Construct();
                 var texture = GenerateTexture(serializedProperty.objectReferenceValue, size);
                 if (texture == null) return;
-                EditorPopup.Initialize(texture,
-                    new Rect(_currentScreenMousePosition, Vector2.one * size));
+                var popup = EditorPopup.Initialize(texture,
+                    new Rect(_currentScreenMousePosition, Vector2.one * size), true);
                 _isMouseDown = true;
 
                 _cancellation = new CancellationTokenSource();
-                UpdateTextureLoop(_cancellation.Token);
+                UpdateTextureLoop(popup, _cancellation.Token);
             }
         }
     }
