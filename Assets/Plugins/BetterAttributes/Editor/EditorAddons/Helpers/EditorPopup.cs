@@ -65,9 +65,9 @@ namespace Better.Attributes.EditorAddons.Helpers
             if (!HasOpenInstances<EditorPopup>()) return;
             var window = GetWindow<EditorPopup>();
             window.Closed?.Invoke();
-            if (window._destroyTexture)
+            if (window._destroyTexture && window._texture)
             {
-                Destroy(window._texture);
+                DestroyImmediate(window._texture);
             }
 
             window.Close();
