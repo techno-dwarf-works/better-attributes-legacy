@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Helpers
 {
-    internal static class DrawersHelper
+    public static class DrawersHelper
     {
         private static float _spaceHeight = 6f;
         public static float SpaceHeight => _spaceHeight;
@@ -26,7 +26,7 @@ namespace Better.Attributes.EditorAddons.Helpers
         }
 
         /// <summary>
-        /// Override for default Inspector HelpBox with RTF text
+        /// Override for default Inspector HelpBox with Rich text
         /// </summary>
         /// <param name="message"></param>
         /// <param name="position"></param>
@@ -257,7 +257,7 @@ namespace Better.Attributes.EditorAddons.Helpers
         }
     }
 
-    internal enum IconType
+    public enum IconType
     {
         /// <summary>
         ///   <para>Neutral message.</para>
