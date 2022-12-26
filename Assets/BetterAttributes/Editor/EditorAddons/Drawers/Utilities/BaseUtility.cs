@@ -51,7 +51,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
         }
 
         /// <summary>
-        /// Validates stored properties if their <see cref="BetterAttributes.EditorAddons.Drawers.Base.WrapperCollectionValue.Type"/> supported
+        /// Validates stored properties if their <see cref="WrapperCollectionValue{T}.Type"/> supported
         /// </summary>
         /// <param name="gizmoWrappers"></param>
         /// <typeparam name="T"></typeparam>
