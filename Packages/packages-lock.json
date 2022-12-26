@@ -146,8 +146,24 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.uurha.betterdatastructures": {
+      "version": "0.0.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://package.openupm.com"
+    },
+    "com.uurha.bettereditortools": {
+      "version": "0.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.uurha.betterdatastructures": "0.0.2"
+      },
+      "url": "https://package.openupm.com"
+    },
     "com.uurha.betterextensions": {
-      "version": "0.1.2",
+      "version": "0.2.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

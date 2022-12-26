@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Better.Attributes.EditorAddons.Helpers;
+using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
 

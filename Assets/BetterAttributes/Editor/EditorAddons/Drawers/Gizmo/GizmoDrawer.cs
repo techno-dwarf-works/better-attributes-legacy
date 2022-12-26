@@ -1,8 +1,8 @@
 ﻿using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
-using Better.Attributes.EditorAddons.Helpers;
 using Better.Attributes.Runtime.Gizmo;
-using Better.Extensions.EditorAddons;
+using Better.EditorTools;
+using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
