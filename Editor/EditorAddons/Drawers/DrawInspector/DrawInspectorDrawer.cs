@@ -2,8 +2,8 @@
 using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
-using Better.Attributes.EditorAddons.Helpers;
 using Better.Attributes.Runtime.DrawInspector;
+using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
 

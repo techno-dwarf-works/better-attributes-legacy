@@ -1,4 +1,5 @@
 ﻿using System;
+using Better.Attributes.EditorAddons.Drawers.Comparers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Base
         private protected WrapperCollection<T> _wrappers;
 
         /// <summary>
-        /// Method generates explicit typed collection inherited from <see cref="BetterAttributes.EditorAddons.Drawers.Base.WrapperCollection"/> 
+        /// Method generates explicit typed collection inherited from <see cref="WrapperCollection{T}"/> 
         /// </summary>
         /// <returns></returns>
         private protected abstract WrapperCollection<T> GenerateCollection();
@@ -32,10 +33,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Base
         }
 
         /// <summary>
-        /// Validates if <see cref="_wrappers"/> contains property by <see cref="BetterAttributes.EditorAddons.Drawers.Comparers.SerializedPropertyComparer"/>
+        /// Validates if <see cref="_wrappers"/> contains property by <see cref="SerializedPropertyComparer"/>
         /// </summary>
         /// <param name="property">SerializedProperty what will be stored into <see cref="_wrappers"/></param>
-        /// <param name="handler"><see cref="BetterAttributes.EditorAddons.Drawers.Utilities.BaseUtility"/> used to validate current stored wrappers and gets instance for recently added property</param>
+        /// <param name="handler"><see cref="BaseUtility{THandler}"/> used to validate current stored wrappers and gets instance for recently added property</param>
         /// <typeparam name="THandler"></typeparam>
         /// <returns>Returns true if wrapper for <paramref name="property"/> was already stored into <see cref="_wrappers"/></returns>
         private protected bool ValidateCachedProperties<THandler>(SerializedProperty property,

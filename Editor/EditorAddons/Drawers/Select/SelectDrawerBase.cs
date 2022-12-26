@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
-using Better.Attributes.EditorAddons.Helpers;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Helpers;
+using Better.EditorTools.Helpers.DropDown;
 using UnityEditor;
 using UnityEngine;
 

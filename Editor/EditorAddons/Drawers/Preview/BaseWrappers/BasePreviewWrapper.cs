@@ -1,5 +1,5 @@
 ﻿using Better.Attributes.EditorAddons.Drawers.Utilities;
-using Better.Attributes.EditorAddons.Helpers;
+using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
