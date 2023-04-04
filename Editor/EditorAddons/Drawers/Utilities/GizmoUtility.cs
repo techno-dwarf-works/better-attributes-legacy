@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.Attributes.Runtime.Gizmo;
+using Better.EditorTools.Drawers.Base;
+using Better.EditorTools.Utilities;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
             }
         }
 
-        private protected override WrappersTypeCollection GenerateCollection()
+        protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection()
             {
@@ -71,7 +72,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
             };
         }
 
-        private protected override HashSet<Type> GenerateAvailable()
+        protected override HashSet<Type> GenerateAvailable()
         {
             return new HashSet<Type>()
             {
