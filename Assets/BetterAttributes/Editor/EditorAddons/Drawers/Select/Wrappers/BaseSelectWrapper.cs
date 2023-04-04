@@ -1,4 +1,4 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Utilities;
+﻿using Better.EditorTools.Utilities;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers

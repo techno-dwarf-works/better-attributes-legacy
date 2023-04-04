@@ -29,7 +29,7 @@ namespace Samples
 
         [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
 
-        [DrawInspector] [SerializeField] private PreviewTest component;
+        [Preview] [SerializeField] private PreviewTest component;
         [Preview] [SerializeField] private Texture2D texture;
 
         [DrawInspector] [SerializeField] private List<TestScriptableObject> scriptableObjectList;

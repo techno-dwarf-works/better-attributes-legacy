@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Drawers.Base;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -19,7 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
         private protected SelectTypeWrappers Collection => _wrappers as SelectTypeWrappers;
 
-        private protected override WrapperCollection<SelectTypeWrapper> GenerateCollection()
+        protected override WrapperCollection<SelectTypeWrapper> GenerateCollection()
         {
             return new SelectTypeWrappers();
         }

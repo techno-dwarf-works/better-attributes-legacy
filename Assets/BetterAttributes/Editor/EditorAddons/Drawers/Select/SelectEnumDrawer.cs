@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Drawers.Base;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
@@ -37,12 +37,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             public int Value { get; }
         }
 
-        private protected override WrapperCollection<SelectEnumWrapper> GenerateCollection()
+        protected override WrapperCollection<SelectEnumWrapper> GenerateCollection()
         {
             return new SelectEnumWrappers();
         }
 
-        private protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
             var preparePropertyRect = PreparePropertyRect(position);
             EditorGUI.LabelField(preparePropertyRect, label, EditorStyles.label);

@@ -1,8 +1,8 @@
 ﻿using System;
-using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.DrawInspector;
+using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
@@ -15,17 +15,17 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
         private bool _isOpen;
         private DrawInspectors Collection => _wrappers as DrawInspectors;
 
-        private protected override void Deconstruct()
+        protected override void Deconstruct()
         {
             _wrappers.Deconstruct();
         }
         
-        private protected override Type GetFieldType()
+        protected override Type GetFieldType()
         {
             return fieldInfo.FieldType;
         }
 
-        private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
+        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             var fieldType = GetFieldType();
             if (fieldType.IsArray || !DrawInspectorUtility.Instance.IsSupported(fieldType))
@@ -55,17 +55,17 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             return true;
         }
 
-        private protected override Rect PreparePropertyRect(Rect original)
+        protected override Rect PreparePropertyRect(Rect original)
         {
             return original;
         }
 
-        private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
             Collection.OnGUI(property);
         }
 
-        private protected override WrapperCollection<DrawInspectorWrapper> GenerateCollection()
+        protected override WrapperCollection<DrawInspectorWrapper> GenerateCollection()
         {
             return new DrawInspectors();
         }

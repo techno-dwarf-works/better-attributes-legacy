@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.Attributes.EditorAddons.Drawers.Base;
-using Better.Attributes.EditorAddons.Drawers.Comparers;
 using Better.Attributes.EditorAddons.Drawers.DrawInspector;
 using Better.Attributes.Runtime.DrawInspector;
+using Better.EditorTools.Comparers;
+using Better.EditorTools.Drawers.Base;
+using Better.EditorTools.Utilities;
 using Object = UnityEngine.Object;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {
     public class DrawInspectorUtility : BaseUtility<DrawInspectorUtility>
     {
-        private protected override WrappersTypeCollection GenerateCollection()
+        protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection()
             {
@@ -21,7 +22,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
             };
         }
 
-        private protected override HashSet<Type> GenerateAvailable()
+        protected override HashSet<Type> GenerateAvailable()
         {
             return new HashSet<Type>(AssignableFromComparer.Instance) { typeof(Object) };
         }

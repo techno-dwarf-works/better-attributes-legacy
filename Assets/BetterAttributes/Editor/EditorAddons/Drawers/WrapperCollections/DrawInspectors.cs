@@ -1,5 +1,5 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Base;
-using Better.Attributes.EditorAddons.Drawers.DrawInspector;
+﻿using Better.Attributes.EditorAddons.Drawers.DrawInspector;
+using Better.EditorTools.Drawers.Base;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
