@@ -1,5 +1,5 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Base;
-using Better.Attributes.Runtime.ReadOnly;
+﻿using Better.Attributes.Runtime.ReadOnly;
+using Better.EditorTools.Drawers.Base;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,22 +8,22 @@ namespace Better.Attributes.EditorAddons.Drawers.ReadOnly
     [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyFieldDrawer : FieldDrawer
     {
-        private protected override void Deconstruct()
+        protected override void Deconstruct()
         {
         }
 
-        private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
+        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginDisabledGroup(true);
             return true;
         }
 
-        private protected override Rect PreparePropertyRect(Rect position)
+        protected override Rect PreparePropertyRect(Rect position)
         {
             return position;
         }
 
-        private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.EndDisabledGroup();
         }

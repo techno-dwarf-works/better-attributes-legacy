@@ -1,6 +1,6 @@
 ﻿using System;
-using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
+using Better.EditorTools.Drawers.Base;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections

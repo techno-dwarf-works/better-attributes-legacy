@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.Attributes.EditorAddons.Drawers.Base;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using Better.EditorTools.Helpers.DropDown;
 using UnityEditor;
@@ -26,12 +26,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return EditorGUI.GetPropertyHeight(property, true);
         }
 
-        private protected override Type GetFieldType()
+        protected override Type GetFieldType()
         {
             return (attribute as SelectAttributeBase)?.GetFieldType() ?? base.GetFieldType();
         }
 
-        private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
+        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return popupPosition;
         }
 
-        private protected override void Deconstruct()
+        protected override void Deconstruct()
         {
             DropdownWindow.CloseInstance();
             _wrappers?.Deconstruct();
@@ -166,12 +166,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             _isSetUp = true;
         }
 
-        private protected override Rect PreparePropertyRect(Rect original)
+        protected override Rect PreparePropertyRect(Rect original)
         {
             return original;
         }
 
-        private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
         }
     }

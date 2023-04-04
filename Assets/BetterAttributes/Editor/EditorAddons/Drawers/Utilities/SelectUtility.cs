@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.Attributes.EditorAddons.Drawers.Base;
-using Better.Attributes.EditorAddons.Drawers.Comparers;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Comparers;
+using Better.EditorTools.Drawers.Base;
+using Better.EditorTools.Utilities;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {
     public class SelectUtility : BaseUtility<SelectUtility>
     {
-        private protected override WrappersTypeCollection GenerateCollection()
+        protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection(TypeComparer.Instance)
             {
@@ -28,7 +29,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
             };
         }
 
-        private protected override HashSet<Type> GenerateAvailable()
+        protected override HashSet<Type> GenerateAvailable()
         {
             return new HashSet<Type>(TypeComparer.Instance)
             {

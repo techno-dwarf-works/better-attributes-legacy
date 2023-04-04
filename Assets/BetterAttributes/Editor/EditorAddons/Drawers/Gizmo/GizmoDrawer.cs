@@ -1,7 +1,7 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Base;
-using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+﻿using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Gizmo;
 using Better.EditorTools;
+using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
@@ -42,13 +42,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
         }
 
-        private protected override void Deconstruct()
+        protected override void Deconstruct()
         {
             SceneView.duringSceneGui -= OnSceneGUIDelegate;
             _wrappers?.Deconstruct();
         }
 
-        private protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
+        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             var fieldType = fieldInfo.FieldType;
             var attributeType = attribute.GetType();
@@ -81,7 +81,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             return true;
         }
 
-        private protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
             if (EditorGUI.EndChangeCheck())
             {
@@ -95,12 +95,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
         }
 
-        private protected override WrapperCollection<GizmoWrapper> GenerateCollection()
+        protected override WrapperCollection<GizmoWrapper> GenerateCollection()
         {
             return new GizmoWrappers();
         }
 
-        private protected override Rect PreparePropertyRect(Rect original)
+        protected override Rect PreparePropertyRect(Rect original)
         {
             var copy = original;
             copy.width *= 0.89f;
