@@ -69,7 +69,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             SelectImplementationAttribute currentAttribute)
         {
             var currentObjectType = property.serializedObject.targetObject.GetType();
-            LazyGetAllInheritedType(GetFieldType(), currentObjectType);
+            LazyGetAllInheritedType(GetFieldOrElementType(), currentObjectType);
         }
 
         private protected override GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping)

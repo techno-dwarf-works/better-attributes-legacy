@@ -26,9 +26,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return EditorGUI.GetPropertyHeight(property, true);
         }
 
-        protected override Type GetFieldType()
+        protected override Type GetFieldOrElementType()
         {
-            return (attribute as SelectAttributeBase)?.GetFieldType() ?? base.GetFieldType();
+            return (attribute as SelectAttributeBase)?.GetFieldType() ?? base.GetFieldOrElementType();
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
