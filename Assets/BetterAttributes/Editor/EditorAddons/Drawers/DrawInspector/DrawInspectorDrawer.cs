@@ -19,15 +19,15 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
         {
             _wrappers.Deconstruct();
         }
-        
-        protected override Type GetFieldType()
+
+        protected override Type GetFieldOrElementType()
         {
             return fieldInfo.FieldType;
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
-            var fieldType = GetFieldType();
+            var fieldType = GetFieldOrElementType();
             if (fieldType.IsArray || !DrawInspectorUtility.Instance.IsSupported(fieldType))
             {
                 EditorGUI.BeginChangeCheck();
