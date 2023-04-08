@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Comparers;
 using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
@@ -13,25 +13,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
     {
         private protected override object GetCurrentValue(SerializedProperty property)
         {
-#if UNITY_2021_1_OR_NEWER
-            return property.managedReferenceValue?.GetType();
-#else
-            if (string.IsNullOrEmpty(property.managedReferenceFullTypename))
-            {
-                return null;
-            }
-
-            var split = property.managedReferenceFullTypename.Split(' ');
-            var assembly = GetAssembly(split[0]);
-            var currentValue = assembly.GetType(split[1]);
-            return currentValue;
-#endif
-        }
-
-        private static Assembly GetAssembly(string name)
-        {
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SingleOrDefault(assembly => assembly.GetName().Name == name);
+            return property.GetManagedType();
         }
 
         private bool ValidateType(Type type)
