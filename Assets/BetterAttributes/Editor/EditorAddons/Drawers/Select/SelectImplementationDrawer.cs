@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.Comparers;
+using Better.EditorTools;
 using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;

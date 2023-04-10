@@ -5,6 +5,7 @@ using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Drawers.Base;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -23,26 +24,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return new SelectTypeWrappers();
         }
 
-        private void LazyGetAllInheritedType(Type baseType, Type currentObjectType)
+        private void LazyGetAllInheritedType(Type baseType)
         {
             if (_reflectionTypes != null) return;
-
-            _reflectionTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes()).Where(p => ArgIsValueType(baseType, currentObjectType, p))
-                .Select(x => (object)x).ToList();
+            _reflectionTypes = ReflectionExtensions.GetAllInheritedType(baseType).Cast<object>().ToList();
             _reflectionTypes.Insert(0, null);
-        }
-
-        private bool ArgIsValueType(Type baseType, Type currentObjectType, Type iterateValue)
-        {
-            return iterateValue != currentObjectType && CheckType(baseType, iterateValue) &&
-                   (iterateValue.IsClass || iterateValue.IsValueType) &&
-                   !iterateValue.IsAbstract && !iterateValue.IsSubclassOf(typeof(Object));
-        }
-
-        private bool CheckType(Type baseType, Type p)
-        {
-            return baseType.IsAssignableFrom(p);
         }
 
         private protected override bool CheckSupported(SerializedProperty property)
@@ -69,7 +55,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             SelectImplementationAttribute currentAttribute)
         {
             var currentObjectType = property.serializedObject.targetObject.GetType();
-            LazyGetAllInheritedType(GetFieldOrElementType(), currentObjectType);
+            LazyGetAllInheritedType(GetFieldOrElementType());
         }
 
         private protected override GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping)
