@@ -27,7 +27,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         private void LazyGetAllInheritedType(Type baseType)
         {
             if (_reflectionTypes != null) return;
-            _reflectionTypes = ReflectionExtensions.GetAllInheritedType(baseType).Cast<object>().ToList();
+            _reflectionTypes = baseType.GetAllInheritedType().Cast<object>().ToList();
             _reflectionTypes.Insert(0, null);
         }
 
