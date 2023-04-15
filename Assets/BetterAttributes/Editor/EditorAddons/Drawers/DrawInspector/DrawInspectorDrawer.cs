@@ -20,15 +20,10 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             _wrappers.Deconstruct();
         }
 
-        protected override Type GetFieldOrElementType()
-        {
-            return fieldInfo.FieldType;
-        }
-
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             var fieldType = GetFieldOrElementType();
-            if (fieldType.IsArray || !DrawInspectorUtility.Instance.IsSupported(fieldType))
+            if (!DrawInspectorUtility.Instance.IsSupported(fieldType))
             {
                 EditorGUI.BeginChangeCheck();
                 DrawField(position, property, label);
@@ -47,12 +42,25 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
                 label.image = DrawersHelper.GetIcon(_isOpen ? IconType.Minus : IconType.PlusMore);
             }
 
-            if (DrawersHelper.IsClickedAt(DrawersHelper.GetClickRect(position, label)))
+            var copy = DrawersHelper.GetClickRect(position, label);
+            if (DrawersHelper.IsClickedAt(copy))
             {
                 Collection.SetOpen(property, !_isOpen);
             }
 
             return true;
+        }
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var additionalHeight = 0f;
+            if (Collection != null && Collection.IsOpen(property))
+            {
+                additionalHeight = Collection.GetHeight(property);
+            }
+
+            var propertyHeight = EditorGUI.GetPropertyHeight(property, label) + additionalHeight;
+            return propertyHeight;
         }
 
         protected override Rect PreparePropertyRect(Rect original)
@@ -62,7 +70,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
-            Collection.OnGUI(property);
+            Collection.OnGUI(property, position);
         }
 
         protected override WrapperCollection<DrawInspectorWrapper> GenerateCollection()
