@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ac2a2517c6046a41adbaaf3d289ba3c, type: 3}
-  m_Name: TestScriptableObject
+  m_Name: TestScriptableObject 1
   m_EditorClassIdentifier: 
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -21,7 +21,7 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 1658768636898705410
+    rid: 6147899586227994624
   someAbstractClass:
     rid: -2
   someAbstractClasses: []
@@ -31,7 +31,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 1658768636898705410
-      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
+    - rid: 6147899586227994624
+      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp-firstpass}
       data:
         intField: 0
