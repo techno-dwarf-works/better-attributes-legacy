@@ -24,7 +24,6 @@ namespace Samples
 
     public class Test : MonoBehaviour
     {
-        [IconHeader("78b772f3f305147419de3cc97ca72bd7")]
         [SelectEnum] [SerializeField] private KeyCode keyCode;
 
         [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
@@ -34,6 +33,7 @@ namespace Samples
 
         [DrawInspector] [SerializeField] private List<TestScriptableObject> scriptableObjectList;
         [DrawInspector] [SerializeField] private TestScriptableObject[] scriptableObjectArray;
+        [DrawInspector] [SerializeField] private TestScriptableObject scriptableObject;
 
         [GizmoLocal] [SerializeField] private Vector3 vector3Local;
 

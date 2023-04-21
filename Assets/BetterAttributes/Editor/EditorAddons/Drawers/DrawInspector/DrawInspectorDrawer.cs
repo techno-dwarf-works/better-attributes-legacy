@@ -43,6 +43,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             }
 
             var copy = DrawersHelper.GetClickRect(position, label);
+            copy.height = EditorGUIUtility.singleLineHeight;
             if (DrawersHelper.IsClickedAt(copy))
             {
                 Collection.SetOpen(property, !_isOpen);
