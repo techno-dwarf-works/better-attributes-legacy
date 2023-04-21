@@ -1,16 +1,17 @@
 ﻿using Better.Attributes.EditorAddons.Drawers.DrawInspector;
 using Better.EditorTools.Drawers.Base;
 using UnityEditor;
+using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
     public class DrawInspectors : WrapperCollection<DrawInspectorWrapper>
     {
-        public void OnGUI(SerializedProperty serializedProperty)
+        public void OnGUI(SerializedProperty serializedProperty, Rect rect)
         {
             if (TryGetValue(serializedProperty, out var collectionValue))
             {
-                collectionValue.Wrapper.OnGUI();
+                collectionValue.Wrapper.OnGUI(rect);
             }
         }
 
@@ -36,8 +37,18 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
         {
             if (TryGetValue(property, out var wrapper))
             {
-                wrapper.Wrapper.CreateEditor(property.objectReferenceValue);
+                wrapper.Wrapper.SetProperty(property);
             }
+        }
+
+        public float GetHeight(SerializedProperty property)
+        {
+            if (TryGetValue(property, out var wrapper))
+            {
+                return wrapper.Wrapper.GetHeight();
+            }
+
+            return 0;
         }
     }
 }
