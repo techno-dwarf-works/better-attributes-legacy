@@ -21,7 +21,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         {
             get
             {
-                _wrappers ??= GenerateCollection();
+                if (_wrappers == null)
+                {
+                    _wrappers = GenerateCollection();
+                }
+
                 return _wrappers as GizmoWrappers;
             }
         }
@@ -37,6 +41,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         {
             if (sceneView.drawGizmos)
             {
+                if (_wrappers == null)
+                {
+                    _wrappers = GenerateCollection();
+                }
                 GizmoUtility.Instance.ValidateCachedProperties(_wrappers);
                 Collection?.Apply(sceneView);
             }
@@ -53,11 +61,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             var fieldType = fieldInfo.FieldType;
             var attributeType = attribute.GetType();
 
-            if (_hideTransformDrawer == null && property.IsTargetComponent(out _))
-            {
-                _hideTransformDrawer = new HideTransformButtonUtility(property, GizmoUtility.Instance);
-            }
-
             if (!GizmoUtility.Instance.IsSupported(fieldType))
             {
                 EditorGUI.BeginChangeCheck();
@@ -72,11 +75,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
 
             EditorGUI.BeginChangeCheck();
-
-            if (_hideTransformDrawer != null)
-            {
-                _hideTransformDrawer.DrawHideTransformButton();
-            }
 
             return true;
         }
