@@ -2,36 +2,41 @@
 using System.Linq;
 using System.Reflection;
 using Better.Attributes.Runtime;
+using Better.EditorTools.CustomEditors;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace Better.Attributes.EditorAddons
+namespace Better.Attributes.EditorAddons.CustomEditors
 {
-    [CanEditMultipleObjects]
-    [CustomEditor(typeof(Object), true)]
-    public class BetterAttributesEditor : Editor
+    [BetterEditor(typeof(Object), true, Order = 999)]
+    public class BetterButtonsEditor : EditorExtension
     {
         private Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>> _methodButtonsAttributes =
             new Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>>();
-
-        protected Object _bufferTarget;
-
-        protected virtual void OnEnable()
+        
+        public BetterButtonsEditor(Object target, SerializedObject serializedObject) : base(target, serializedObject)
         {
-            _bufferTarget = target;
-            var type = _bufferTarget.GetType();
+        }
+
+        public override void OnDisable()
+        {
+        }
+
+        public override void OnEnable()
+        {
+            var type = _target.GetType();
             _methodButtonsAttributes = type.GetSortedMethodAttributes();
         }
 
-        private void DrawButton(KeyValuePair<MethodInfo, EditorButtonAttribute> button,
-            GUIStyle guiStyle)
+        private void DrawButton(KeyValuePair<MethodInfo, EditorButtonAttribute> button, GUIStyle guiStyle)
         {
             var attribute = button.Value;
             var methodInfo = button.Key;
 
             if (GUILayout.Button(attribute.GetDisplayName(methodInfo.PrettyMemberName()), guiStyle))
-                methodInfo.Invoke(_bufferTarget, attribute.InvokeParams);
+                methodInfo.Invoke(_target, attribute.InvokeParams);
         }
 
         private void DrawButtons(Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>> buttons)
@@ -76,10 +81,14 @@ namespace Better.Attributes.EditorAddons
 
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-            serializedObject.Update();
+            _serializedObject.Update();
             DrawButtons(_methodButtonsAttributes);
-            serializedObject.ApplyModifiedProperties();
+            _serializedObject.ApplyModifiedProperties();
+        }
+
+        public override void OnChanged()
+        {
+            
         }
     }
 }

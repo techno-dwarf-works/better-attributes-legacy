@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.EditorTools.Utilities;
 using UnityEditor;
@@ -12,25 +13,21 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
     public abstract class GizmoWrapper : UtilityWrapper
     {
         private protected SerializedProperty _serializedProperty;
-        private protected Type _objectType;
 
         private protected readonly Quaternion _defaultRotation = Quaternion.identity;
         private protected readonly Vector3 _defaultPosition = Vector3.zero;
         private bool _showInSceneView = true;
         private Type _fieldType;
 
+        private string _path;
+
         public bool ShowInSceneView => _showInSceneView;
 
         public virtual void SetProperty(SerializedProperty property, Type fieldType)
         {
-            _fieldType = fieldType;
             _serializedProperty = property;
-            _objectType = _serializedProperty.serializedObject.targetObject.GetType();
-        }
-
-        public override void Deconstruct()
-        {
-            GizmoUtility.Instance.RemoveButtonDrawn(_objectType);
+            _path = _serializedProperty.propertyPath;
+            _fieldType = fieldType;
         }
 
         public void SwitchShowMode()
@@ -40,13 +37,22 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         public abstract void Apply(SceneView sceneView);
 
-        private protected virtual bool ValidateSerializedObject()
+        public override void Deconstruct()
         {
-            var serializedObject = _serializedProperty?.serializedObject;
+            _serializedProperty = null;
+        }
 
-            if (serializedObject == null) return false;
+        public virtual bool ValidateSerializedObject()
+        {
             try
             {
+                if (_serializedProperty == null) return false;
+                var serializedObject = _serializedProperty.serializedObject;
+
+                if (!string.Equals(_serializedProperty.propertyPath, _path)) return false;
+                if (serializedObject == null) return false;
+                if (!_serializedProperty.Copy().Next(true)) return false;
+
                 if (!GizmoUtility.Instance.IsSupported(_fieldType)) return false;
                 return serializedObject.targetObject != null;
             }

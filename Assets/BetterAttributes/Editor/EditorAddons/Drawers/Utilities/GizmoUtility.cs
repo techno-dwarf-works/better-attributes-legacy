@@ -11,42 +11,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {
     public class GizmoUtility : BaseUtility<GizmoUtility>
     {
-        private readonly Dictionary<Type, int> hideTransformRegistered = new Dictionary<Type, int>();
-
-        [DidReloadScripts]
-        private static void OnReloadScripts()
-        {
-            Instance.hideTransformRegistered.Clear();
-        }
-
-        public bool IsButtonDrawn(Type type)
-        {
-            if (hideTransformRegistered.TryGetValue(type, out var count))
-            {
-                count++;
-                hideTransformRegistered[type] = count;
-                return true;
-            }
-
-            hideTransformRegistered.Add(type, 1);
-            return false;
-        }
-
-        public void RemoveButtonDrawn(Type type)
-        {
-            if (hideTransformRegistered.TryGetValue(type, out var count))
-            {
-                count--;
-                if (count <= 1)
-                {
-                    hideTransformRegistered.Remove(type);
-                    return;
-                }
-
-                hideTransformRegistered[type] = count;
-            }
-        }
-
         protected override WrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection()

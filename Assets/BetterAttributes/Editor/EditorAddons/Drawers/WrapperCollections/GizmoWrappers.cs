@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.EditorTools.Drawers.Base;
 using UnityEditor;
@@ -9,9 +10,30 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
     {
         public void Apply(SceneView sceneView)
         {
-            foreach (var gizmo in Values)
+            List<SerializedProperty> keysToRemove = null;
+            foreach (var gizmo in this)
             {
-                gizmo.Wrapper.Apply(sceneView);
+                var valueWrapper = gizmo.Value.Wrapper;
+                if(valueWrapper.ValidateSerializedObject())
+                {
+                    valueWrapper.Apply(sceneView);
+                }
+                else
+                {
+                    if (keysToRemove == null)
+                    {
+                        keysToRemove = new List<SerializedProperty>();
+                    }
+                    keysToRemove.Add(gizmo.Key);
+                }
+            }
+
+            if (keysToRemove != null)
+            {
+                foreach (var property in keysToRemove)
+                {
+                    Remove(property);
+                }
             }
         }
 
