@@ -11,7 +11,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         public override void Apply(SceneView sceneView)
         {
             if (!ShowInSceneView) return;
-            if (!ValidateSerializedObject()) return;
             DrawLabel($"{_serializedProperty.name}:\n{_quaternion.eulerAngles}", _defaultPosition, _quaternion,
                 sceneView);
             _quaternion = Handles.RotationHandle(_quaternion, _defaultPosition);
