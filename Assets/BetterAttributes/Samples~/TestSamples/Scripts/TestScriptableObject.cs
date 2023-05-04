@@ -12,6 +12,10 @@ namespace Samples
     [CreateAssetMenu(menuName = "Create TestScriptableObject", fileName = "TestScriptableObject", order = 0)]
     public class TestScriptableObject : ScriptableObject
     {
+        
+        [Select] [SerializeField] private KeyCode keyCode;
+        [Select] [SerializeField] private KeyCode keyCode1;
+        
         [Gizmo]
         [SerializeField] private Bounds bounds;
         
@@ -36,7 +40,7 @@ namespace Samples
 
         [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
-
+        
         ///Default usage of attribute.
         [EditorButton]
         private void SomeMethod()

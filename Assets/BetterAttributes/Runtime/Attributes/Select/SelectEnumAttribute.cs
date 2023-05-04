@@ -9,6 +9,7 @@ namespace Better.Attributes.Runtime.Select
     /// </summary>
     [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
+    [Obsolete("Use SelectAttribute instead", true)]
     public class SelectEnumAttribute : SelectAttributeBase
     {
         public SelectEnumAttribute(Type type) : base(type)
