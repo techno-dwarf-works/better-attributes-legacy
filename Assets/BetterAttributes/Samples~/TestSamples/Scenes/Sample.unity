@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,8 +153,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3ec95f197def4081b17762f1fd41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyCode: 46
-  myFlagEnumTest: 5
+  serializedType:
+    fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  keyCode: 342
+  myFlagEnumTest: 0
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
   texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 3}
   scriptableObjectList:
@@ -170,29 +173,40 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: -2
+    rid: 7756078790551535633
   someAbstractClass:
-    rid: 220138102916644875
+    rid: 7756078790551535629
   someAbstractClasses:
-  - rid: -2
+  - rid: 7756078790551535630
   someInterfaces:
-  - rid: 220138311990378500
-  - rid: -2
+  - rid: 7756078790551535631
+  - rid: 7756078790551535632
   bounds:
     m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
     m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 220138102916644875
-      type: {class: SomeAbstractClassImplementation2, ns: BetterAttributes.Samples.Models, asm: Assembly-CSharp-firstpass}
+    - rid: 7756078790551535629
+      type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 220138311990378500
-      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp-firstpass}
+    - rid: 7756078790551535630
+      type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
+      data:
+        baseIntField: 0
+        boolField: 0
+    - rid: 7756078790551535631
+      type: {class: SomeInterfaceImplementation21, ns: Samples.Models, asm: Assembly-CSharp}
+      data:
+        intField: 0
+    - rid: 7756078790551535632
+      type: {class: SomeInterfaceImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
+      data:
+        boolField: 0
+    - rid: 7756078790551535633
+      type: {class: SomeInterfaceImplementation16, ns: Samples.OtherModels, asm: Assembly-CSharp}
       data:
         intField: 0
 --- !u!4 &123298862
@@ -422,6 +436,7 @@ GameObject:
   - component: {fileID: 1418057091}
   - component: {fileID: 1418057090}
   - component: {fileID: 1418057089}
+  - component: {fileID: 1418057092}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -479,3 +494,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1418057092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418057088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e00f0a3eb91afd4a834ba63c1fef0dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eboboInt:
+  - value: 0
+    arki_Ne_prava_nadeus: 0
+  - value: 0
+    arki_Ne_prava_nadeus: 0
+  eboboType:
+  - {value: {fileID: 0}, arki_Ne_prava_nadeus: 0}
+  - {value: {fileID: 0}, arki_Ne_prava_nadeus: 0}

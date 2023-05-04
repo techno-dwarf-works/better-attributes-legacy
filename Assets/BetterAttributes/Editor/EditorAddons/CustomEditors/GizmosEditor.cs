@@ -1,4 +1,5 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Gizmo;
+﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.Attributes.Runtime.Gizmo;
 using Better.EditorTools;
 using Better.EditorTools.CustomEditors;
@@ -22,9 +23,14 @@ namespace Better.Attributes.EditorAddons.CustomEditors
 
         public override void OnEnable()
         {
+            CheckAttribute();
+        }
+
+        private void CheckAttribute()
+        {
             var attributeFound = AttributeFound();
 
-            if (attributeFound)
+            if (attributeFound && !(_serializedObject.targetObject is ScriptableObject))
             {
                 _hideTransformDrawer = new HideTransformButtonUtility();
             }
@@ -36,13 +42,13 @@ namespace Better.Attributes.EditorAddons.CustomEditors
             var attributeFound = false;
             while (iterator.Next(true))
             {
-                var data = iterator.GetAttributes<GizmoAttribute>();
+                var data = iterator.GetFieldInfoAndStaticTypeFromProperty();
                 if (data == null)
                 {
                     continue;
                 }
 
-                if (data.Count <= 0) continue;
+                if (data.FieldInfo.GetCustomAttribute<GizmoLocalAttribute>() == null && data.FieldInfo.GetCustomAttribute<GizmoAttribute>() == null) continue;
                 attributeFound = true;
                 break;
             }
@@ -60,8 +66,7 @@ namespace Better.Attributes.EditorAddons.CustomEditors
 
         public override void OnChanged()
         {
-            var attributeFound = AttributeFound();
-            _hideTransformDrawer = attributeFound ? new HideTransformButtonUtility() : null;
+            CheckAttribute();
         }
     }
 }

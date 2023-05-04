@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
@@ -11,24 +13,29 @@ using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select
 {
-    public abstract class SelectDrawerBase<TAttribute, TWrapper> : MultiFieldDrawer<TWrapper>
-        where TAttribute : SelectAttributeBase where TWrapper : BaseSelectWrapper
+    public abstract class SelectDrawerBase<TAttribute> : MultiFieldDrawer<BaseSelectWrapper> where TAttribute : SelectAttributeBase
     {
         private bool _needUpdate;
         private bool _isSetUp;
         private DisplayName _displayName;
         private DisplayGrouping _displayGrouping;
 
-        private protected const string NotSupported = "Not supported";
+        protected SelectedItem<object> _selectedItem;
+        protected List<object> _selectionObjects;
+        protected SetupStrategy _setupStrategy;
+        protected SelectWrappers Collection => _wrappers as SelectWrappers;
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUI.GetPropertyHeight(property, true);
-        }
+            _wrappers ??= GenerateCollection();
+            if (!ValidateCachedProperties(property, SelectUtility.Instance))
+            {
+                var selectWrapper = _wrappers[property].Wrapper;
+                selectWrapper.SetProperty(property, fieldInfo);
+                return selectWrapper.GetHeight();
+            }
 
-        protected override Type GetFieldOrElementType()
-        {
-            return (attribute as SelectAttributeBase)?.GetFieldType() ?? base.GetFieldOrElementType();
+            return _wrappers[property].Wrapper.GetHeight();
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
@@ -36,21 +43,23 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             try
             {
                 var att = (TAttribute)attribute;
+                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(GetFieldOrElementType(), attribute.GetType());
+                var fieldOrElementType = _setupStrategy.GetFieldOrElementType(fieldInfo, att);
                 if (!CheckSupported(property))
                 {
-                    DrawersHelper.NotSupportedAttribute(property.displayName, fieldInfo.FieldType, attribute.GetType());
+                    DrawersHelper.NotSupportedAttribute(property.displayName, fieldOrElementType, attribute.GetType());
                     return false;
                 }
 
                 if (!ValidateCachedProperties(property, SelectUtility.Instance))
                 {
-                    _wrappers[property].Wrapper.SetProperty(property);
+                    _wrappers[property].Wrapper.SetProperty(property, fieldInfo);
                 }
 
                 var popupPosition = GetPopupPosition(position);
                 if (!_isSetUp)
                 {
-                    Setup(property, att);
+                    _selectionObjects = _setupStrategy.Setup(fieldOrElementType);
                     _displayName = att.DisplayName;
                     _displayGrouping = att.DisplayGrouping;
                     SetReady();
@@ -64,9 +73,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
                 if (_needUpdate)
                 {
-                    UpdateValue(property);
+                    Collection.Update(_selectedItem);
                     _needUpdate = false;
-                    AfterValueUpdated(property);
+                    _selectedItem = null;
                 }
             }
             catch (Exception e)
@@ -96,7 +105,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             var content = DrawersHelper.GetIconGUIContent(IconType.GrayDropdown);
 
-            content.text = GetButtonName(currentValue);
+            content.text = _setupStrategy.GetButtonName(currentValue);
             return GUI.Button(buttonPosition, content, Styles.Button);
         }
 
@@ -104,38 +113,35 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             var copy = popupPosition;
             copy.y += EditorGUIUtility.singleLineHeight;
-            var popup = DropdownWindow.ShowWindow(GUIUtility.GUIToScreenRect(copy), GenerateHeader());
+            var popup = DropdownWindow.ShowWindow(GUIUtility.GUIToScreenRect(copy), _setupStrategy.GenerateHeader());
             var items = GenerateItemsTree(serializedProperty, currentValue);
 
             popup.SetItems(items);
         }
 
-        private protected virtual DropdownCollection GenerateItemsTree(SerializedProperty serializedProperty,
-            object currentValue)
+        private DropdownCollection GenerateItemsTree(SerializedProperty serializedProperty, object currentValue)
         {
             var items = new DropdownCollection(new DropdownSubTree(new GUIContent("Root")));
-            var collection = GetSelectCollection();
             if (_displayGrouping == DisplayGrouping.None)
             {
-                foreach (var type in collection)
+                foreach (var type in _selectionObjects)
                 {
-                    var guiContent = ResolveName(type, _displayName);
-                    if (guiContent.image == null && ResolveState(currentValue, type))
+                    var guiContent = _setupStrategy.ResolveName(type, _displayName);
+                    if (guiContent.image == null && _setupStrategy.ResolveState(currentValue, type))
                     {
                         guiContent.image = DrawersHelper.GetIcon(IconType.Checkmark);
                     }
 
-                    var item = new DropdownItem(guiContent, OnSelectItem,
-                        new SelectedItem<object>(serializedProperty, type));
+                    var item = new DropdownItem(guiContent, OnSelectItem, new SelectedItem<object>(serializedProperty, type));
                     items.AddChild(item);
                 }
             }
             else
             {
-                foreach (var type in collection)
+                foreach (var type in _selectionObjects)
                 {
-                    var resolveGroupedName = ResolveGroupedName(type, _displayGrouping);
-                    items.AddItem(resolveGroupedName, ResolveState(currentValue, type), OnSelectItem,
+                    var resolveGroupedName = _setupStrategy.ResolveGroupedName(type, _displayGrouping);
+                    items.AddItem(resolveGroupedName, _setupStrategy.ResolveState(currentValue, type), OnSelectItem,
                         new SelectedItem<object>(serializedProperty, type));
                 }
             }
@@ -143,20 +149,46 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return items;
         }
 
-        private protected abstract GUIContent GenerateHeader();
-        private protected abstract object GetCurrentValue(SerializedProperty property);
-        private protected abstract bool CheckSupported(SerializedProperty property);
-        private protected abstract string GetButtonName(object currentValue);
-        private protected abstract void Setup(SerializedProperty property, TAttribute currentAttribute);
-        private protected abstract List<object> GetSelectCollection();
-        private protected abstract GUIContent ResolveName(object value, DisplayName displayName);
-        private protected abstract GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping);
-        private protected abstract bool ResolveState(object currentValue, object iteratedValue);
-        private protected abstract void OnSelectItem(object obj);
-        private protected abstract void UpdateValue(SerializedProperty property);
-        private protected abstract void AfterValueUpdated(SerializedProperty property);
+        private object GetCurrentValue(SerializedProperty property)
+        {
+            return Collection.GetCurrentValue(property);
+        }
 
-        private protected void SetNeedUpdate()
+        protected abstract bool CheckSupported(SerializedProperty property);
+
+        private void OnSelectItem(object obj)
+        {
+            if (obj is SelectedItem<object> value && !_setupStrategy.Validate(value.Data))
+            {
+                return;
+            }
+
+            if (obj == null)
+            {
+                _selectedItem = null;
+                SetNeedUpdate();
+                return;
+            }
+
+            var item = (SelectedItem<object>)obj;
+            if (_selectedItem != default)
+            {
+                if (_selectedItem.Equals(item))
+                {
+                    return;
+                }
+            }
+
+            _selectedItem = item;
+            SetNeedUpdate();
+        }
+
+        protected override WrapperCollection<BaseSelectWrapper> GenerateCollection()
+        {
+            return new SelectWrappers();
+        }
+
+        protected void SetNeedUpdate()
         {
             _needUpdate = true;
         }

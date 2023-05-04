@@ -33,7 +33,7 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
             return false;
         }
 
-        public void SetObjectFromProperty(SerializedProperty property)
+        public void SetProperty(SerializedProperty property)
         {
             if (TryGetValue(property, out var wrapper))
             {

@@ -1,11 +1,11 @@
 {
   "name": "com.uurha.betterattributes",
   "displayName": "Better Attributes",
-  "version": "1.7.3",
-  "unity": "2018.3",
+  "version": "1.8.3",
+  "unity": "2020.1",
   "description": "Unity attributes, allows to serialize interfaces, draw handles for Vector3/Vector2/Quaternion/Bounds, create read only fields.",
   "dependencies": {
-    "com.uurha.bettereditortools" : "0.4.9"
+    "com.uurha.bettereditortools" : "0.7.8"
   },
   "author": {
     "name": "Arcueid D'athemon",

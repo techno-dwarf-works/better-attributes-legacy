@@ -1,5 +1,6 @@
 ﻿using System;
-using Better.Extensions.Runtime;
+using System.Reflection;
+using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
@@ -7,42 +8,48 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
     {
         private bool _isFlag;
 
-        public void Update(Enum value)
+        public override bool SkipFieldDraw()
         {
-            if (_property == null) return;
-            var enumType = value.GetType();
-            if (!_isFlag)
-            {
-                _property.intValue = value.ToFlagInt();
-            }
-            else
-            {
-                Enum currentEnum;
-#if UNITY_2021_1_OR_NEWER
-                currentEnum = (Enum)Enum.ToObject(enumType, _property.enumValueFlag);
-#else
-                currentEnum = (Enum)Enum.ToObject(enumType, _property.intValue);
-#endif
+            return true;
+        }
 
-                if (value.IsFlagNone())
+        public override float GetHeight()
+        {
+            return EditorGUI.GetPropertyHeight(_property, false);
+        }
+
+        public override void SetProperty(SerializedProperty property, FieldInfo fieldInfo)
+        {
+            base.SetProperty(property, fieldInfo);
+            _isFlag = fieldInfo.FieldType.GetCustomAttribute<FlagsAttribute>() != null;
+        }
+
+        public override void Update(object objValue)
+        {
+            var value = (int)objValue;
+            var currentValue = _property.intValue;
+            if (_isFlag)
+            {
+                if (currentValue == 0)
                 {
-                    currentEnum = value;
+                    currentValue = value;
                 }
                 else
                 {
-                    currentEnum = currentEnum.HasFlag(value) ? currentEnum.Remove(value) : currentEnum.Add(value);
+                    currentValue ^= value;
                 }
-#if UNITY_2021_1_OR_NEWER
-                _property.enumValueFlag = currentEnum.ToFlagInt();
-#else
-                _property.intValue = currentEnum.ToFlagInt();
-#endif
             }
+            else
+            {
+                currentValue = value;
+            }
+
+            _property.intValue = currentValue;
         }
 
-        public void SetIsFlag(bool isFlag)
+        public override object GetCurrentValue()
         {
-            _isFlag = isFlag;
+            return _property.intValue;
         }
     }
 }
