@@ -14,35 +14,27 @@ Better dropdown contains:
 2. Fast navigation
 3. Grouping
 
-## Select Implementation
+## Select Attribute
 
-Provides possibility to select interface implementation in Unity Inspector.
-
-Usage:
-
-```c#
-[SelectImplementation] [SerializeReference]
-private ISomeInterface someInterface;
-
-[SelectImplementation] [SerializeReference]
-private SomeAbstractClass someAbstractClass;
-
-[SelectImplementation(typeof(SomeAbstractClass)] [SerializeReference]
-private List<SomeAbstractClass> someAbstractClasses;
-
-[SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
-private List<ISomeInterface> someInterfaces;
-```
-
-## Select Enum
-
-Provides possibility to select enum value with better dropdown.<br>
+Provides possibility to select interface implementation, enum value with better dropdown in Unity Inspector.<br>
 Also supports **_flag_** enums.
 
 Usage:
 
 ```c#
-[SelectEnum] [SerializeField]
+[Select] [SerializeReference]
+private ISomeInterface someInterface;
+
+[Select] [SerializeReference]
+private SomeAbstractClass someAbstractClass;
+
+[Select(typeof(SomeAbstractClass)] [SerializeReference]
+private List<SomeAbstractClass> someAbstractClasses;
+
+[Select(typeof(ISomeInterface))] [SerializeReference]
+private List<ISomeInterface> someInterfaces;
+
+[Select] [SerializeField]
 private KeyCode keyCode;
 ```
 
