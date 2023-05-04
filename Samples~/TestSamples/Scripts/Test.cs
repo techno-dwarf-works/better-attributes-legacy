@@ -8,9 +8,11 @@ using Better.Attributes.Runtime.Preview;
 using Better.Attributes.Runtime.ReadOnly;
 using Better.Attributes.Runtime.Rename;
 using Better.Attributes.Runtime.Select;
+using Better.Extensions.Runtime;
 using Samples.Interfaces;
 using Samples.Models;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Samples
 {
@@ -24,9 +26,11 @@ namespace Samples
 
     public class Test : MonoBehaviour
     {
-        [SelectEnum] [SerializeField] private KeyCode keyCode;
+        [Select(typeof(ISomeInterface))]
+        [SerializeField] private SerializedType serializedType;
+        [Select] [SerializeField] private KeyCode keyCode;
 
-        [SelectEnum] [SerializeField] private MyFlagEnum myFlagEnumTest;
+        [Select] [SerializeField] private MyFlagEnum myFlagEnumTest;
 
         [Preview] [SerializeField] private PreviewTest component;
         [Preview] [SerializeField] private Texture2D texture;
@@ -46,16 +50,16 @@ namespace Samples
 
         [ReadOnlyField] [SerializeField] private float someFloat;
 
-        [SelectImplementation(DisplayGrouping.GroupedFlat)] [SerializeReference]
+        [Select(DisplayGrouping.GroupedFlat)] [SerializeReference]
         private ISomeInterface someInterface;
 
-        [SelectImplementation] [SerializeReference]
+        [Select] [SerializeReference]
         private SomeAbstractClass someAbstractClass;
 
-        [SelectImplementation(typeof(SomeAbstractClass), DisplayName.Full)] [SerializeReference]
+        [Select(typeof(SomeAbstractClass), DisplayName.Full)] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
-        [SelectImplementation(typeof(ISomeInterface), DisplayGrouping.Grouped)] [SerializeReference]
+        [Select(typeof(ISomeInterface), DisplayGrouping.Grouped)] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
 
         [GizmoLocal] [SerializeField] private Bounds bounds;

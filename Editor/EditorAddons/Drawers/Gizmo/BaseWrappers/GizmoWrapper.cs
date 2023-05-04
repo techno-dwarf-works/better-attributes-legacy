@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.EditorTools;
 using Better.EditorTools.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -46,15 +47,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         {
             try
             {
-                if (_serializedProperty == null) return false;
-                var serializedObject = _serializedProperty.serializedObject;
-
-                if (!string.Equals(_serializedProperty.propertyPath, _path)) return false;
-                if (serializedObject == null) return false;
-                if (!_serializedProperty.Copy().Next(true)) return false;
+                if (_serializedProperty.IsDisposed())
+                {
+                    return false;
+                }
 
                 if (!GizmoUtility.Instance.IsSupported(_fieldType)) return false;
-                return serializedObject.targetObject != null;
+                return _serializedProperty.serializedObject.targetObject != null;
             }
             catch
             {

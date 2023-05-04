@@ -17,7 +17,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 
         protected override void Deconstruct()
         {
-            _wrappers.Deconstruct();
+            _wrappers?.Deconstruct();
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
@@ -33,7 +33,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 
             if (!ValidateCachedProperties(property, DrawInspectorUtility.Instance))
             {
-                Collection.SetObjectFromProperty(property);
+                Collection.SetProperty(property);
             }
 
             _isOpen = Collection.IsOpen(property);

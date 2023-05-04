@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using UnityEngine.Playables;
 
 namespace Better.Attributes.Runtime.Select
 {
@@ -9,7 +10,8 @@ namespace Better.Attributes.Runtime.Select
     /// </summary>
     [Conditional(ConstantDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class SelectImplementationAttribute : SelectAttributeBase
+    [Obsolete("Use SelectAttribute instead")]
+    public class SelectImplementationAttribute : SelectAttribute
     {
         public SelectImplementationAttribute(Type type) : base(type)
         {
