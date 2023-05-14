@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Better.Attributes.Runtime;
 using Better.Attributes.Runtime.DrawInspector;
 using Better.Attributes.Runtime.Gizmo;
-using Better.Attributes.Runtime.Headers;
 using Better.Attributes.Runtime.Preview;
 using Better.Attributes.Runtime.ReadOnly;
 using Better.Attributes.Runtime.Rename;
@@ -12,7 +11,6 @@ using Better.Extensions.Runtime;
 using Samples.Interfaces;
 using Samples.Models;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Samples
 {
@@ -63,6 +61,8 @@ namespace Samples
         private List<ISomeInterface> someInterfaces;
 
         [GizmoLocal] [SerializeField] private Bounds bounds;
+
+        [Gizmo] [SerializeField] private List<Vector3> _vector3s;
 
         ///Default usage of attribute.
         [EditorButton]

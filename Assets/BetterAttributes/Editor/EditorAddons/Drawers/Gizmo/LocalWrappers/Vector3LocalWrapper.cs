@@ -16,7 +16,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             {
                 var transform = component.transform;
                 var worldPosition = transform.TransformPoint(_vector3);
-                DrawLabel($"Local {_serializedProperty.name}:\n{_vector3}", worldPosition, _defaultRotation, sceneView);
+                DrawLabel($"Local {GetName()}:\n{_vector3}", worldPosition, _defaultRotation, sceneView);
                 _vector3 = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, _defaultRotation));
                 SetValueAndApply(_vector3);
             }

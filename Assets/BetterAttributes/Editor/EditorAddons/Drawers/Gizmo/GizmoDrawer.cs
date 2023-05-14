@@ -58,7 +58,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
-            var fieldType = fieldInfo.FieldType;
+            var fieldType = GetFieldOrElementType();
             var attributeType = attribute.GetType();
 
             if (!GizmoUtility.Instance.IsSupported(fieldType))

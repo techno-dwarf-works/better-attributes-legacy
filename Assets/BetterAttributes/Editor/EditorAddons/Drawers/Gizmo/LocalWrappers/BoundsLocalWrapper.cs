@@ -13,7 +13,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             {
                 var transform = component.transform;
                 var worldPosition = transform.TransformPoint(_bounds.center);
-                DrawLabel($"{_serializedProperty.name}:\nLocal Center: {_bounds.center}\nSize: {_bounds.size}",
+                DrawLabel($"{GetName()}:\nLocal Center: {_bounds.center}\nSize: {_bounds.size}",
                     worldPosition, _defaultRotation, sceneView);
                 _bounds.center =
                     transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, Quaternion.identity));
