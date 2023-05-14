@@ -179,11 +179,15 @@ MonoBehaviour:
   someAbstractClasses:
   - rid: 7756078790551535630
   someInterfaces:
-  - rid: 7756078790551535631
-  - rid: 7756078790551535632
+  - rid: 8510811860460109824
+  - rid: 8510811860460109825
   bounds:
     m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
     m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
+  _vector3s:
+  - {x: 1.4682333, y: 0, z: -3.2066925}
+  - {x: 0, y: 0, z: 3.1299038}
+  - {x: -3.3073177, y: 0, z: 0}
   references:
     version: 2
     RefIds:
@@ -197,18 +201,26 @@ MonoBehaviour:
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 7756078790551535631
-      type: {class: SomeInterfaceImplementation21, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        intField: 0
-    - rid: 7756078790551535632
-      type: {class: SomeInterfaceImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        boolField: 0
     - rid: 7756078790551535633
       type: {class: SomeInterfaceImplementation16, ns: Samples.OtherModels, asm: Assembly-CSharp}
       data:
         intField: 0
+    - rid: 8510811860460109824
+      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      data:
+        intField: 0
+        gVector3:
+        - {x: 0, y: 0, z: 0}
+        - {x: 1.3066115, y: 0, z: 1.5113901}
+        - {x: 0, y: 0, z: 5.3295355}
+    - rid: 8510811860460109825
+      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      data:
+        intField: 0
+        gVector3:
+        - {x: -3.5512767, y: 0, z: 0}
+        - {x: 2.2007942, y: 0, z: 3.4126492}
+        - {x: 2.8446193, y: 0, z: 0}
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0

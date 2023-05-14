@@ -14,7 +14,7 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
             foreach (var gizmo in this)
             {
                 var valueWrapper = gizmo.Value.Wrapper;
-                if(valueWrapper.ValidateSerializedObject())
+                if(valueWrapper.Validate())
                 {
                     valueWrapper.Apply(sceneView);
                 }

@@ -18,7 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 var rotation = transform.rotation;
                 var position = transform.position;
                 var worldRotation = rotation * _quaternion;
-                DrawLabel($"Local {_serializedProperty.name}:\n{_quaternion.eulerAngles}", position, worldRotation,
+                DrawLabel($"Local {GetName()}:\n{_quaternion.eulerAngles}", position, worldRotation,
                     sceneView);
                 _quaternion = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
                 SetValueAndApply(_quaternion);

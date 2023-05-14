@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.EditorTools;
 using Better.EditorTools.Utilities;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 #if UNITY_2022_1_OR_NEWER
 using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
 #endif
@@ -19,16 +21,31 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         private protected readonly Vector3 _defaultPosition = Vector3.zero;
         private bool _showInSceneView = true;
         private Type _fieldType;
-
-        private string _path;
+        
+        private string _compiledName;
 
         public bool ShowInSceneView => _showInSceneView;
 
         public virtual void SetProperty(SerializedProperty property, Type fieldType)
         {
             _serializedProperty = property;
-            _path = _serializedProperty.propertyPath;
             _fieldType = fieldType;
+            _compiledName = GetCompiledName();
+        }
+
+        private string GetCompiledName()
+        {
+            if (Validate())
+            {
+                if (_serializedProperty.IsArrayElement())
+                {
+                    return $"{ObjectNames.NicifyVariableName(_serializedProperty.GetArrayPath())}";
+                }
+
+                return _serializedProperty.displayName;
+            }
+
+            return string.Empty;
         }
 
         public void SwitchShowMode()
@@ -38,12 +55,17 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         public abstract void Apply(SceneView sceneView);
 
+        private protected virtual string GetName()
+        {
+            return _compiledName;
+        }
+
         public override void Deconstruct()
         {
             _serializedProperty = null;
         }
 
-        public virtual bool ValidateSerializedObject()
+        public virtual bool Validate()
         {
             try
             {
@@ -77,8 +99,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             _serializedProperty.serializedObject.ApplyModifiedProperties();
         }
 
-        private protected virtual void DrawLabel(string value, Vector3 position, Quaternion rotation,
-            SceneView sceneView)
+        private protected virtual void DrawLabel(string value, Vector3 position, Quaternion rotation, SceneView sceneView)
         {
             var style = new GUIStyle
             {
