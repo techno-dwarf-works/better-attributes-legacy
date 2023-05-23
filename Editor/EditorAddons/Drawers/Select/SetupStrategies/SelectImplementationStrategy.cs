@@ -42,5 +42,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             resolveName.tooltip = "Type has not parameterless constructor!";
             return resolveName;
         }
+
+        public SelectImplementationStrategy(Type fieldType, SelectAttributeBase selectAttributeBase) : base(fieldType, selectAttributeBase)
+        {
+        }
     }
 }

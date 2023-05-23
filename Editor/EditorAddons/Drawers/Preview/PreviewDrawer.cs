@@ -30,7 +30,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
                 return false;
             }
 
-            if (!ValidateCachedProperties(property, PreviewUtility.Instance))
+            var cache = ValidateCachedProperties(property, PreviewUtility.Instance);
+            if (!cache.IsValid)
             {
             }
 

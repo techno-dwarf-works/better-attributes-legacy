@@ -18,7 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public override void Update(object value)
         {
-            if (_property == null) return;
+            if (!_property.Verify()) return;
             var typeValue = (Type)value;
             _property.managedReferenceValue = typeValue == null ? null : Activator.CreateInstance(typeValue);
         }

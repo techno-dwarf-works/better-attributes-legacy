@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
+    fullQualifiedName: Samples.Models.SomeInterfaceImplementation2, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   keyCode: 342
   myFlagEnumTest: 0
@@ -173,9 +173,15 @@ MonoBehaviour:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 7756078790551535633
+    rid: 8510812055856218114
   someAbstractClass:
     rid: 7756078790551535629
+  config:
+    abilities: []
+    cameraBoss:
+      vector3: {x: 0, y: 0, z: 0}
+    finish:
+      vector3: {x: 0, y: 0, z: 0}
   someAbstractClasses:
   - rid: 7756078790551535630
   someInterfaces:
@@ -184,10 +190,7 @@ MonoBehaviour:
   bounds:
     m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
     m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
-  _vector3s:
-  - {x: 1.4682333, y: 0, z: -3.2066925}
-  - {x: 0, y: 0, z: 3.1299038}
-  - {x: -3.3073177, y: 0, z: 0}
+  _vector3s: []
   references:
     version: 2
     RefIds:
@@ -201,10 +204,6 @@ MonoBehaviour:
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 7756078790551535633
-      type: {class: SomeInterfaceImplementation16, ns: Samples.OtherModels, asm: Assembly-CSharp}
-      data:
-        intField: 0
     - rid: 8510811860460109824
       type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
       data:
@@ -221,6 +220,10 @@ MonoBehaviour:
         - {x: -3.5512767, y: 0, z: 0}
         - {x: 2.2007942, y: 0, z: 3.4126492}
         - {x: 2.8446193, y: 0, z: 0}
+    - rid: 8510812055856218114
+      type: {class: SomeInterfaceImplementation14, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      data:
+        intField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0
