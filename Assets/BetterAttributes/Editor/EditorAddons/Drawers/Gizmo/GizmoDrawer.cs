@@ -69,7 +69,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 return false;
             }
 
-            if (!ValidateCachedProperties(property, GizmoUtility.Instance))
+            var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
+            if (!cache.IsValid)
             {
                 Collection.SetProperty(property, fieldType);
             }
