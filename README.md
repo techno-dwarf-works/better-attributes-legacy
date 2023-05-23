@@ -190,4 +190,4 @@ private void SomeMethod()
 You can check constructors for `EditorButtonAttribute` there more specific options.
 
 ## Install
-[How to istall](https://github.com/uurha/BetterPluginCollection/wiki/How-to-install)
+[How to install](https://github.com/uurha/BetterPluginCollection/wiki/How-to-install)
