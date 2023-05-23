@@ -72,19 +72,19 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
         /// Generate ready to use wrapper's instance by dictionary from <see cref="GetSetupStrategyDictionary"/>
         /// </summary>
         /// <param name="type"></param>
-        /// <param name="attributeType"></param>
+        /// <param name="attribute"></param>
         /// <returns></returns>
-        public SetupStrategy GetSetupStrategy(Type type, Type attributeType)
+        public SetupStrategy GetSetupStrategy(Type type, SelectAttributeBase attribute)
         {
             if (!IsSupported(type))
             {
                 return null;
             }
 
-            var gizmoWrappers = GetSetupStrategyDictionary(attributeType);
+            var gizmoWrappers = GetSetupStrategyDictionary(attribute.GetType());
             var wrapperType = gizmoWrappers[type];
 
-            return (SetupStrategy)Activator.CreateInstance(wrapperType);
+            return (SetupStrategy)Activator.CreateInstance(wrapperType, new object[]{type, attribute});
         }
 
         protected override HashSet<Type> GenerateAvailable()

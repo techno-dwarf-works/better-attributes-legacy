@@ -33,12 +33,23 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override bool Validate(object item)
         {
+            if (item == null)
+            {
+                return true;
+            }
+
             if (item is Type type)
             {
                 return ValidateInternal(type);
             }
 
             return false;
+        }
+
+        public override bool CheckSupported()
+        {
+            var baseType = GetFieldOrElementType();
+            return baseType.IsAbstract || baseType.IsInterface;
         }
 
         public override GUIContent GenerateHeader()
@@ -118,6 +129,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             var selectionObjects = baseType.GetAllInheritedType().Cast<object>().ToList();
             selectionObjects.Insert(0, null);
             return selectionObjects;
+        }
+
+        public SelectTypeStrategy(Type fieldType, SelectAttributeBase selectAttributeBase) : base(fieldType, selectAttributeBase)
+        {
         }
     }
 }

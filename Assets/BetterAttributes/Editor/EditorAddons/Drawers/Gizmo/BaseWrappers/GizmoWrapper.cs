@@ -21,7 +21,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         private protected readonly Vector3 _defaultPosition = Vector3.zero;
         private bool _showInSceneView = true;
         private Type _fieldType;
-        
+
         private string _compiledName;
 
         public bool ShowInSceneView => _showInSceneView;
@@ -69,7 +69,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         {
             try
             {
-                if (_serializedProperty.IsDisposed())
+                if (!_serializedProperty.Verify())
                 {
                     return false;
                 }
@@ -85,6 +85,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         private protected void SetValueAndApply(object value)
         {
+            if (!Validate()) return;
             if (_fieldType.IsEquivalentTo(typeof(Vector2)))
                 _serializedProperty.vector2Value = (Vector2)value;
             else if (_fieldType.IsEquivalentTo(typeof(Vector3)))

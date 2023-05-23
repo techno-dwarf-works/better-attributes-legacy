@@ -7,5 +7,7 @@ namespace Samples.Models
     public abstract class SomeAbstractClass
     {
         [SerializeField] private protected int baseIntField;
+
+        public int BaseIntField => baseIntField;
     }
 }

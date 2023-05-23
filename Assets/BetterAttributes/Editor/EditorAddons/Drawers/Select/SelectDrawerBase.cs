@@ -28,14 +28,16 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             _wrappers ??= GenerateCollection();
-            if (!ValidateCachedProperties(property, SelectUtility.Instance))
+            var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
+            if (!cache.IsValid)
             {
-                var selectWrapper = _wrappers[property].Wrapper;
+                if (cache.Value == null) return EditorGUI.GetPropertyHeight(property, true);
+                var selectWrapper = cache.Value.Wrapper;
                 selectWrapper.SetProperty(property, fieldInfo);
                 return selectWrapper.GetHeight();
             }
 
-            return _wrappers[property].Wrapper.GetHeight();
+            return cache.Value.Wrapper.GetHeight();
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
@@ -43,40 +45,16 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             try
             {
                 var att = (TAttribute)attribute;
-                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(GetFieldOrElementType(), attribute.GetType());
-                var fieldOrElementType = _setupStrategy.GetFieldOrElementType(fieldInfo, att);
-                if (!CheckSupported(property))
+                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(GetFieldOrElementType(), att);
+                if (_setupStrategy == null || (!CheckSupported(property) && !_setupStrategy.CheckSupported()))
                 {
-                    DrawersHelper.NotSupportedAttribute(property.displayName, fieldOrElementType, attribute.GetType());
+                    EditorGUI.BeginChangeCheck();
+                    DrawField(position, property, label);
+                    DrawersHelper.NotSupportedAttribute(property.displayName, GetFieldOrElementType(), attribute.GetType(), false);
                     return false;
                 }
 
-                if (!ValidateCachedProperties(property, SelectUtility.Instance))
-                {
-                    _wrappers[property].Wrapper.SetProperty(property, fieldInfo);
-                }
-
-                var popupPosition = GetPopupPosition(position);
-                if (!_isSetUp)
-                {
-                    _selectionObjects = _setupStrategy.Setup(fieldOrElementType);
-                    _displayName = att.DisplayName;
-                    _displayGrouping = att.DisplayGrouping;
-                    SetReady();
-                }
-
-                var referenceValue = GetCurrentValue(property);
-                if (DrawButton(popupPosition, referenceValue))
-                {
-                    ShowDropDown(property, popupPosition, referenceValue);
-                }
-
-                if (_needUpdate)
-                {
-                    Collection.Update(_selectedItem);
-                    _needUpdate = false;
-                    _selectedItem = null;
-                }
+                PreDrawExtended(position, property, att);
             }
             catch (Exception e)
             {
@@ -84,6 +62,38 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             }
 
             return true;
+        }
+
+        private void PreDrawExtended(Rect position, SerializedProperty property, TAttribute att)
+        {
+            var fieldOrElementType = _setupStrategy.GetFieldOrElementType();
+            var cache = ValidateCachedProperties(property, SelectUtility.Instance);
+            if (!cache.IsValid)
+            {
+                cache.Value.Wrapper.SetProperty(property, fieldInfo);
+            }
+
+            var popupPosition = GetPopupPosition(position);
+            if (!_isSetUp)
+            {
+                _selectionObjects = _setupStrategy.Setup(fieldOrElementType);
+                _displayName = att.DisplayName;
+                _displayGrouping = att.DisplayGrouping;
+                SetReady();
+            }
+
+            var referenceValue = GetCurrentValue(property);
+            if (DrawButton(popupPosition, referenceValue))
+            {
+                ShowDropDown(property, popupPosition, referenceValue);
+            }
+
+            if (_needUpdate)
+            {
+                Collection.Update(_selectedItem);
+                _needUpdate = false;
+                _selectedItem = null;
+            }
         }
 
         private Rect GetPopupPosition(Rect currentPosition)

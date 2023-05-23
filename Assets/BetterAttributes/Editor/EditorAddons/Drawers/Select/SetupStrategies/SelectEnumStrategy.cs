@@ -71,6 +71,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             return true;
         }
 
+        public override bool CheckSupported()
+        {
+            return true;
+        }
+
         public override GUIContent GenerateHeader()
         {
             return new GUIContent("Options");
@@ -134,6 +139,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             }
 
             return new GUIContent(SelectUtility.NotSupported);
+        }
+
+        public SelectEnumStrategy(Type fieldType, SelectAttributeBase selectAttributeBase) : base(fieldType, selectAttributeBase)
+        {
         }
     }
 }

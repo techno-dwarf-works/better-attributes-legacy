@@ -31,7 +31,8 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
                 return false;
             }
 
-            if (!ValidateCachedProperties(property, DrawInspectorUtility.Instance))
+            var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
+            if (!cache.IsValid)
             {
                 Collection.SetProperty(property);
             }

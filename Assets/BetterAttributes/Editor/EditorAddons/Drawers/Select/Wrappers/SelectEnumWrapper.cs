@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using Better.EditorTools;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
@@ -26,6 +27,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public override void Update(object objValue)
         {
+            if (!_property.Verify()) return;
             var value = (int)objValue;
             var currentValue = _property.intValue;
             if (_isFlag)
