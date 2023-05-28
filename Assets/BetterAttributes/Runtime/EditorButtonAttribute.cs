@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 
 namespace Better.Attributes.Runtime
 {
     /// <summary>
     /// Displays Button in Inspector
     /// </summary>
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    [Conditional(ConstantDefines.Editor)]
     public class EditorButtonAttribute : Attribute
     {
         private readonly string _displayName;
