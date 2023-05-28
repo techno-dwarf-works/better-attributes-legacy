@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Select
@@ -17,7 +18,7 @@ namespace Better.Attributes.Runtime.Select
         GroupedFlat = 3
     }
 
-    [Conditional(ConstantDefines.Editor)]
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public abstract class SelectAttributeBase : PropertyAttribute
     {

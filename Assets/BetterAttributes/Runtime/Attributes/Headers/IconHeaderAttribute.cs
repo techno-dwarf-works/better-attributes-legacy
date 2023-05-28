@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Headers
@@ -8,8 +9,8 @@ namespace Better.Attributes.Runtime.Headers
     /// Draws texture by path in Unity Inspector
     /// </summary>
     /// <remarks>Quick way to use this attribute -> ContextMenu on Texture Importer -> Convert To IconHeaderAttribute</remarks>
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    [Conditional(ConstantDefines.Editor)]
     public class IconHeaderAttribute : PropertyAttribute
     {
         public string Guid { get; }

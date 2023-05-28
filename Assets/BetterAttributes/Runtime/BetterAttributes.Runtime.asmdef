@@ -2,7 +2,8 @@
     "name": "BetterAttributes.Runtime",
     "rootNamespace": "Better.Attributes",
     "references": [
-        "GUID:28da8d3b12e3efa47928e0c9070f853d"
+        "GUID:28da8d3b12e3efa47928e0c9070f853d",
+        "GUID:a59e3daedde9ca94bba45364d4ead25f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

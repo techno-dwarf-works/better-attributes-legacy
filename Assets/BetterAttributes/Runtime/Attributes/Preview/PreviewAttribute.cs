@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Preview
@@ -8,7 +9,7 @@ namespace Better.Attributes.Runtime.Preview
     /// Attribute for preview in Inspector.
     /// Click on question mark or label to see preview.
     /// </summary>
-    [Conditional(ConstantDefines.Editor)]
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class PreviewAttribute : PropertyAttribute
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 using UnityEngine.Playables;
 
 namespace Better.Attributes.Runtime.Select
@@ -8,7 +9,7 @@ namespace Better.Attributes.Runtime.Select
     /// Attribute for Implementation selection in Inspector.
     /// Use in pair with [SerializeReference] Attribute.
     /// </summary>
-    [Conditional(ConstantDefines.Editor)]
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     [Obsolete("Use SelectAttribute instead")]
     public class SelectImplementationAttribute : SelectAttribute
