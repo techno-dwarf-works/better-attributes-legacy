@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 
 namespace Better.Attributes.Runtime.Select
 {
@@ -7,7 +8,7 @@ namespace Better.Attributes.Runtime.Select
     /// Attribute for selection in Inspector.
     /// Use in pair with [SerializeReference] Attribute.
     /// </summary>
-    [Conditional(ConstantDefines.Editor)]
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class SelectAttribute : SelectAttributeBase
     {

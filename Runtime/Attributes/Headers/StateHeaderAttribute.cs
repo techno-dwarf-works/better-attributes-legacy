@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Better.EditorTools.Runtime;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Headers
@@ -7,8 +8,8 @@ namespace Better.Attributes.Runtime.Headers
     /// <summary>
     /// Replacement for Header("State")
     /// </summary>
+    [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    [Conditional(ConstantDefines.Editor)]
     public class StateHeaderAttribute : HeaderAttribute
     {
         public StateHeaderAttribute() : base("State")

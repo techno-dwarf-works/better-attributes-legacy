@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Better.EditorTools.Runtime;
 
 namespace Better.Attributes.Runtime
 {
     public static class ReflectionExtensions
     {
-        public const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic |
-                                          BindingFlags.Static | BindingFlags.Instance |
-                                          BindingFlags.DeclaredOnly;
-
         public static Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>>
             GetSortedMethodAttributes(this Type type)
         {
@@ -46,7 +43,7 @@ namespace Better.Attributes.Runtime
         {
             return t == null
                 ? Enumerable.Empty<KeyValuePair<MethodInfo, IEnumerable<T>>>()
-                : t.GetMethods(Flags).Where(x => x.GetCustomAttributes<T>().Any())
+                : t.GetMethods(BetterEditorDefines.MethodFlags).Where(x => x.GetCustomAttributes<T>().Any())
                     .ToDictionary(key => key, value => value.GetCustomAttributes<T>(true))
                     .Concat(GetMethodsAttributes<T>(t.BaseType));
         }
