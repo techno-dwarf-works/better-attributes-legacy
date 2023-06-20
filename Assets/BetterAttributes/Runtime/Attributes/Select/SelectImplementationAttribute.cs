@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.EditorTools.Runtime;
-using UnityEngine.Playables;
+using Better.Tools.Runtime;
 
 namespace Better.Attributes.Runtime.Select
 {

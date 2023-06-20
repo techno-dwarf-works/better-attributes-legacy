@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.EditorTools.Runtime;
 using Better.Extensions.Runtime;
+using Better.Tools.Runtime;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Headers

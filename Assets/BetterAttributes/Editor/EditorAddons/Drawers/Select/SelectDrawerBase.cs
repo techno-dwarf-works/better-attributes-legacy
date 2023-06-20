@@ -37,7 +37,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 return selectWrapper.GetHeight();
             }
 
-            return cache.Value.Wrapper.GetHeight();
+            var valueWrapper = cache.Value.Wrapper;
+            if (!valueWrapper.Verify())
+            {
+                valueWrapper.SetProperty(property, fieldInfo);
+            }
+
+            return valueWrapper.GetHeight();
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
