@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Better.EditorTools.Runtime;
+using Better.Tools.Runtime;
 
 namespace Better.Attributes.Runtime
 {
