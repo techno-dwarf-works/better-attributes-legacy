@@ -21,12 +21,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
         {
             _previewScene = new PreviewSceneRenderer();
         }
-
-        ~PreviewWrapper()
-        {
-            Deconstruct();
-        }
-
+        
         public override void Deconstruct()
         {
             EditorPopup.CloseInstance();

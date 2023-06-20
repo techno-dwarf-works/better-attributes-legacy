@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -154,74 +154,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    fullQualifiedName: Samples.Models.SomeInterfaceImplementation2, Assembly-CSharp,
+    fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation14, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  keyCode: 342
-  myFlagEnumTest: 0
+  keyCode: 8
+  myFlagEnumTest: 4
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
-  texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 3}
+  texture: {fileID: 0}
   scriptableObjectList:
-  - {fileID: 11400000, guid: ac831e4d15607c1468b51a2ca7a39284, type: 2}
+  - {fileID: 0}
   scriptableObjectArray:
-  - {fileID: 11400000, guid: e00e2eaef8418bb4799da0de9053fc9b, type: 2}
+  - {fileID: 0}
   scriptableObject: {fileID: 0}
-  vector3Local: {x: 0, y: 0, z: 4.6317034}
-  quaternion: {x: 0, y: 0, z: 0, w: 1}
+  vector3Local: {x: 0, y: 0, z: 0}
+  quaternion: {x: 0, y: 0, z: 0, w: 0}
   some:
     intField: 0
   someClass:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 8510812055856218114
+    rid: 8521015457725808646
   someAbstractClass:
-    rid: 7756078790551535629
-  config:
-    abilities: []
-    cameraBoss:
-      vector3: {x: 0, y: 0, z: 0}
-    finish:
-      vector3: {x: 0, y: 0, z: 0}
+    rid: 8521015457725808642
   someAbstractClasses:
-  - rid: 7756078790551535630
+  - rid: 8521015457725808643
   someInterfaces:
-  - rid: 8510811860460109824
-  - rid: 8510811860460109825
+  - rid: 8521015457725808645
+  - rid: 8521015457725808644
   bounds:
-    m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
-    m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
   _vector3s: []
   references:
     version: 2
     RefIds:
-    - rid: 7756078790551535629
+    - rid: 8521015457725808642
       type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 7756078790551535630
+    - rid: 8521015457725808643
       type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 8510811860460109824
-      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
+    - rid: 8521015457725808644
+      type: {class: SomeInterfaceImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
       data:
-        intField: 0
-        gVector3:
-        - {x: 0, y: 0, z: 0}
-        - {x: 1.3066115, y: 0, z: 1.5113901}
-        - {x: 0, y: 0, z: 5.3295355}
-    - rid: 8510811860460109825
-      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
-      data:
-        intField: 0
-        gVector3:
-        - {x: -3.5512767, y: 0, z: 0}
-        - {x: 2.2007942, y: 0, z: 3.4126492}
-        - {x: 2.8446193, y: 0, z: 0}
-    - rid: 8510812055856218114
+        boolField: 0
+    - rid: 8521015457725808645
       type: {class: SomeInterfaceImplementation14, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      data:
+        intField: 0
+    - rid: 8521015457725808646
+      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp}
       data:
         intField: 0
 --- !u!4 &123298862
@@ -252,16 +238,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   someInterface:
-    rid: 1628111135132614656
+    rid: 8521015457725808640
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 1628111135132614656
-      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp-firstpass}
+    - rid: 8521015457725808640
+      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
       data:
         intField: 0
+        gVector3: []
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,9 +381,17 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

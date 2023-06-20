@@ -5,7 +5,7 @@
   "unity": "2020.1",
   "description": "Unity attributes, allows to serialize interfaces, draw handles for Vector3/Vector2/Quaternion/Bounds, create read only fields.",
   "dependencies": {
-    "com.uurha.bettereditortools" : "0.9.1"
+    "com.uurha.bettereditortools" : "0.9.2"
   },
   "author": {
     "name": "Arcueid D'athemon",

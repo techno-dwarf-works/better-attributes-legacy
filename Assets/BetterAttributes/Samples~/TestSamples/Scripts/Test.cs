@@ -54,9 +54,6 @@ namespace Samples
         [Select] [SerializeReference]
         private SomeAbstractClass someAbstractClass;
         
-        [Select] [SerializeField]
-        private BaseConfig config;
-
         [Select(typeof(SomeAbstractClass), DisplayName.Full)] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
