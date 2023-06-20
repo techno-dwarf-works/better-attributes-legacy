@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Better.EditorTools;
 using Better.EditorTools.Utilities;
 using UnityEditor;
 
@@ -23,6 +24,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
         {
             _property = property;
             _fieldInfo = fieldInfo;
+        }
+
+        public virtual bool Verify()
+        {
+            return _property.Verify();
         }
 
         public abstract object GetCurrentValue();
