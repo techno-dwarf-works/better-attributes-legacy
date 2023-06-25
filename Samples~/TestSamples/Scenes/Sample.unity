@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 3
+    serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    buildHeightMesh: 0
+    accuratePlacement: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -156,60 +156,44 @@ MonoBehaviour:
   serializedType:
     fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation14, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  keyCode: 8
-  myFlagEnumTest: 4
-  component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
+  keyCode: 0
+  myFlagEnumTest: 0
+  component: {fileID: 0}
   texture: {fileID: 0}
-  scriptableObjectList:
-  - {fileID: 0}
-  scriptableObjectArray:
-  - {fileID: 0}
+  scriptableObjectList: []
+  scriptableObjectArray: []
   scriptableObject: {fileID: 0}
-  vector3Local: {x: 0, y: 0, z: 0}
-  quaternion: {x: 0, y: 0, z: 0, w: 0}
+  vector3Local: {x: 0, y: 0, z: 4.6317034}
+  quaternion: {x: 0, y: 0, z: 0, w: 1}
   some:
     intField: 0
   someClass:
     intField: 0
   someFloat: 0
   someInterface:
-    rid: 8521015457725808646
+    id: 0
   someAbstractClass:
-    rid: 8521015457725808642
+    id: 1
   someAbstractClasses:
-  - rid: 8521015457725808643
-  someInterfaces:
-  - rid: 8521015457725808645
-  - rid: 8521015457725808644
+  - id: 2
+  someInterfaces: []
   bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
+    m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
+    m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
   _vector3s: []
   references:
-    version: 2
-    RefIds:
-    - rid: 8521015457725808642
+    version: 1
+    00000000:
+      type: {class: SomeInterfaceImplementation15, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      data:
+        intField: 0
+    00000001:
+      type: {class: , ns: , asm: }
+    00000002:
       type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
       data:
         baseIntField: 0
         boolField: 0
-    - rid: 8521015457725808643
-      type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        baseIntField: 0
-        boolField: 0
-    - rid: 8521015457725808644
-      type: {class: SomeInterfaceImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        boolField: 0
-    - rid: 8521015457725808645
-      type: {class: SomeInterfaceImplementation14, ns: Samples.OtherModels, asm: Assembly-CSharp}
-      data:
-        intField: 0
-    - rid: 8521015457725808646
-      type: {class: SomeInterfaceImplementation17, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        intField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0
@@ -220,7 +204,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -238,15 +221,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   someInterface:
-    rid: 8521015457725808640
+    id: 0
   references:
-    version: 2
-    RefIds:
-    - rid: 8521015457725808640
-      type: {class: SomeInterfaceImplementation1, ns: Samples.OtherModels, asm: Assembly-CSharp}
-      data:
-        intField: 0
-        gVector3: []
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +315,6 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -381,17 +359,9 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -428,7 +398,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -464,7 +433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -497,7 +465,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
