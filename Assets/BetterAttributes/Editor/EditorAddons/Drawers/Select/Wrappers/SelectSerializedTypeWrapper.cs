@@ -35,23 +35,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public override object GetCurrentValue()
         {
-            Type type = null;
-            if (_property.propertyType == SerializedPropertyType.Generic)
+            var objectOfProperty = _property.GetValue();
+            var type = objectOfProperty.GetType();
+            if (type == typeof(SerializedType))
             {
-                var objectOfProperty = _property.GetValue();
-                type = objectOfProperty.GetType();
-                if (type == typeof(SerializedType))
-                {
-                    type = (objectOfProperty as SerializedType)?.Type;
-                }
-            }
-            else if(_property.propertyType == SerializedPropertyType.ManagedReference)
-            {
-                type = _property.GetManagedType();
-                if (type == typeof(SerializedType))
-                {
-                    type = (_property.managedReferenceValue as SerializedType)?.Type;
-                }
+                type = (objectOfProperty as SerializedType)?.Type;
             }
 
             return type;
