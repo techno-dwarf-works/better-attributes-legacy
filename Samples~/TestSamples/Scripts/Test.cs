@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Better.Attributes.Runtime;
 using Better.Attributes.Runtime.DrawInspector;
 using Better.Attributes.Runtime.Gizmo;
+using Better.Attributes.Runtime.Headers;
 using Better.Attributes.Runtime.Preview;
 using Better.Attributes.Runtime.ReadOnly;
 using Better.Attributes.Runtime.Rename;
@@ -24,6 +25,7 @@ namespace Samples
 
     public class Test : MonoBehaviour
     {
+        [IconHeader("78b772f3f305147419de3cc97ca72bd7")]
         [Select(typeof(ISomeInterface))]
         [SerializeField] private SerializedType serializedType;
         [Select] [SerializeField] private KeyCode keyCode;
