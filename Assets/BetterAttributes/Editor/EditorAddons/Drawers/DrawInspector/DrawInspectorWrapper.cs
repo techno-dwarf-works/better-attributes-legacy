@@ -12,7 +12,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
         private bool _isOpen = false;
         private SerializedObject _serializedObject;
 
-        public void OnGUI(Rect rect)
+        public void PostDraw(Rect rect)
         {
             if (!_isOpen) return;
             if (_property == null) return;
@@ -31,7 +31,6 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             var y = rect.position.y + EditorGUI.GetPropertyHeight(_property);
             rect.position = new Vector2(x, y);
             rect.width -= 15f;
-
             using (var change = new EditorGUI.ChangeCheckScope())
             {
                 for (var enterChildren = true; iterator.NextVisible(enterChildren); enterChildren = false)

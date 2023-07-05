@@ -32,14 +32,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
         }
 
         private protected abstract Texture GenerateTexture(Object drawnObject, float size);
+        
 
-        public override void OnGUI(Rect position, SerializedProperty serializedProperty, float size)
+        public override void PreDraw(Rect position, SerializedProperty serializedProperty, float size)
         {
-            if (!ValidateObject(serializedProperty.objectReferenceValue))
-            {
-                return;
-            }
-
             _currentScreenMousePosition = GUIUtility.GUIToScreenPoint(Event.current.mousePosition);
             _currentMousePosition = Event.current.mousePosition;
             CheckInteraction(position, serializedProperty, size);

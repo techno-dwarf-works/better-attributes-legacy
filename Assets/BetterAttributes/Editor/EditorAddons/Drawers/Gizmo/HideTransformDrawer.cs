@@ -1,5 +1,4 @@
-﻿using Better.EditorTools;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
@@ -8,10 +7,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
     {
         public void DrawHideTransformButton()
         {
-            var text = Tools.hidden ? "Show" : "Hide";
+            var text = UnityEditor.Tools.hidden ? "Show" : "Hide";
             if (GUILayout.Button($"{text} Transform handles"))
             {
-                Tools.hidden = !Tools.hidden;
+                UnityEditor.Tools.hidden = !UnityEditor.Tools.hidden;
                 SceneView.RepaintAll();
             }
         }

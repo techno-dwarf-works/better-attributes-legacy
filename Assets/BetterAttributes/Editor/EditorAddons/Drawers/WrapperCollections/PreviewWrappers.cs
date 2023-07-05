@@ -7,13 +7,23 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
     public class PreviewWrappers : WrapperCollection<BasePreviewWrapper>
     {
-        public void OnGUI(Rect position, SerializedProperty property, float previewSize, bool objectChanged)
+        public void PreDraw(Rect position, SerializedProperty property, float previewSize, bool objectChanged)
         {
             if (TryGetValue(property, out var wrapper))
             {
                 wrapper.Wrapper.IsObjectUpdated(objectChanged);
-                wrapper.Wrapper.OnGUI(position, property, previewSize);
+                wrapper.Wrapper.PreDraw(position, property, previewSize);
             }
+        }
+
+        public bool ValidateObject(SerializedProperty property)
+        {
+            if (TryGetValue(property, out var wrapper))
+            {
+               return wrapper.Wrapper.ValidateObject(property);
+            }
+
+            return false;
         }
     }
 }

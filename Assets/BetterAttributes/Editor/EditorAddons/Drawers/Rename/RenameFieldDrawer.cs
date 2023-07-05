@@ -1,11 +1,14 @@
-﻿using Better.Attributes.Runtime.Rename;
+﻿using System.Reflection;
+using Better.Attributes.Runtime.Rename;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Rename
 {
-    [CustomPropertyDrawer(typeof(RenameFieldAttribute))]
+    [MultiCustomPropertyDrawer(typeof(RenameFieldAttribute))]
     public class RenameFieldDrawer : FieldDrawer
     {
         protected override void Deconstruct()
@@ -25,6 +28,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Rename
         }
 
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        {
+        }
+
+        public RenameFieldDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
         {
         }
     }

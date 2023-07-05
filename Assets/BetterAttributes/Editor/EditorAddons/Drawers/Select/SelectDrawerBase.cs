@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
@@ -8,6 +9,7 @@ using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using Better.EditorTools.Helpers.DropDown;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,27 +25,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected SelectedItem<object> _selectedItem;
         protected List<object> _selectionObjects;
         protected SetupStrategy _setupStrategy;
+        
         protected SelectWrappers Collection => _wrappers as SelectWrappers;
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        
+        protected SelectDrawerBase(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
         {
-            _wrappers ??= GenerateCollection();
-            var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
-            if (!cache.IsValid)
-            {
-                if (cache.Value == null) return EditorGUI.GetPropertyHeight(property, true);
-                var selectWrapper = cache.Value.Wrapper;
-                selectWrapper.SetProperty(property, fieldInfo);
-                return selectWrapper.GetHeight();
-            }
-
-            var valueWrapper = cache.Value.Wrapper;
-            if (!valueWrapper.Verify())
-            {
-                valueWrapper.SetProperty(property, fieldInfo);
-            }
-
-            return valueWrapper.GetHeight();
         }
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
@@ -164,13 +150,31 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
             return items;
         }
+        
+        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
+            if (!cache.IsValid)
+            {
+                if (cache.Value == null) return HeightCache.GetAdditive(0f);
+                var selectWrapper = cache.Value.Wrapper;
+                selectWrapper.SetProperty(property, fieldInfo);
+                return selectWrapper.GetHeight();
+            }
+
+            var valueWrapper = cache.Value.Wrapper;
+            if (!valueWrapper.Verify())
+            {
+                valueWrapper.SetProperty(property, fieldInfo);
+            }
+
+            return valueWrapper.GetHeight();
+        }
 
         private object GetCurrentValue(SerializedProperty property)
         {
             return Collection.GetCurrentValue(property);
         }
-
-        protected abstract bool CheckSupported(SerializedProperty property);
 
         private void OnSelectItem(object obj)
         {
@@ -222,5 +226,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
         }
+        
+        protected abstract bool CheckSupported(SerializedProperty property);
     }
 }

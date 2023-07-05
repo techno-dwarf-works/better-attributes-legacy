@@ -154,17 +154,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation14, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  keyCode: 0
+    fullQualifiedName: 
+  keyCode: 8
   myFlagEnumTest: 0
-  component: {fileID: 0}
+  component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
   texture: {fileID: 0}
   scriptableObjectList: []
   scriptableObjectArray: []
   scriptableObject: {fileID: 0}
-  vector3Local: {x: 0, y: 0, z: 4.6317034}
-  quaternion: {x: 0, y: 0, z: 0, w: 1}
+  vector3Local: {x: 0, y: 0, z: 0}
+  quaternion: {x: 0, y: 0, z: 0, w: 0}
   some:
     intField: 0
   someClass:
@@ -174,12 +173,11 @@ MonoBehaviour:
     id: 0
   someAbstractClass:
     id: 1
-  someAbstractClasses:
-  - id: 2
+  someAbstractClasses: []
   someInterfaces: []
   bounds:
-    m_Center: {x: 0.038021624, y: 0, z: 0.3450185}
-    m_Extent: {x: 0.005, y: 0.005, z: 0.033352688}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
   _vector3s: []
   references:
     version: 1
@@ -189,11 +187,6 @@ MonoBehaviour:
         intField: 0
     00000001:
       type: {class: , ns: , asm: }
-    00000002:
-      type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        baseIntField: 0
-        boolField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0

@@ -1,14 +1,17 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Utilities;
+﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Preview;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
-    [CustomPropertyDrawer(typeof(PreviewAttribute))]
+    [MultiCustomPropertyDrawer(typeof(PreviewAttribute))]
     public class PreviewDrawer : MultiFieldDrawer<BasePreviewWrapper>
     {
         private protected bool _objectChanged;
@@ -37,12 +40,37 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
 
             EditorGUI.BeginChangeCheck();
             _previewSize = ((PreviewAttribute)attribute).PreviewSize;
+            if (!Collection.ValidateObject(property))
+            {
+                const string message = "Preview not available for empty field";
+                var offset = DrawersHelper.GetHelpBoxHeight(position.width, message, IconType.WarningMessage);
+                var buffer = new Rect(position);
+                buffer.y += EditorGUI.GetPropertyHeight(property, label, false) + DrawersHelper.SpaceHeight;
+                DrawersHelper.HelpBox(buffer, message, IconType.WarningMessage);
+
+                position.height += offset + DrawersHelper.SpaceHeight * 2;
+                return true;
+            }
+
             label.image = DrawersHelper.GetIcon(IconType.View);
             var copy = DrawersHelper.GetClickRect(position, label);
             copy.height = EditorGUIUtility.singleLineHeight;
-            Collection.OnGUI(copy, property, _previewSize, _objectChanged);
+
+            Collection.PreDraw(copy, property, _previewSize, _objectChanged);
 
             return true;
+        }
+
+        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            if (!Collection.ValidateObject(property))
+            {
+                const string message = "Preview not available for null";
+                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
+                return HeightCache.GetFull(EditorGUI.GetPropertyHeight(property, label, true) + additive + DrawersHelper.SpaceHeight * 2);
+            }
+
+            return HeightCache.GetAdditive(0);
         }
 
         protected override Rect PreparePropertyRect(Rect original)
@@ -55,14 +83,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             _objectChanged = EditorGUI.EndChangeCheck();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return EditorGUI.GetPropertyHeight(property, true);
-        }
-
         protected override WrapperCollection<BasePreviewWrapper> GenerateCollection()
         {
             return new PreviewWrappers();
+        }
+
+        public PreviewDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        {
         }
     }
 }

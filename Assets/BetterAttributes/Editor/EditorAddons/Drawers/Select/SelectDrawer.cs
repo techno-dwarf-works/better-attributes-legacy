@@ -1,8 +1,11 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
+﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,8 +13,8 @@ using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select
 {
-    [CustomPropertyDrawer(typeof(SelectAttribute))]
-    [CustomPropertyDrawer(typeof(SelectImplementationAttribute))]
+    [MultiCustomPropertyDrawer(typeof(SelectAttribute))]
+    [MultiCustomPropertyDrawer(typeof(SelectImplementationAttribute))]
     public class SelectDrawer : SelectDrawerBase<SelectAttributeBase>
     {
         protected override bool CheckSupported(SerializedProperty property)
@@ -29,12 +32,16 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             if (_wrappers.TryGetValue(property, out var value) && value.Wrapper.SkipFieldDraw())
             {
                 var rect = PreparePropertyRect(position);
-                rect.height = value.Wrapper.GetHeight();
+                rect.height = value.Wrapper.GetHeight().Value;
                 EditorGUI.LabelField(rect, label);
                 return;
             }
 
             base.DrawField(position, property, label);
+        }
+
+        public SelectDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        {
         }
     }
 }

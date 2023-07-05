@@ -1,11 +1,14 @@
-﻿using Better.Attributes.Runtime.ReadOnly;
+﻿using System.Reflection;
+using Better.Attributes.Runtime.ReadOnly;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.ReadOnly
 {
-    [CustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
+    [MultiCustomPropertyDrawer(typeof(ReadOnlyFieldAttribute))]
     public class ReadOnlyFieldDrawer : FieldDrawer
     {
         protected override void Deconstruct()
@@ -28,9 +31,8 @@ namespace Better.Attributes.EditorAddons.Drawers.ReadOnly
             EditorGUI.EndDisabledGroup();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        public ReadOnlyFieldDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
         {
-            return EditorGUI.GetPropertyHeight(property, true);
         }
     }
 }

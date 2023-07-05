@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Better.EditorTools;
+using Better.EditorTools.Drawers.Base;
 using Better.Extensions.Runtime;
 using UnityEditor;
 
@@ -13,9 +14,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
             return true;
         }
 
-        public override float GetHeight()
+        public override HeightCache GetHeight()
         {
-            return EditorGUI.GetPropertyHeight(_property, false);
+            return HeightCache.GetFull(EditorGUI.GetPropertyHeight(_property, false));
         }
 
         public override void Update(object value)

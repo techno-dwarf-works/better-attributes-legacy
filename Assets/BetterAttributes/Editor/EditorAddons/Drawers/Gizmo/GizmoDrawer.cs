@@ -1,9 +1,12 @@
-﻿using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Gizmo;
 using Better.EditorTools;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using Better.EditorTools.Utilities;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
@@ -14,8 +17,8 @@ using Better.Attributes.EditorAddons.Drawers.Utilities;
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
-    [CustomPropertyDrawer(typeof(GizmoAttribute))]
-    [CustomPropertyDrawer(typeof(GizmoLocalAttribute))]
+    [MultiCustomPropertyDrawer(typeof(GizmoAttribute))]
+    [MultiCustomPropertyDrawer(typeof(GizmoLocalAttribute))]
     public class GizmoDrawer : MultiFieldDrawer<GizmoWrapper>
     {
         private GizmoWrappers Collection
@@ -33,10 +36,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         private HideTransformButtonUtility _hideTransformDrawer;
 
-        public GizmoDrawer() : base()
-        {
-            SceneView.duringSceneGui += OnSceneGUIDelegate;
-        }
 
         private void OnSceneGUIDelegate(SceneView sceneView)
         {
@@ -46,6 +45,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 {
                     _wrappers = GenerateCollection();
                 }
+
                 GizmoUtility.Instance.ValidateCachedProperties(_wrappers);
                 Collection?.Apply(sceneView);
             }
@@ -64,8 +64,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
             if (!GizmoUtility.Instance.IsSupported(fieldType))
             {
-                EditorGUI.BeginChangeCheck();
-                DrawField(position, property, label);
                 DrawersHelper.NotSupportedAttribute(label.text, fieldInfo.FieldType, attributeType, false);
                 return false;
             }
@@ -115,10 +113,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             copy.height = EditorGUIUtility.singleLineHeight;
             return copy;
         }
-
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        
+        public GizmoDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
         {
-            return EditorGUI.GetPropertyHeight(property, true);
+            SceneView.duringSceneGui += OnSceneGUIDelegate;
         }
     }
 }
