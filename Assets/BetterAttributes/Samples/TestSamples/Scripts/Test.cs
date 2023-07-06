@@ -33,7 +33,7 @@ namespace Samples
         [Select]
         [SerializeField] private KeyCode keyCode;
 
-        [DisableIf(nameof(keyCode), KeyCode.D)]
+        //[DisableIf(nameof(keyCode), KeyCode.D)]
         [Select] 
         [SerializeField]
         private MyFlagEnum myFlagEnumTest;
@@ -86,6 +86,7 @@ namespace Samples
         [GizmoLocal] 
         [SerializeField] private Bounds bounds;
 
+        [DisableIf(nameof(keyCode), KeyCode.Backspace)]
         [Gizmo] 
         [SerializeField] private List<Vector3> _vector3s;
 

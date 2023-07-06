@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Better.Attributes.Runtime.Manipulation;
 using Better.EditorTools;
 using Better.EditorTools.Drawers.Base;
@@ -32,6 +34,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
         private ManipulateConditionAttribute _attribute;
 
         private GUI.Scope _scope;
+        private object _container;
 
         public override void Deconstruct()
         {
@@ -40,19 +43,20 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
 
         private bool IsConditionSatisfied()
         {
-            var container = _property.GetPropertyContainer();
-            var type = container.GetType();
+            if (_container == null) return false;
+            var type = _container.GetType();
             var field = type.GetField(_attribute.MemberName, BetterEditorDefines.FieldsFlags);
             var memberValue = _attribute.MemberValue;
             if (field != null)
             {
-                return Equals(memberValue, field.GetValue(container));
+                var value = field.GetValue(_container);
+                return Equals(memberValue, value);
             }
 
             var method = type.GetMethod(_attribute.MemberName, BetterEditorDefines.MethodFlags);
             if (method != null)
             {
-                return Equals(memberValue, method.Invoke(container, Array.Empty<object>()));
+                return Equals(memberValue, method.Invoke(_container, Array.Empty<object>()));
             }
 
             return false;
@@ -112,6 +116,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
         {
             _property = property;
             _attribute = attribute;
+            _container = _property.GetLastNonCollectionContainer();
         }
     }
 }

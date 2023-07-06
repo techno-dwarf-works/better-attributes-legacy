@@ -10,7 +10,7 @@ using Object = UnityEngine.Object;
 
 namespace Better.Attributes.EditorAddons.CustomEditors
 {
-    [BetterEditor(typeof(Object), true, Order = 999)]
+    [MultiEditor(typeof(Object), true, Order = 999)]
     public class BetterButtonsEditor : EditorExtension
     {
         private Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>> _methodButtonsAttributes =
