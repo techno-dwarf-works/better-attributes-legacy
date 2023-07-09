@@ -7,11 +7,11 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
     public class DrawInspectors : WrapperCollection<DrawInspectorWrapper>
     {
-        public void OnGUI(SerializedProperty serializedProperty, Rect rect)
+        public void PostDraw(SerializedProperty serializedProperty, Rect rect)
         {
             if (TryGetValue(serializedProperty, out var collectionValue))
             {
-                collectionValue.Wrapper.OnGUI(rect);
+                collectionValue.Wrapper.PostDraw(rect);
             }
         }
 

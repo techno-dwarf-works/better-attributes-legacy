@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.DrawInspector;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 {
-    [CustomPropertyDrawer(typeof(DrawInspectorAttribute))]
+    [MultiCustomPropertyDrawer(typeof(DrawInspectorAttribute))]
     public class DrawInspectorDrawer : MultiFieldDrawer<DrawInspectorWrapper>
     {
         private bool _isOpen;
@@ -27,7 +30,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             {
                 EditorGUI.BeginChangeCheck();
                 DrawField(position, property, label);
-                DrawersHelper.NotSupportedAttribute(label.text, fieldType, attribute.GetType(), false);
+                DrawersHelper.NotSupportedAttribute(position, property, label, fieldType, _attribute.GetType());
                 return false;
             }
 
@@ -53,7 +56,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             return true;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var additionalHeight = 0f;
             if (Collection != null && Collection.IsOpen(property))
@@ -61,8 +64,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
                 additionalHeight = Collection.GetHeight(property);
             }
 
-            var propertyHeight = EditorGUI.GetPropertyHeight(property, label) + additionalHeight;
-            return propertyHeight;
+            return HeightCache.GetAdditive(additionalHeight);
         }
 
         protected override Rect PreparePropertyRect(Rect original)
@@ -72,12 +74,16 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
-            Collection.OnGUI(property, position);
+            Collection.PostDraw(property, position);
         }
 
         protected override WrapperCollection<DrawInspectorWrapper> GenerateCollection()
         {
             return new DrawInspectors();
+        }
+
+        public DrawInspectorDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        {
         }
     }
 }

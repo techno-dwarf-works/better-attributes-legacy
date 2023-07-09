@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Better.Tools.Runtime;
+using Better.Tools.Runtime.Attributes;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Select
@@ -20,7 +21,7 @@ namespace Better.Attributes.Runtime.Select
 
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public abstract class SelectAttributeBase : PropertyAttribute
+    public abstract class SelectAttributeBase : MultiPropertyAttribute
     {
         private readonly Type _type;
         public DisplayName DisplayName { get; } = DisplayName.Short;

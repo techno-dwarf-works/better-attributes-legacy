@@ -1,19 +1,24 @@
-﻿using Better.Attributes.EditorAddons.Drawers.Utilities;
+﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Preview;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
-    [CustomPropertyDrawer(typeof(PreviewAttribute))]
+    [MultiCustomPropertyDrawer(typeof(PreviewAttribute))]
     public class PreviewDrawer : MultiFieldDrawer<BasePreviewWrapper>
     {
         private protected bool _objectChanged;
         private float _previewSize;
         public PreviewWrappers Collection => _wrappers as PreviewWrappers;
+
+        private const string Message = "Preview not available for empty field";
 
         protected override void Deconstruct()
         {
@@ -22,11 +27,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
-            var fieldType = fieldInfo.FieldType;
-            var attributeType = attribute.GetType();
+            var fieldType = _fieldInfo.FieldType;
+            var attributeType = _attribute.GetType();
             if (!PreviewUtility.Instance.IsSupported(fieldType))
             {
-                DrawersHelper.NotSupportedAttribute(label.text, fieldType, attributeType);
+                DrawersHelper.NotSupportedAttribute(position, property, label, fieldType, attributeType);
                 return false;
             }
 
@@ -36,13 +41,31 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             }
 
             EditorGUI.BeginChangeCheck();
-            _previewSize = ((PreviewAttribute)attribute).PreviewSize;
+            _previewSize = ((PreviewAttribute)_attribute).PreviewSize;
+            if (!Collection.ValidateObject(property))
+            {
+                DrawersHelper.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage);
+                return true;
+            }
+
             label.image = DrawersHelper.GetIcon(IconType.View);
             var copy = DrawersHelper.GetClickRect(position, label);
             copy.height = EditorGUIUtility.singleLineHeight;
-            Collection.OnGUI(copy, property, _previewSize, _objectChanged);
+
+            Collection.PreDraw(copy, property, _previewSize, _objectChanged);
 
             return true;
+        }
+
+        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            if (!Collection.ValidateObject(property))
+            {
+                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
+                return HeightCache.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
+            }
+
+            return HeightCache.GetAdditive(0);
         }
 
         protected override Rect PreparePropertyRect(Rect original)
@@ -55,14 +78,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             _objectChanged = EditorGUI.EndChangeCheck();
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            return EditorGUI.GetPropertyHeight(property, true);
-        }
-
         protected override WrapperCollection<BasePreviewWrapper> GenerateCollection()
         {
             return new PreviewWrappers();
+        }
+
+        public PreviewDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        {
         }
     }
 }

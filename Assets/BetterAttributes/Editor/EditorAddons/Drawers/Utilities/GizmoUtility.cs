@@ -10,7 +10,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {
     public class GizmoUtility : BaseUtility<GizmoUtility>
     {
-        protected override WrappersTypeCollection GenerateCollection()
+        protected override BaseWrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection()
             {

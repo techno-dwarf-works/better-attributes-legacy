@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.CustomEditors
 {
-    [BetterEditor(typeof(Object), true, Order = -999)]
+    [MultiEditor(typeof(Object), true, Order = -999)]
     public class GizmosEditor : EditorExtension
     {
         private HideTransformButtonUtility _hideTransformDrawer;

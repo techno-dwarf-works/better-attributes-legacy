@@ -1,9 +1,12 @@
-﻿using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Gizmo;
 using Better.EditorTools;
+using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using Better.EditorTools.Utilities;
+using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
@@ -14,8 +17,8 @@ using Better.Attributes.EditorAddons.Drawers.Utilities;
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
-    [CustomPropertyDrawer(typeof(GizmoAttribute))]
-    [CustomPropertyDrawer(typeof(GizmoLocalAttribute))]
+    [MultiCustomPropertyDrawer(typeof(GizmoAttribute))]
+    [MultiCustomPropertyDrawer(typeof(GizmoLocalAttribute))]
     public class GizmoDrawer : MultiFieldDrawer<GizmoWrapper>
     {
         private GizmoWrappers Collection
@@ -31,13 +34,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
         }
 
-        private HideTransformButtonUtility _hideTransformDrawer;
-
-        public GizmoDrawer() : base()
-        {
-            SceneView.duringSceneGui += OnSceneGUIDelegate;
-        }
-
         private void OnSceneGUIDelegate(SceneView sceneView)
         {
             if (sceneView.drawGizmos)
@@ -46,6 +42,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 {
                     _wrappers = GenerateCollection();
                 }
+
                 GizmoUtility.Instance.ValidateCachedProperties(_wrappers);
                 Collection?.Apply(sceneView);
             }
@@ -60,14 +57,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             var fieldType = GetFieldOrElementType();
-            var attributeType = attribute.GetType();
+            var attributeType = _attribute.GetType();
 
+            EditorGUI.BeginChangeCheck();
             if (!GizmoUtility.Instance.IsSupported(fieldType))
             {
-                EditorGUI.BeginChangeCheck();
-                DrawField(position, property, label);
-                DrawersHelper.NotSupportedAttribute(label.text, fieldInfo.FieldType, attributeType, false);
-                return false;
+                var rect = new Rect(position);
+                DrawersHelper.NotSupportedAttribute(rect, property, label, fieldType, attributeType);
+                return true;
             }
 
             var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
@@ -76,16 +73,21 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 Collection.SetProperty(property, fieldType);
             }
 
-            EditorGUI.BeginChangeCheck();
+            position = PreparePropertyRect(position);  
 
             return true;
+        }
+
+        protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.PropertyField(position, property, label, true);
         }
 
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
             if (EditorGUI.EndChangeCheck())
             {
-                Collection.SetProperty(property, fieldInfo.FieldType);
+                Collection.SetProperty(property, _fieldInfo.FieldType);
             }
 
             if (GUI.Button(PrepareButtonRect(position), Collection.ShowInSceneView(property) ? "Hide" : "Show"))
@@ -103,22 +105,35 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         protected override Rect PreparePropertyRect(Rect original)
         {
             var copy = original;
-            copy.width *= 0.89f;
+            copy.width *= 0.9f;
             return copy;
         }
 
         private Rect PrepareButtonRect(Rect original)
         {
             var copy = original;
-            copy.x += copy.width * 0.9f;
+            copy.x += copy.width + DrawersHelper.SpaceHeight;
             copy.width *= 0.1f;
             copy.height = EditorGUIUtility.singleLineHeight;
             return copy;
         }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUI.GetPropertyHeight(property, true);
+            var fieldType = GetFieldOrElementType();
+            if (!GizmoUtility.Instance.IsSupported(fieldType))
+            {
+                var message = DrawersHelper.NotSupportedMessage(property.name, fieldType, _attribute.GetType());
+                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
+                return HeightCache.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
+            }
+
+            return HeightCache.GetAdditive(0);
+        }
+
+        public GizmoDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        {
+            SceneView.duringSceneGui += OnSceneGUIDelegate;
         }
     }
 }
