@@ -6,9 +6,9 @@ namespace Better.Attributes.Runtime.Manipulation
 {
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class EnableIf : ManipulateConditionAttribute
+    public class EnableInEditorModeAttribute : ManipulateAttribute
     {
-        public EnableIf(string memberName, object memberValue) : base(memberName, memberValue, ManipulationMode.Enable)
+        public EnableInEditorModeAttribute() : base(ManipulationMode.Enable)
         {
         }
     }

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using Better.Tools.Runtime;
 using Better.Tools.Runtime.Attributes;
-using UnityEngine;
 
 namespace Better.Attributes.Runtime.Manipulation
 {
@@ -23,6 +22,7 @@ namespace Better.Attributes.Runtime.Manipulation
         public ManipulateAttribute(ManipulationMode modeType)
         {
             ModeType = modeType;
+            order = -999;
         }
     }
 }

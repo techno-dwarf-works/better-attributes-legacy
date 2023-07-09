@@ -43,7 +43,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
             };
         }
 
-        protected override WrappersTypeCollection GenerateCollection()
+        protected override BaseWrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection(TypeComparer.Instance)
             {

@@ -6,12 +6,12 @@ namespace Better.Attributes.Runtime.Manipulation
 {
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public abstract class ManipulateConditionAttribute : ManipulateAttribute
+    public abstract class ManipulateUserConditionAttribute : ManipulateAttribute
     {
         public string MemberName { get; }
         public object MemberValue { get; }
         
-        public ManipulateConditionAttribute(string memberName, object memberValue, ManipulationMode modeType) : base(modeType)
+        public ManipulateUserConditionAttribute(string memberName, object memberValue, ManipulationMode modeType) : base(modeType)
         {
             MemberName = memberName;
             MemberValue = memberValue;

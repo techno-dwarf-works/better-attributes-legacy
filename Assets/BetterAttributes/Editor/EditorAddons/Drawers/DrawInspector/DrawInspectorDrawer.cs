@@ -30,7 +30,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             {
                 EditorGUI.BeginChangeCheck();
                 DrawField(position, property, label);
-                DrawersHelper.NotSupportedAttribute(label.text, fieldType, attribute.GetType(), false);
+                DrawersHelper.NotSupportedAttribute(position, property, label, fieldType, _attribute.GetType());
                 return false;
             }
 

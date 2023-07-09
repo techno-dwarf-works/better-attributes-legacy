@@ -6,9 +6,9 @@ namespace Better.Attributes.Runtime.Manipulation
 {
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class HideInPlayMode : ManipulateAttribute
+    public class DisableInEditorModeAttribute : ManipulateAttribute
     {
-        public HideInPlayMode() : base(ManipulationMode.Hide)
+        public DisableInEditorModeAttribute() : base(ManipulationMode.Disable)
         {
         }
     }

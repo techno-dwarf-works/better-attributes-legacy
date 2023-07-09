@@ -17,7 +17,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Rename
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
-            var rename = (attribute as RenameFieldAttribute)?.Name;
+            var rename = (_attribute as RenameFieldAttribute)?.Name;
             label.text = rename;
             return true;
         }

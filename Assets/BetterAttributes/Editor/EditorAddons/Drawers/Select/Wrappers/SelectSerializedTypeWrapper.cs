@@ -23,12 +23,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
         {
             if (!_property.Verify()) return;
             var typeValue = (Type)value;
-            if(_property.propertyType == SerializedPropertyType.Generic)
+            if (_property.propertyType == SerializedPropertyType.Generic)
             {
-                var buffer = new SerializedType(typeValue);
+                var buffer = typeValue != null ? new SerializedType(typeValue) : new SerializedType();
                 _property.SetValue(buffer);
             }
-            else if(_property.propertyType == SerializedPropertyType.ManagedReference)
+            else if (_property.propertyType == SerializedPropertyType.ManagedReference)
             {
                 _property.managedReferenceValue = typeValue == null ? null : Activator.CreateInstance(typeof(SerializedType), typeValue);
             }
@@ -45,7 +45,5 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
             return type;
         }
-
-        
     }
 }

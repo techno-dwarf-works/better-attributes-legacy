@@ -25,9 +25,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected SelectedItem<object> _selectedItem;
         protected List<object> _selectionObjects;
         protected SetupStrategy _setupStrategy;
-        
+
         protected SelectWrappers Collection => _wrappers as SelectWrappers;
-        
+
         protected SelectDrawerBase(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
         {
         }
@@ -36,17 +36,17 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             try
             {
-                var att = (TAttribute)attribute;
-                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(GetFieldOrElementType(), att);
+                var attribute = (TAttribute)_attribute;
+                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(GetFieldOrElementType(), attribute);
                 if (_setupStrategy == null || (!CheckSupported(property) && !_setupStrategy.CheckSupported()))
                 {
                     EditorGUI.BeginChangeCheck();
                     DrawField(position, property, label);
-                    DrawersHelper.NotSupportedAttribute(property.displayName, GetFieldOrElementType(), attribute.GetType(), false);
+                    DrawersHelper.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType());
                     return false;
                 }
 
-                PreDrawExtended(position, property, att);
+                PreDrawExtended(position, property, attribute);
             }
             catch (Exception e)
             {
@@ -56,21 +56,21 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return true;
         }
 
-        private void PreDrawExtended(Rect position, SerializedProperty property, TAttribute att)
+        private void PreDrawExtended(Rect position, SerializedProperty property, TAttribute attribute)
         {
             var fieldOrElementType = _setupStrategy.GetFieldOrElementType();
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
             if (!cache.IsValid)
             {
-                cache.Value.Wrapper.SetProperty(property, fieldInfo);
+                cache.Value.Wrapper.SetProperty(property, _fieldInfo);
             }
 
             var popupPosition = GetPopupPosition(position);
             if (!_isSetUp)
             {
                 _selectionObjects = _setupStrategy.Setup(fieldOrElementType);
-                _displayName = att.DisplayName;
-                _displayGrouping = att.DisplayGrouping;
+                _displayName = attribute.DisplayName;
+                _displayGrouping = attribute.DisplayGrouping;
                 SetReady();
             }
 
@@ -150,7 +150,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
             return items;
         }
-        
+
         protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
@@ -158,14 +158,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             {
                 if (cache.Value == null) return HeightCache.GetAdditive(0f);
                 var selectWrapper = cache.Value.Wrapper;
-                selectWrapper.SetProperty(property, fieldInfo);
+                selectWrapper.SetProperty(property, _fieldInfo);
                 return selectWrapper.GetHeight();
             }
 
             var valueWrapper = cache.Value.Wrapper;
             if (!valueWrapper.Verify())
             {
-                valueWrapper.SetProperty(property, fieldInfo);
+                valueWrapper.SetProperty(property, _fieldInfo);
             }
 
             return valueWrapper.GetHeight();
@@ -226,7 +226,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
         }
-        
+
         protected abstract bool CheckSupported(SerializedProperty property);
     }
 }

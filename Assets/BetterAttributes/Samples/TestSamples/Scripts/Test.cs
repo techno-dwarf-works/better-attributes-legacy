@@ -6,7 +6,6 @@ using Better.Attributes.Runtime.Gizmo;
 using Better.Attributes.Runtime.Headers;
 using Better.Attributes.Runtime.Manipulation;
 using Better.Attributes.Runtime.Preview;
-using Better.Attributes.Runtime.ReadOnly;
 using Better.Attributes.Runtime.Rename;
 using Better.Attributes.Runtime.Select;
 using Better.Extensions.Runtime;
@@ -26,22 +25,19 @@ namespace Samples
 
     public class Test : MonoBehaviour
     {
-        [Select(typeof(ISomeInterface))]
-        [SerializeField]
+        [Select(typeof(ISomeInterface))] [SerializeField]
         private SerializedType serializedType;
 
-        [Select]
-        [SerializeField] private KeyCode keyCode;
+        [Select] [SerializeField] private KeyCode keyCode;
 
-        //[DisableIf(nameof(keyCode), KeyCode.D)]
-        [Select] 
+        [DisableIf(nameof(keyCode), KeyCode.D)]
+        [Select] [SerializeField] private MyFlagEnum myFlagEnumTest;
+
+        [ShowIf(nameof(keyCode), KeyCode.Backspace)] 
+        [Preview] [DrawInspector] 
         [SerializeField]
-        private MyFlagEnum myFlagEnumTest;
-        
-        [ShowIf(nameof(keyCode), KeyCode.Backspace)]
-        [Preview]
-        [DrawInspector]
-        [SerializeField] private PreviewTest component;
+        private PreviewTest component;
+
         [Preview] 
         [SerializeField] private Texture2D texture;
 
@@ -52,28 +48,27 @@ namespace Samples
         [DrawInspector] 
         [SerializeField] private TestScriptableObject scriptableObject;
 
-        [GizmoLocal]
+        [GizmoLocal] 
         [SerializeField] private Vector3 vector3Local;
 
-        [GizmoLocal] [RenameField("Quaternion Local Rename")] 
-        [SerializeField]
-        private Quaternion quaternion;
-
         [GizmoLocal] 
+        [RenameField("Quaternion Local Rename")] [SerializeField]
+        private Quaternion quaternion;
+        
+        [GizmoLocal]
         [SerializeField] private SomeClass some;
 
-        [ReadOnlyField] 
+        [ReadOnly] 
         [SerializeField] private SomeClass someClass;
 
-        [ReadOnlyField] 
+        [ReadOnly] 
         [SerializeField] private float someFloat;
 
         [Select(DisplayGrouping.GroupedFlat)] 
         [SerializeReference]
         private ISomeInterface someInterface;
 
-        [Select] 
-        [SerializeReference] private SomeAbstractClass someAbstractClass;
+        [Select] [SerializeReference] private SomeAbstractClass someAbstractClass;
 
         [Select(typeof(SomeAbstractClass), DisplayName.Full)] 
         [SerializeReference]
@@ -83,12 +78,54 @@ namespace Samples
         [SerializeReference]
         private List<ISomeInterface> someInterfaces;
 
-        [GizmoLocal] 
-        [SerializeField] private Bounds bounds;
+        [GizmoLocal] [SerializeField]
+        private Bounds bounds;
 
-        [DisableIf(nameof(keyCode), KeyCode.Backspace)]
-        [Gizmo] 
+        [DisableInEditorMode]
         [SerializeField] private List<Vector3> _vector3s;
+
+        [ShowInEditorMode] 
+        [SerializeField] private int showInEditorMode;
+
+        [HideInEditorMode] 
+        [SerializeField] private int hideInEditorMode;
+
+        [HideInPlayMode] 
+        [SerializeField] private int hideInPlayMode;
+
+        [ShowInPlayMode] 
+        [SerializeField] private int showInPlayMode;
+
+        [EnableInPlayMode] 
+        [SerializeField] private int enableInPlayMode;
+
+        [DisableInEditorMode] 
+        [SerializeField] private int disableInEditorMode;
+
+        [EnableInEditorMode] 
+        [SerializeField] private int enableInEditorMode;
+
+        [DisableInPlayMode] 
+        [SerializeField] private int disableInPlayMode;
+
+        [SerializeField] private bool boolField;
+
+        [ShowIf(nameof(boolField), true)]
+        [SerializeField]
+        private int showIfBool;
+
+        [HideIf(nameof(boolField), true)]
+        [SerializeField]
+        private int hideIfBool;
+
+        [DisableIf(nameof(boolField), true)]
+        [SerializeField]
+        private int disableIfBool;
+
+        [EnableIf(nameof(boolField), true)]
+        [SerializeField]
+        private int enableIfBool;
+
 
         ///Default usage of attribute.
         [EditorButton]

@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 123298862}
   - component: {fileID: 123298861}
-  - component: {fileID: 123298863}
   m_Layer: 0
   m_Name: TestObject
   m_TagString: Untagged
@@ -154,13 +153,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    fullQualifiedName: 
-  keyCode: 8
-  myFlagEnumTest: 0
+    fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation1, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  keyCode: 0
+  myFlagEnumTest: 1
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
   texture: {fileID: 0}
-  scriptableObjectList: []
-  scriptableObjectArray: []
+  scriptableObjectList:
+  - {fileID: 0}
+  scriptableObjectArray:
+  - {fileID: 0}
   scriptableObject: {fileID: 0}
   vector3Local: {x: 0, y: 0, z: 0}
   quaternion: {x: 0, y: 0, z: 0, w: 0}
@@ -176,13 +178,28 @@ MonoBehaviour:
   someAbstractClasses: []
   someInterfaces: []
   bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
-  _vector3s: []
+    m_Center: {x: 0, y: -3.7256675, z: 0}
+    m_Extent: {x: 1.0894362, y: 1.2339233, z: 3.5291336}
+  _vector3s:
+  - {x: 0, y: -2.0571938, z: 6.2717056}
+  - {x: 0, y: -2.9847207, z: -7.380436}
+  showInEditorMode: 0
+  hideInEditorMode: 0
+  hideInPlayMode: 0
+  showInPlayMode: 0
+  enableInPlayMode: 0
+  disableInEditorMode: 0
+  enableInEditorMode: 0
+  disableInPlayMode: 0
+  boolField: 0
+  showIfBool: 0
+  hideIfBool: 0
+  disableIfBool: 0
+  enableIfBool: 0
   references:
     version: 1
     00000000:
-      type: {class: SomeInterfaceImplementation15, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      type: {class: SomeInterfaceImplementation14, ns: Samples.OtherModels, asm: Assembly-CSharp}
       data:
         intField: 0
     00000001:
@@ -195,30 +212,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123298860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4.66, z: 1.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &123298863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123298860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0abba7378f7ebde44b97f830c5edf86b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  someInterface:
-    id: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: , ns: , asm: }
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,11 +473,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e00f0a3eb91afd4a834ba63c1fef0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eboboInt:
-  - value: 0
-    arki_Ne_prava_nadeus: 0
-  - value: 0
-    arki_Ne_prava_nadeus: 0
-  eboboType:
-  - {value: {fileID: 0}, arki_Ne_prava_nadeus: 0}
-  - {value: {fileID: 0}, arki_Ne_prava_nadeus: 0}

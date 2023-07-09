@@ -6,9 +6,9 @@ namespace Better.Attributes.Runtime.Manipulation
 {
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class DisableInPlayMode : ManipulateAttribute
+    public class ShowIfAttribute : ManipulateUserConditionAttribute
     {
-        public DisableInPlayMode() : base(ManipulationMode.Disable)
+        public ShowIfAttribute(string memberName, object memberValue) : base(memberName, memberValue, ManipulationMode.Show)
         {
         }
     }

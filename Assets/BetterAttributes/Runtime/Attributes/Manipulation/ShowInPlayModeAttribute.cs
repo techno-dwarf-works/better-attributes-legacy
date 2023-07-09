@@ -4,11 +4,12 @@ using Better.Tools.Runtime;
 
 namespace Better.Attributes.Runtime.Manipulation
 {
+
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class EnableInPlayMode : ManipulateAttribute
+    public class ShowInPlayModeAttribute : ManipulateAttribute
     {
-        public EnableInPlayMode() : base(ManipulationMode.Enable)
+        public ShowInPlayModeAttribute() : base(ManipulationMode.Show)
         {
         }
     }

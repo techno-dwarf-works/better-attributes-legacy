@@ -18,6 +18,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
         private float _previewSize;
         public PreviewWrappers Collection => _wrappers as PreviewWrappers;
 
+        private const string Message = "Preview not available for empty field";
+
         protected override void Deconstruct()
         {
             _wrappers.Deconstruct();
@@ -25,11 +27,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
 
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
-            var fieldType = fieldInfo.FieldType;
-            var attributeType = attribute.GetType();
+            var fieldType = _fieldInfo.FieldType;
+            var attributeType = _attribute.GetType();
             if (!PreviewUtility.Instance.IsSupported(fieldType))
             {
-                DrawersHelper.NotSupportedAttribute(label.text, fieldType, attributeType);
+                DrawersHelper.NotSupportedAttribute(position, property, label, fieldType, attributeType);
                 return false;
             }
 
@@ -39,16 +41,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             }
 
             EditorGUI.BeginChangeCheck();
-            _previewSize = ((PreviewAttribute)attribute).PreviewSize;
+            _previewSize = ((PreviewAttribute)_attribute).PreviewSize;
             if (!Collection.ValidateObject(property))
             {
-                const string message = "Preview not available for empty field";
-                var offset = DrawersHelper.GetHelpBoxHeight(position.width, message, IconType.WarningMessage);
-                var buffer = new Rect(position);
-                buffer.y += EditorGUI.GetPropertyHeight(property, label, false) + DrawersHelper.SpaceHeight;
-                DrawersHelper.HelpBox(buffer, message, IconType.WarningMessage);
-
-                position.height += offset + DrawersHelper.SpaceHeight * 2;
+                DrawersHelper.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage);
                 return true;
             }
 
@@ -65,9 +61,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
         {
             if (!Collection.ValidateObject(property))
             {
-                const string message = "Preview not available for null";
-                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
-                return HeightCache.GetFull(EditorGUI.GetPropertyHeight(property, label, true) + additive + DrawersHelper.SpaceHeight * 2);
+                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
+                return HeightCache.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
             }
 
             return HeightCache.GetAdditive(0);
