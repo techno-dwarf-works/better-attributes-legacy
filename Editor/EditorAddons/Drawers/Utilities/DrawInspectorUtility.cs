@@ -11,7 +11,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {
     public class DrawInspectorUtility : BaseUtility<DrawInspectorUtility>
     {
-        protected override WrappersTypeCollection GenerateCollection()
+        protected override BaseWrappersTypeCollection GenerateCollection()
         {
             return new WrappersTypeCollection()
             {

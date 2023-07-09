@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Better.Tools.Runtime;
+using Better.Tools.Runtime.Attributes;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.DrawInspector
@@ -10,7 +11,7 @@ namespace Better.Attributes.Runtime.DrawInspector
     /// </summary>
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class DrawInspectorAttribute : PropertyAttribute
+    public class DrawInspectorAttribute : MultiPropertyAttribute
     {
     }
 }

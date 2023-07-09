@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Better.Attributes.Runtime;
 using Better.Attributes.Runtime.Gizmo;
-using Better.Attributes.Runtime.ReadOnly;
+using Better.Attributes.Runtime.Manipulation;
 using Better.Attributes.Runtime.Select;
 using Samples.Interfaces;
 using Samples.Models;
@@ -25,9 +25,9 @@ namespace Samples
         [Gizmo]
         [SerializeField] private Quaternion quaternion;
 
-        [ReadOnlyField] [SerializeField] private SomeClass someClass;
+        [ReadOnly] [SerializeField] private SomeClass someClass;
 
-        [ReadOnlyField] [SerializeField] private float someFloat;
+        [ReadOnly] [SerializeField] private float someFloat;
 
         [SelectImplementation] [SerializeReference]
         private ISomeInterface someInterface;

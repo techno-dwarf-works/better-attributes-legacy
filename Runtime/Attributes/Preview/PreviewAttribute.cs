@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Better.Tools.Runtime;
+using Better.Tools.Runtime.Attributes;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Preview
@@ -11,7 +12,7 @@ namespace Better.Attributes.Runtime.Preview
     /// </summary>
     [Conditional(BetterEditorDefines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class PreviewAttribute : PropertyAttribute
+    public class PreviewAttribute : MultiPropertyAttribute
     {
         private readonly float _previewSize;
 
