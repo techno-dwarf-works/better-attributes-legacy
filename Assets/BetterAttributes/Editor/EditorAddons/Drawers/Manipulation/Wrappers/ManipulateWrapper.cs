@@ -13,6 +13,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
         protected SerializedProperty _property;
         protected ManipulateAttribute _attribute;
         private GUI.Scope _scope;
+        private int _currentCount;
 
         public override void Deconstruct()
         {
@@ -21,7 +22,28 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
 
         protected abstract bool IsConditionSatisfied();
 
-        public virtual bool PreDraw()
+        public virtual bool Draw()
+        {
+            var satisfied = IsConditionSatisfied();
+
+            switch (_attribute.ModeType)
+            {
+                case ManipulationMode.Show:
+                    return satisfied;
+                case ManipulationMode.Hide:
+                    return !satisfied;
+                case ManipulationMode.Disable:
+                    return !satisfied;
+                case ManipulationMode.Enable:
+                    return satisfied;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return true;
+        }
+
+        public virtual bool PreDraw(ref Rect position)
         {
             var satisfied = IsConditionSatisfied();
 
@@ -29,9 +51,19 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
             {
                 case ManipulationMode.Show:
                     _scope = new HideGroup(!satisfied);
+                    if (!satisfied)
+                    {
+                        position = DisableClick();
+                    }
+
                     break;
                 case ManipulationMode.Hide:
                     _scope = new HideGroup(satisfied);
+                    if (satisfied)
+                    {
+                        position = DisableClick();
+                    }
+
                     break;
                 case ManipulationMode.Disable:
                     _scope = new EditorGUI.DisabledGroupScope(satisfied);
@@ -44,6 +76,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
             }
 
             return true;
+        }
+
+        private Rect DisableClick()
+        {
+            _currentCount = Event.current.clickCount;
+            Event.current.clickCount = 0;
+            return Rect.zero;
         }
 
         public virtual HeightCache GetHeight()
@@ -75,6 +114,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
         public virtual void PostDraw()
         {
             _scope?.Dispose();
+            if (_currentCount > 0)
+            {
+                Event.current.clickCount = _currentCount;
+            }
         }
     }
 }
