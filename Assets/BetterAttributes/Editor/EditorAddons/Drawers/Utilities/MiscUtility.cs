@@ -28,6 +28,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
                         { typeof(Enum), typeof(EnumButtonsWrapper) }
                     }
                 },
+
+                {
+                    typeof(CustomTooltipAttribute), new Dictionary<Type, Type>(AnyTypeComparer.Instance)
+                    {
+                        { typeof(Type), typeof(CustomToolTipWrapper) }
+                    }
+                },
             };
         }
 
