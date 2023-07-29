@@ -17,7 +17,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             _tooltipAttribute = (CustomTooltipAttribute)attribute;
         }
 
-        public override void PreDraw(ref Rect position, GUIContent label)
+        public override void PreDraw(Rect position, GUIContent label)
         {
             if (!string.IsNullOrEmpty(_tooltipAttribute.Tooltip) && !string.IsNullOrEmpty(label.text))
             {

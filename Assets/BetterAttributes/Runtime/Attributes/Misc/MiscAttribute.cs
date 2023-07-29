@@ -11,4 +11,16 @@ namespace Better.Attributes.Runtime.Misc
     {
         
     }
+    
+    [Conditional(BetterEditorDefines.Editor)]
+    [AttributeUsage(AttributeTargets.Field)]
+    public class HelpBoxAttribute : MiscAttribute
+    {
+        public HelpBoxAttribute(string text)
+        {
+            Text = text;
+        }
+
+        public string Text { get; }
+    }
 }

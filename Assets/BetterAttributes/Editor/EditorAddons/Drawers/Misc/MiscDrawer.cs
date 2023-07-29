@@ -34,7 +34,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc
         {
             _wrappers ??= GenerateCollection();
             var wrapper = GetWrapper(property); 
-            wrapper.PreDraw(ref position, label);
+            wrapper.PreDraw(position, label);
             
             return true;
         }

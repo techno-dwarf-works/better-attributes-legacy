@@ -1,5 +1,5 @@
-using Better.EditorTools.Comparers;
 using Better.EditorTools.Drawers.Base;
+using Better.EditorTools.Helpers;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,12 +7,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
 {
     public class HideLabelWrapper : MiscWrapper
     {
-        public override void PreDraw(ref Rect position, GUIContent label)
+        public override void PreDraw(Rect position, GUIContent label)
         {
-            if (!_property.hasVisibleChildren)
-            {
-                label.text = string.Empty;
-            }
+            label.text = string.Empty;
         }
 
         public override void PostDraw()
@@ -33,10 +30,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             {
                 var prop = enumerator.Current as SerializedProperty;
                 if (prop == null) continue;
-                //Add your treatment to the current child property...
+                
                 var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
                 copy.height = propertyHeight;
-                EditorGUI.PropertyField(copy, prop, true);
+                
+                //TODO: Fix multiply drawing of field
+                EditorGUIHelpers.PropertyFieldSafe(copy, prop, label);
                 copy.y += propertyHeight + EditorGUIUtility.standardVerticalSpacing;
             }
         }

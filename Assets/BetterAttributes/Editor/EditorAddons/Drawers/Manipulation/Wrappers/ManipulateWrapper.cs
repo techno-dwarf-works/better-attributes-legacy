@@ -21,28 +21,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
         }
 
         protected abstract bool IsConditionSatisfied();
-
-        public virtual bool Draw()
-        {
-            var satisfied = IsConditionSatisfied();
-
-            switch (_attribute.ModeType)
-            {
-                case ManipulationMode.Show:
-                    return satisfied;
-                case ManipulationMode.Hide:
-                    return !satisfied;
-                case ManipulationMode.Disable:
-                    return !satisfied;
-                case ManipulationMode.Enable:
-                    return satisfied;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            return true;
-        }
-
+        
         public virtual bool PreDraw(ref Rect position)
         {
             var satisfied = IsConditionSatisfied();

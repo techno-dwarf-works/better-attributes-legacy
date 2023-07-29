@@ -14,25 +14,28 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
         {
             return new WrappersTypeCollection(TypeComparer.Instance)
             {
-                
                 {
                     typeof(HideLabelAttribute), new Dictionary<Type, Type>(AnyTypeComparer.Instance)
                     {
                         { typeof(Type), typeof(HideLabelWrapper) }
                     }
                 },
-
                 {
                     typeof(EnumButtonsAttribute), new Dictionary<Type, Type>(AssignableFromComparer.Instance)
                     {
                         { typeof(Enum), typeof(EnumButtonsWrapper) }
                     }
                 },
-
                 {
                     typeof(CustomTooltipAttribute), new Dictionary<Type, Type>(AnyTypeComparer.Instance)
                     {
                         { typeof(Type), typeof(CustomToolTipWrapper) }
+                    }
+                },
+                {
+                    typeof(HelpBoxAttribute), new Dictionary<Type, Type>(AnyTypeComparer.Instance)
+                    {
+                        { typeof(Type), typeof(HelpBoxWrapper) }
                     }
                 },
             };

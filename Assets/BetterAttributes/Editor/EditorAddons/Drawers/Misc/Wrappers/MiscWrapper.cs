@@ -25,7 +25,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             _fieldInfo = fieldInfo;
         }
 
-        public abstract void PreDraw(ref Rect position, GUIContent label);
+        public abstract void PreDraw(Rect position, GUIContent label);
         public abstract void DrawField(Rect rect, GUIContent label);
         public abstract void PostDraw();
         public abstract HeightCache GetHeight(GUIContent label);

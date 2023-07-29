@@ -35,20 +35,25 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             }
         }
 
-        public override void PostDraw()
+        public override void PreDraw(Rect position, GUIContent label)
         {
         }
 
         public override void DrawField(Rect rect, GUIContent label)
         {
             var width = 0f;
-            var maxLabelWidth = GetMaxLabelWidth(label);
+            var maxLabelWidth = label.GetMaxWidth();
             var labelRect = new Rect(rect)
             {
                 width = maxLabelWidth,
                 height = EditorGUIUtility.singleLineHeight
             };
             EditorGUI.LabelField(labelRect, label, EditorStyles.label);
+            DrawEnumButtons(rect, maxLabelWidth, width);
+        }
+
+        private void DrawEnumButtons(Rect rect, float maxLabelWidth, float width)
+        {
             var buttonRect = new Rect(rect);
             buttonRect.height = EditorGUIUtility.singleLineHeight;
             buttonRect.x += maxLabelWidth;
@@ -68,10 +73,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 }
 
                 copy.width = maxWidth;
-                
-                if (GUI.Toggle(copy,currentValue == button.Item1, button.Item2, _buttonStyle))
+
+                if (GUI.Toggle(copy, currentValue == button.Item1, button.Item2, _buttonStyle))
                 {
-                    if(currentValue != button.Item1)
+                    if (currentValue != button.Item1)
                     {
                         _property.intValue = EnumSetterExtension.CalculateCurrentValue(currentValue, _isFlag, button.Item1, _everythingValue);
                         _property.serializedObject.ApplyModifiedProperties();
@@ -83,16 +88,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             }
         }
 
-        private static float GetMaxLabelWidth(GUIContent label)
-        {
-            if (string.IsNullOrEmpty(label.text))
-            {
-                return 0;
-            }
-
-            return EditorGUIUtility.labelWidth;
-        }
-
         private static float GetCurrentViewWidth(float maxLabelWidth)
         {
             return EditorGUIUtility.currentViewWidth - maxLabelWidth - EditorGUIUtility.singleLineHeight * 2f;
@@ -100,7 +95,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
 
         public override HeightCache GetHeight(GUIContent label)
         {
-            var maxLabelWidth = GetMaxLabelWidth(label);
+            var maxLabelWidth = label.GetMaxWidth();
             var inspectorWidth = GetCurrentViewWidth(maxLabelWidth);
             var width = 0f;
             var linesCount = 1;
@@ -118,8 +113,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
 
             return HeightCache.GetFull(linesCount * EditorGUIUtility.singleLineHeight).Force();
         }
-
-        public override void PreDraw(ref Rect position, GUIContent label)
+        
+        public override void PostDraw()
         {
         }
     }
