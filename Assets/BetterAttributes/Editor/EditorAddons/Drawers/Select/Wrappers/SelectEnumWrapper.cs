@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Reflection;
+using Better.Attributes.EditorAddons.Extensions;
 using Better.EditorTools;
 using Better.EditorTools.Drawers.Base;
+using Better.Extensions.Runtime;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
@@ -9,6 +11,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
     public class SelectEnumWrapper : BaseSelectWrapper
     {
         private bool _isFlag;
+        private int _everythingValue;
 
         public override bool SkipFieldDraw()
         {
@@ -23,6 +26,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
         public override void SetProperty(SerializedProperty property, FieldInfo fieldInfo)
         {
             base.SetProperty(property, fieldInfo);
+            var enumType = fieldInfo.GetFieldOrElementType();
+            _everythingValue = enumType.EverythingFlag().ToFlagInt();
             _isFlag = fieldInfo.FieldType.GetCustomAttribute<FlagsAttribute>() != null;
         }
 
@@ -31,25 +36,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
             if (!_property.Verify()) return;
             var value = (int)objValue;
             var currentValue = _property.intValue;
-            if (_isFlag)
-            {
-                if (currentValue == 0)
-                {
-                    currentValue = value;
-                }
-                else
-                {
-                    currentValue ^= value;
-                }
-            }
-            else
-            {
-                currentValue = value;
-            }
+            currentValue = EnumSetterExtension.CalculateCurrentValue(currentValue, _isFlag, value, _everythingValue);
 
             _property.intValue = currentValue;
         }
-
+        
         public override object GetCurrentValue()
         {
             return _property.intValue;

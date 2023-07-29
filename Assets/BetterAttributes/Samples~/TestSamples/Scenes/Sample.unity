@@ -153,12 +153,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation1, Assembly-CSharp,
+    fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  keyCode: 0
-  myFlagEnumTest: 1
+  keyCode: 8
+  myFlagEnumTest: 4
+  myEnumTest: 0
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
-  texture: {fileID: 0}
+  texture: {fileID: 2800000, guid: 78b772f3f305147419de3cc97ca72bd7, type: 3}
   scriptableObjectList:
   - {fileID: 0}
   scriptableObjectArray:
@@ -168,8 +169,16 @@ MonoBehaviour:
   quaternion: {x: 0, y: 0, z: 0, w: 0}
   some:
     intField: 0
+    intField1: 0
+    intField2: 0
+    intField3: 0
+    intField4: 0
   someClass:
-    intField: 0
+    intField: 53
+    intField1: 0
+    intField2: 0
+    intField3: 0
+    intField4: 203
   someFloat: 0
   someInterface:
     id: 0
