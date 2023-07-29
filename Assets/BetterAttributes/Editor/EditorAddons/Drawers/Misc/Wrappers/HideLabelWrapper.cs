@@ -34,7 +34,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
                 copy.height = propertyHeight;
                 
-                //TODO: Fix multiply drawing of field
                 EditorGUIHelpers.PropertyFieldSafe(copy, prop, label);
                 copy.y += propertyHeight + EditorGUIUtility.standardVerticalSpacing;
             }
