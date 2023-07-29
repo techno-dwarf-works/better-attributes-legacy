@@ -5,6 +5,7 @@ using Better.Attributes.Runtime.DrawInspector;
 using Better.Attributes.Runtime.Gizmo;
 using Better.Attributes.Runtime.Headers;
 using Better.Attributes.Runtime.Manipulation;
+using Better.Attributes.Runtime.Misc;
 using Better.Attributes.Runtime.Preview;
 using Better.Attributes.Runtime.Rename;
 using Better.Attributes.Runtime.Select;
@@ -22,16 +23,55 @@ namespace Samples
         Second = 2,
         Third = 4
     }
+    
+    public enum TestEnum
+    {
+        Option,
+        Option1,
+        Option2,
+        Option3,
+        Option4,
+        Option5,
+        Option6,
+        Option7,
+        Option8,
+        Option9,
+        Option10,
+        Option11,
+        Option12,
+        Option13,
+        Option14,
+        Option15,
+        Option16,
+        Option17,
+        Option18,
+        Option19,
+        Option20,
+        Option21,
+        Option22,
+        Option23,
+        Option24,
+        Option25,
+        Option26,
+        Option27,
+    }
 
     public class Test : MonoBehaviour
     {
-        [Select(typeof(ISomeInterface))] [SerializeField]
+        [HideLabel]
+        [Select(typeof(ISomeInterface))] 
+        [SerializeField]
         private SerializedType serializedType;
 
-        [Select] [SerializeField] private KeyCode keyCode;
+        [Select] 
+        [SerializeField] private KeyCode keyCode;
 
         [DisableIf(nameof(keyCode), KeyCode.D)]
         [Select] [SerializeField] private MyFlagEnum myFlagEnumTest;
+        
+        [EnumButtons] 
+        [HideLabel]
+        [SerializeField] private TestEnum myEnumTest;
 
         [ShowIf(nameof(keyCode), KeyCode.Backspace)] 
         [Preview] [DrawInspector] 
@@ -39,8 +79,10 @@ namespace Samples
         private PreviewTest component;
 
         [Preview] 
+        [CustomTooltip("Test tooltip")]
         [SerializeField] private Texture2D texture;
 
+        [HelpBox("It's help box")]
         [DrawInspector] 
         [SerializeField] private List<TestScriptableObject> scriptableObjectList;
         [DrawInspector] 
@@ -58,7 +100,7 @@ namespace Samples
         [GizmoLocal]
         [SerializeField] private SomeClass some;
 
-        [ReadOnly] 
+        [HideLabel]
         [SerializeField] private SomeClass someClass;
 
         [ReadOnly] 

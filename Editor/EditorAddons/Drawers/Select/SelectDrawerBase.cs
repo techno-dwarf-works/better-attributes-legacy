@@ -5,6 +5,7 @@ using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
@@ -46,7 +47,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                     return false;
                 }
 
-                PreDrawExtended(position, property, attribute);
+                PreDrawExtended(position, property, label, attribute);
             }
             catch (Exception e)
             {
@@ -56,7 +57,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return true;
         }
 
-        private void PreDrawExtended(Rect position, SerializedProperty property, TAttribute attribute)
+        private void PreDrawExtended(Rect position, SerializedProperty property, GUIContent label, TAttribute attribute)
         {
             var fieldOrElementType = _setupStrategy.GetFieldOrElementType();
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
@@ -65,7 +66,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 cache.Value.Wrapper.SetProperty(property, _fieldInfo);
             }
 
-            var popupPosition = GetPopupPosition(position);
+            var popupPosition = GetPopupPosition(position, label);
             if (!_isSetUp)
             {
                 _selectionObjects = _setupStrategy.Setup(fieldOrElementType);
@@ -77,7 +78,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             var referenceValue = GetCurrentValue(property);
             if (DrawButton(popupPosition, referenceValue))
             {
-                ShowDropDown(property, popupPosition, referenceValue);
+                ShowDropDown(property.Copy(), popupPosition, referenceValue);
             }
 
             if (_needUpdate)
@@ -88,11 +89,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             }
         }
 
-        private Rect GetPopupPosition(Rect currentPosition)
+        private Rect GetPopupPosition(Rect currentPosition, GUIContent label)
         {
             var popupPosition = new Rect(currentPosition);
-            popupPosition.width -= EditorGUIUtility.labelWidth;
-            popupPosition.x += EditorGUIUtility.labelWidth;
+            var width = label.GetMaxWidth();
+            popupPosition.width -= width;
+            popupPosition.x += width;
             popupPosition.height = EditorGUIUtility.singleLineHeight;
             return popupPosition;
         }

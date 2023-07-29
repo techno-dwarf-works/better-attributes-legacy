@@ -1,28 +1,30 @@
 ﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers;
+using Better.Attributes.EditorAddons.Drawers.Misc.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.Runtime.Manipulation;
+using Better.Attributes.Runtime.Misc;
 using Better.EditorTools.Attributes;
 using Better.EditorTools.Drawers.Base;
 using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace Better.Attributes.EditorAddons.Drawers.Manipulation
+namespace Better.Attributes.EditorAddons.Drawers.Misc
 {
-    [MultiCustomPropertyDrawer(typeof(ManipulateAttribute))]
-    public class ManipulateDrawer : MultiFieldDrawer<ManipulateWrapper>
+    [MultiCustomPropertyDrawer(typeof(MiscAttribute))]
+    public class MiscDrawer : MultiFieldDrawer<MiscWrapper>
     {
-        private ManipulateDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        private MiscDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
         {
         }
 
-        private ManipulateWrapper GetWrapper(SerializedProperty property)
+        private MiscWrapper GetWrapper(SerializedProperty property)
         {
-            var cache = ValidateCachedProperties(property, ManipulateUtility.Instance);
+            var cache = ValidateCachedProperties(property, MiscUtility.Instance);
             if (!cache.IsValid)
             {
-                cache.Value.Wrapper.SetProperty(property, (ManipulateAttribute)_attribute);
+                cache.Value.Wrapper.SetProperty(property, _fieldInfo, (MiscAttribute)_attribute);
             }
 
             return cache.Value.Wrapper;
@@ -32,7 +34,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation
         {
             _wrappers ??= GenerateCollection();
             var wrapper = GetWrapper(property); 
-            wrapper.PreDraw(ref position);
+            wrapper.PreDraw(position, label);
             
             return true;
         }
@@ -42,10 +44,16 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation
             return original;
         }
 
+        protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        {
+            var wrapper = GetWrapper(property);
+            wrapper.DrawField(position, label);
+        }
+
         protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var wrapper = GetWrapper(property);
-            return wrapper.GetHeight();
+            return wrapper.GetHeight(label);
         }
 
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
@@ -54,9 +62,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation
             wrapper.PostDraw();
         }
 
-        protected override WrapperCollection<ManipulateWrapper> GenerateCollection()
+        protected override WrapperCollection<MiscWrapper> GenerateCollection()
         {
-            return new WrapperCollection<ManipulateWrapper>();
+            return new WrapperCollection<MiscWrapper>();
         }
     }
 }

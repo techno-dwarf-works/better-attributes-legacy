@@ -8,8 +8,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
     public abstract class BaseSelectWrapper : UtilityWrapper
     {
-        private protected SerializedProperty _property;
-        private FieldInfo _fieldInfo;
+        protected SerializedProperty _property;
+        protected FieldInfo _fieldInfo;
 
         public override void Deconstruct()
         {
