@@ -156,7 +156,7 @@ MonoBehaviour:
     fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   keyCode: 8
-  myFlagEnumTest: 4
+  myFlagEnumTest: 2
   myEnumTest: 0
   component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
   texture: {fileID: 2800000, guid: 78b772f3f305147419de3cc97ca72bd7, type: 3}
@@ -185,7 +185,8 @@ MonoBehaviour:
   someAbstractClass:
     id: 1
   someAbstractClasses: []
-  someInterfaces: []
+  someInterfaces:
+  - id: 2
   bounds:
     m_Center: {x: 0, y: -3.7256675, z: 0}
     m_Extent: {x: 1.0894362, y: 1.2339233, z: 3.5291336}
@@ -212,7 +213,14 @@ MonoBehaviour:
       data:
         intField: 0
     00000001:
-      type: {class: , ns: , asm: }
+      type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
+      data:
+        baseIntField: 0
+        boolField: 0
+    00000002:
+      type: {class: SomeInterfaceImplementation21, ns: Samples.Models, asm: Assembly-CSharp}
+      data:
+        intField: 0
 --- !u!4 &123298862
 Transform:
   m_ObjectHideFlags: 0
@@ -482,3 +490,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e00f0a3eb91afd4a834ba63c1fef0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1709801164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1709801166}
+  - component: {fileID: 1709801165}
+  m_Layer: 0
+  m_Name: TestObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1709801165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709801164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716832c938bc4460a9cde471065ce2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testStr: Str3
+  testInt: 3
+  testInt2: 4
+  testICollection:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
+--- !u!4 &1709801166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1709801164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.66, z: 1.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

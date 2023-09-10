@@ -27,30 +27,30 @@ namespace Better.Attributes.Runtime.Select
         public DisplayName DisplayName { get; } = DisplayName.Short;
         public DisplayGrouping DisplayGrouping { get; } = DisplayGrouping.None;
 
-        public SelectAttributeBase(Type type)
+        protected SelectAttributeBase(Type type)
         {
             _type = type;
         }
 
-        public SelectAttributeBase(Type type, DisplayName displayName)
+        protected SelectAttributeBase(Type type, DisplayName displayName)
         {
             _type = type;
             DisplayName = displayName;
         }
-        
-        public SelectAttributeBase(Type type, DisplayGrouping displayGrouping)
+
+        protected SelectAttributeBase(Type type, DisplayGrouping displayGrouping)
         {
             _type = type;
             DisplayName = DisplayName.Short;
             DisplayGrouping = displayGrouping;
         }
 
-        public SelectAttributeBase(DisplayName displayName)
+        protected SelectAttributeBase(DisplayName displayName)
         {
             DisplayName = displayName;
         }
 
-        public SelectAttributeBase(DisplayGrouping displayGrouping)
+        protected SelectAttributeBase(DisplayGrouping displayGrouping)
         {
             DisplayName = DisplayName.Short;
             DisplayGrouping = displayGrouping;
@@ -61,7 +61,7 @@ namespace Better.Attributes.Runtime.Select
             return _type;
         }
 
-        public SelectAttributeBase()
+        protected SelectAttributeBase()
         {
         }
     }

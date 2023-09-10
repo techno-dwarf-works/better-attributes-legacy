@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.Runtime.Select;
@@ -17,6 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
     public class SelectUtility : BaseUtility<SelectUtility>
     {
         public const string NotSupported = "Not supported";
+        public const string Null = "null";
 
         protected Dictionary<Type, Dictionary<Type, Type>> _setupWrappers;
         private HashSet<SerializedPropertyType> _supportedTypes;
@@ -31,6 +33,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
                         { typeof(SerializedType), typeof(SelectTypeStrategy) },
                         { typeof(Enum), typeof(SelectEnumStrategy) },
                         { typeof(Type), typeof(SelectImplementationStrategy) }
+                    }
+                },
+                {
+                    typeof(DropdownAttribute), new Dictionary<Type, Type>(AnyTypeComparer.Instance)
+                    {
+                        { typeof(Type), typeof(DropdownStrategy) }
                     }
                 }
             };
@@ -54,6 +62,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
                         { typeof(Enum), typeof(SelectEnumWrapper) },
                         { typeof(Type), typeof(SelectTypeWrapper) }
                     }
+                },
+                {
+                    typeof(DropdownAttribute), new Dictionary<Type, Type>(AnyTypeComparer.Instance)
+                    {
+                        { typeof(Type), typeof(DropdownWrapper) }
+                    }
                 }
             };
         }
@@ -71,11 +85,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
         /// <summary>
         /// Generate ready to use wrapper's instance by dictionary from <see cref="GetSetupStrategyDictionary"/>
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="fieldInfo"></param>
+        /// <param name="propertyContainer"></param>
         /// <param name="attribute"></param>
         /// <returns></returns>
-        public SetupStrategy GetSetupStrategy(Type type, SelectAttributeBase attribute)
+        public SetupStrategy GetSetupStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase attribute)
         {
+            var type = fieldInfo.GetFieldOrElementType();
             if (!IsSupported(type))
             {
                 return null;
@@ -84,22 +100,17 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
             var gizmoWrappers = GetSetupStrategyDictionary(attribute.GetType());
             var wrapperType = gizmoWrappers[type];
 
-            return (SetupStrategy)Activator.CreateInstance(wrapperType, new object[]{type, attribute});
+            return (SetupStrategy)Activator.CreateInstance(wrapperType, new object[] { fieldInfo, propertyContainer, attribute });
         }
 
         protected override HashSet<Type> GenerateAvailable()
         {
-            return new HashSet<Type>(TypeComparer.Instance)
+            return new HashSet<Type>(AnyTypeComparer.Instance)
             {
                 typeof(Enum),
                 typeof(Type),
                 typeof(SerializedType)
             };
-        }
-
-        public bool CheckSupportedType(SerializedPropertyType propertyType)
-        {
-            return _supportedTypes.Contains(propertyType);
         }
     }
 }
