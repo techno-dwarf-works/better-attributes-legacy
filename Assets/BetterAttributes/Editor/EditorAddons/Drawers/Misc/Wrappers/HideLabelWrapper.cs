@@ -28,8 +28,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             var copy = new Rect(rect);
             while (enumerator.MoveNext())
             {
-                var prop = enumerator.Current as SerializedProperty;
-                if (prop == null) continue;
+                if (!(enumerator.Current is SerializedProperty prop)) continue;
                 
                 var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
                 copy.height = propertyHeight;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Helpers;
 using UnityEngine;
@@ -7,6 +8,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public class SelectImplementationStrategy : SelectTypeStrategy
     {
+        public SelectImplementationStrategy(FieldInfo fieldInfo, object container, SelectAttributeBase selectAttributeBase) : base(fieldInfo, container,
+            selectAttributeBase)
+        {
+        }
+
         public override GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping)
         {
             if (value is Type type)
@@ -41,10 +47,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             resolveName.text = $"{type.Name}";
             resolveName.tooltip = "Type has not parameterless constructor!";
             return resolveName;
-        }
-
-        public SelectImplementationStrategy(Type fieldType, SelectAttributeBase selectAttributeBase) : base(fieldType, selectAttributeBase)
-        {
         }
     }
 }

@@ -17,6 +17,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
         private PredefinedValues _everythingValue = new PredefinedValues("Everything", -1);
         private List<object> _enumValues;
 
+        public SelectEnumStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase) : base(fieldInfo, propertyContainer,
+            selectAttributeBase)
+        {
+        }
+
         private struct PredefinedValues
         {
             public PredefinedValues(string name, int value)
@@ -73,7 +78,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override bool CheckSupported()
         {
-            return true;
+            return GetFieldOrElementType().IsEnum;
         }
 
         public override GUIContent GenerateHeader()
@@ -86,9 +91,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             return new GUIContent[] { new GUIContent(SelectUtility.NotSupported) };
         }
 
-        public override List<object> Setup(Type baseType)
+        public override List<object> Setup()
         {
-            _enumType = baseType;
+            _enumType = GetFieldOrElementType();
             _isFlag = _enumType.GetCustomAttribute<FlagsAttribute>() != null;
 
             var ints = _enumType.GetAllValues();
@@ -139,10 +144,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             }
 
             return new GUIContent(SelectUtility.NotSupported);
-        }
-
-        public SelectEnumStrategy(Type fieldType, SelectAttributeBase selectAttributeBase) : base(fieldType, selectAttributeBase)
-        {
         }
     }
 }

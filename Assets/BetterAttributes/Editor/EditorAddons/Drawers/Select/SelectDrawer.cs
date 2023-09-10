@@ -15,13 +15,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 {
     [MultiCustomPropertyDrawer(typeof(SelectAttribute))]
     [MultiCustomPropertyDrawer(typeof(SelectImplementationAttribute))]
+    [MultiCustomPropertyDrawer(typeof(DropdownAttribute))]
     public class SelectDrawer : SelectDrawerBase<SelectAttributeBase>
     {
-        protected override bool CheckSupported(SerializedProperty property)
-        {
-            return SelectUtility.Instance.CheckSupportedType(property.propertyType);
-        }
-
         protected override WrapperCollection<BaseSelectWrapper> GenerateCollection()
         {
             return new SelectWrappers();

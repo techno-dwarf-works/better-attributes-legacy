@@ -7,6 +7,7 @@ using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
+using Better.EditorTools;
 using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Helpers;
 using Better.EditorTools.Helpers.DropDown;
@@ -38,8 +39,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             try
             {
                 var attribute = (TAttribute)_attribute;
-                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(GetFieldOrElementType(), attribute);
-                if (_setupStrategy == null || (!CheckSupported(property) && !_setupStrategy.CheckSupported()))
+                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(_fieldInfo, property.GetPropertyContainer(), attribute);
+                if (_setupStrategy == null || (!_setupStrategy.CheckSupported()))
                 {
                     EditorGUI.BeginChangeCheck();
                     DrawField(position, property, label);
@@ -59,7 +60,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
         private void PreDrawExtended(Rect position, SerializedProperty property, GUIContent label, TAttribute attribute)
         {
-            var fieldOrElementType = _setupStrategy.GetFieldOrElementType();
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
             if (!cache.IsValid)
             {
@@ -69,7 +69,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             var popupPosition = GetPopupPosition(position, label);
             if (!_isSetUp)
             {
-                _selectionObjects = _setupStrategy.Setup(fieldOrElementType);
+                _selectionObjects = _setupStrategy.Setup();
                 _displayName = attribute.DisplayName;
                 _displayGrouping = attribute.DisplayGrouping;
                 SetReady();
@@ -128,15 +128,15 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             var items = new DropdownCollection(new DropdownSubTree(new GUIContent("Root")));
             if (_displayGrouping == DisplayGrouping.None)
             {
-                foreach (var type in _selectionObjects)
+                foreach (var value in _selectionObjects)
                 {
-                    var guiContent = _setupStrategy.ResolveName(type, _displayName);
-                    if (guiContent.image == null && _setupStrategy.ResolveState(currentValue, type))
+                    var guiContent = _setupStrategy.ResolveName(value, _displayName);
+                    if (guiContent.image == null && _setupStrategy.ResolveState(currentValue, value))
                     {
                         guiContent.image = DrawersHelper.GetIcon(IconType.Checkmark);
                     }
 
-                    var item = new DropdownItem(guiContent, OnSelectItem, new SelectedItem<object>(serializedProperty, type));
+                    var item = new DropdownItem(guiContent, OnSelectItem, new SelectedItem<object>(serializedProperty, value));
                     items.AddChild(item);
                 }
             }
@@ -228,7 +228,5 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
         {
         }
-
-        protected abstract bool CheckSupported(SerializedProperty property);
     }
 }

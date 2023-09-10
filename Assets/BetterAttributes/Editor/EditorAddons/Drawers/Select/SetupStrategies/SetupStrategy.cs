@@ -9,16 +9,18 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public abstract class SetupStrategy
     {
-        private protected readonly Type _fieldType;
+        private protected readonly FieldInfo _fieldInfo;
+        private protected readonly object _propertyContainer;
         private protected readonly SelectAttributeBase _selectAttributeBase;
 
-        protected SetupStrategy(Type fieldType, SelectAttributeBase selectAttributeBase)
+        protected SetupStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase)
         {
-            _fieldType = fieldType;
+            _fieldInfo = fieldInfo;
+            _propertyContainer = propertyContainer;
             _selectAttributeBase = selectAttributeBase;
         }
         
-        public abstract List<object> Setup(Type baseType);
+        public abstract List<object> Setup();
         public abstract GUIContent ResolveName(object value, DisplayName displayName);
         public abstract GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping);
         public abstract string GetButtonName(object currentValue);
@@ -35,7 +37,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 return t;
             }
 
-            return _fieldType;
+            return _fieldInfo.GetFieldOrElementType();
         }
     }
 }

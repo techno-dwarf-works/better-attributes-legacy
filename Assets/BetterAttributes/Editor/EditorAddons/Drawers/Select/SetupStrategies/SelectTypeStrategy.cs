@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
 using Better.Extensions.Runtime;
 using UnityEngine;
@@ -11,6 +12,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public class SelectTypeStrategy : SetupStrategy
     {
+        public SelectTypeStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase) : base(fieldInfo, propertyContainer,
+            selectAttributeBase)
+        {
+        }
+
         public override bool ResolveState(object currentValue, object iteratedValue)
         {
             if (iteratedValue == null && currentValue == null) return true;
@@ -61,7 +67,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
         {
             if (value == null)
             {
-                return new GUIContent[] { new GUIContent("null") };
+                return new GUIContent[] { new GUIContent(SelectUtility.Null) };
             }
 
             if (value is Type type)
@@ -71,7 +77,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                     return new GUIContent[] { new GUIContent(type.Name) };
                 }
 
-                var split = type.FullName.Split('.');
+                var split = type.FullName.Split(AttributesDefinitions.NameSeparator);
                 if (split.Length <= 1)
                 {
                     return new GUIContent[] { new GUIContent(type.Name) };
@@ -95,7 +101,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
         {
             if (value == null)
             {
-                return new GUIContent("null");
+                return new GUIContent(SelectUtility.Null);
             }
 
             if (value is Type type)
@@ -103,9 +109,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 switch (displayName)
                 {
                     case DisplayName.Short:
-                        return new GUIContent($"{type.Name}");
+                        return new GUIContent(type.Name);
                     case DisplayName.Full:
-                        return new GUIContent($"{type.FullName}");
+                        return new GUIContent(type.FullName);
                     default:
                         throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
                 }
@@ -121,18 +127,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 return type.Name;
             }
 
-            return "null";
+            return SelectUtility.Null;
         }
 
-        public override List<object> Setup(Type baseType)
+        public override List<object> Setup()
         {
-            var selectionObjects = baseType.GetAllInheritedType().Cast<object>().ToList();
+            var selectionObjects = GetFieldOrElementType().GetAllInheritedType().Cast<object>().ToList();
             selectionObjects.Insert(0, null);
             return selectionObjects;
-        }
-
-        public SelectTypeStrategy(Type fieldType, SelectAttributeBase selectAttributeBase) : base(fieldType, selectAttributeBase)
-        {
         }
     }
 }
