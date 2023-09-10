@@ -38,38 +38,6 @@ private List<ISomeInterface> someInterfaces;
 private KeyCode keyCode;
 ```
 
-## Dropdown Attribute
-
-Similar to Select Attribute, but allows to define your own collection of selecting.
-
-Usage:
-
-```c#
-[Dropdown("Method()")] [SerializeField]
-private List<int> someInts;
-
-[Dropdown("Method()")] [SerializeField]
-private List<int> someInts;
-```
-
-Supports retrieving information from other classes, to use this option start `selectorName` with `r:`.
-
-Usage:
-
-```c#
-[Dropdown("r:OtherClass.StaticFieldOrProperty")] [SerializeField]
-private List<int> someInts;
-
-[Dropdown("r:OtherClass.StaticMethod()")] [SerializeField]
-private List<int> someInts;
-
-[Dropdown("r:Singleton.Instance.Method()")] [SerializeField]
-private List<int> someInts;
-
-[Dropdown("r:Singleton.Instance.Method()")] [SerializeField]
-private List<int> someInts;
-```
-
 ## Preview
 
 Provides possibility to see object preview by clicking into the field in Unity Inspector.<br>
