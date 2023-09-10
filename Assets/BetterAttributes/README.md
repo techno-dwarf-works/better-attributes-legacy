@@ -45,11 +45,38 @@ Similar to Select Attribute, but allows to define your own collection of selecti
 Usage:
 
 ```c#
-[Dropdown("Method()")] [SerializeField]
+[Dropdown("FieldOrProperty")] [SerializeField]
 private List<int> someInts;
 
 [Dropdown("Method()")] [SerializeField]
 private List<int> someInts;
+
+private Dictionary<string, int> FieldOrProperty = new Dictionary<string, int>()
+{
+    { "test1", 1 },
+    { "test2", 2 },
+    { "test14", 20 }
+};
+
+private List<Tuple<string, int>> Method()
+{
+    return new List<Tuple<string, int>>()
+    {
+        new Tuple<string, int>("Int1", 1),
+        new Tuple<string, int>("Int2", 2),
+        new Tuple<string, int>("Int3", 3),
+    };
+}
+        
+//or
+
+private List<int> Method()
+{
+    return new List<int>()
+    {
+        65, 09, 56, 756
+    };
+}
 ```
 
 Supports retrieving information from other classes, to use this option start `selectorName` with `r:`.
