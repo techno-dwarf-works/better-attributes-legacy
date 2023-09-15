@@ -27,6 +27,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
                 return SelectUtility.Null;
             }
 
+            if (_dictionary.Count <= 0) return obj.ToString();
+            
             foreach (DictionaryEntry en in _dictionary)
             {
                 if (en.Value.Equals(obj))
@@ -41,6 +43,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
         public List<object> GetValues()
         {
             Type type = null;
+            if (_dictionary.Count <= 0) return new List<object>();
             foreach (DictionaryEntry entry in _dictionary)
             {
                 type = entry.Value.GetType();
@@ -53,9 +56,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
 
             if (_showUniqueKey)
             {
-                
             }
-            
+
             if (_showDefault)
             {
                 if (!objects.Contains(defaultElement, EqualityComparer<object>.Default))

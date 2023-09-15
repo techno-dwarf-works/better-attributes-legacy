@@ -27,6 +27,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
                 return SelectUtility.Null;
             }
 
+            if (_list.Count <= 0) return obj.ToString();
             if (_list[_list.Count - 1] is ITuple)
             {
                 foreach (ITuple item in _list)
@@ -60,6 +61,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
 
         public List<object> GetValues()
         {
+            if (_list.Count <= 0) return new List<object>();
             var last = _list[_list.Count - 1];
             var type = last.GetType();
             object defaultElement;
