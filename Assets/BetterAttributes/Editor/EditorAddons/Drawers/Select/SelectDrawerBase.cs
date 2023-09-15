@@ -39,7 +39,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             try
             {
                 var attribute = (TAttribute)_attribute;
-                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(_fieldInfo, property.GetPropertyContainer(), attribute);
+                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(_fieldInfo, property.GetLastNonCollectionContainer(), attribute);
                 if (_setupStrategy == null || (!_setupStrategy.CheckSupported()))
                 {
                     EditorGUI.BeginChangeCheck();
