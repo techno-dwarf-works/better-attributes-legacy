@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.DropdownCollection
+namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public interface IDataCollection
     {

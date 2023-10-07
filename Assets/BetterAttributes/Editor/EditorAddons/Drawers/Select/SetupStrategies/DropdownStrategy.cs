@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.DropdownCollection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Comparers;
 using Better.Tools.Runtime;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
@@ -102,60 +102,35 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         private object GetItemsFrom(ref string memberName, out Type type)
         {
-            object instance = null;
             var path = new Stack<string>(memberName.Split(AttributesDefinitions.NameSeparator));
             memberName = path.Pop().Replace(AttributesDefinitions.Brackets, string.Empty);
+            if (TryGetType(path, out type)) return null;
+            var instanceName = path.Pop().Replace(AttributesDefinitions.Brackets, string.Empty);
+
             if (!TryGetType(path, out type))
-            {
-                var instanceName = path.Pop().Replace(AttributesDefinitions.Brackets, string.Empty);
-
-                if (TryGetType(path, out type))
-                {
-                    const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-                    var members = type.GetMember(instanceName, bindingFlags);
-                    object bufferInstance = null;
-                    foreach (var memberInfo in members)
-                    {
-                        switch (memberInfo)
-                        {
-                            case PropertyInfo propertyInfo:
-                                if (propertyInfo.GetGetMethod().IsStatic)
-                                {
-                                    bufferInstance = propertyInfo.GetValue(null);
-                                }
-
-                                break;
-                            case FieldInfo fieldInfo:
-                                if (fieldInfo.IsStatic)
-                                {
-                                    bufferInstance = fieldInfo.GetValue(null);
-                                }
-
-                                break;
-                            case MethodInfo methodInfo:
-                                if (methodInfo.IsStatic && methodInfo.GetParameters().Length <= 0)
-                                {
-                                    bufferInstance = methodInfo.Invoke(null, Array.Empty<object>());
-                                }
-
-                                break;
-                        }
-
-                        if (bufferInstance != null)
-                        {
-                            instance = bufferInstance;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (type == null)
             {
                 throw new TypeAccessException();
             }
 
-            return instance;
+            const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
+            var members = type.GetMember(instanceName, bindingFlags);
+
+            return members.Select(GetInstance).FirstOrDefault(bufferInstance => bufferInstance != null);
+        }
+
+        private static object GetInstance(MemberInfo memberInfo)
+        {
+            switch (memberInfo)
+            {
+                case PropertyInfo propertyInfo when propertyInfo.GetGetMethod().IsStatic:
+                    return propertyInfo.GetValue(null);
+                case FieldInfo { IsStatic: true } fieldInfo:
+                    return fieldInfo.GetValue(null);
+                case MethodInfo { IsStatic: true } methodInfo when methodInfo.GetParameters().Length <= 0:
+                    return methodInfo.Invoke(null, Array.Empty<object>());
+                default:
+                    return null;
+            }
         }
 
         public override GUIContent ResolveName(object value, DisplayName displayName)
@@ -165,14 +140,19 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 return new GUIContent(SelectUtility.Null);
             }
 
-            var type = _data.FindName(value);
+            var name = _data.FindName(value);
+            if (value is Object)
+            {
+                displayName = DisplayName.Full;
+            }
+
             switch (displayName)
             {
                 case DisplayName.Short:
-                    var split = type.Split(AttributesDefinitions.NameSeparator);
-                    return split.Length <= 1 ? new GUIContent(type) : new GUIContent(split.Last());
+                    var split = name.Split(AttributesDefinitions.NameSeparator);
+                    return split.Length <= 1 ? new GUIContent(name) : new GUIContent(split.Last());
                 case DisplayName.Full:
-                    return new GUIContent(type);
+                    return new GUIContent(name);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
             }

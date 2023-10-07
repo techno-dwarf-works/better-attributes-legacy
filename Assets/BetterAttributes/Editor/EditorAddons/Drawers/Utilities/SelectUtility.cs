@@ -97,8 +97,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
                 return null;
             }
 
-            var gizmoWrappers = GetSetupStrategyDictionary(attribute.GetType());
-            var wrapperType = gizmoWrappers[type];
+            var dictionary = GetSetupStrategyDictionary(attribute.GetType());
+            var wrapperType = dictionary[type];
 
             return (SetupStrategy)Activator.CreateInstance(wrapperType, new object[] { fieldInfo, propertyContainer, attribute });
         }
