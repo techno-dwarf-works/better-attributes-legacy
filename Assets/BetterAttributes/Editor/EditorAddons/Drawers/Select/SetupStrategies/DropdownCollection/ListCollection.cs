@@ -5,10 +5,27 @@ using System.Runtime.CompilerServices;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Extensions.Runtime;
 
-namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.DropdownCollection
+namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public class ListCollection : IDataCollection
     {
+        private class KeyTupleComparer : IEqualityComparer<ITuple>
+        {
+            public bool Equals(ITuple x, ITuple y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (ReferenceEquals(x, null)) return false;
+                if (ReferenceEquals(y, null)) return false;
+                if (x.GetType() != y.GetType()) return false;
+                return Equals(x[0], y[0]);
+            }
+
+            public int GetHashCode(ITuple obj)
+            {
+                return obj.Length;
+            }
+        }
+
         private readonly IList _list;
         private readonly bool _showDefault;
         private readonly bool _showUniqueKey;
@@ -42,23 +59,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
             return obj.ToString();
         }
 
-        private class KeyTupleComparer : IEqualityComparer<ITuple>
-        {
-            public bool Equals(ITuple x, ITuple y)
-            {
-                if (ReferenceEquals(x, y)) return true;
-                if (ReferenceEquals(x, null)) return false;
-                if (ReferenceEquals(y, null)) return false;
-                if (x.GetType() != y.GetType()) return false;
-                return Equals(x[0], y[0]);
-            }
-
-            public int GetHashCode(ITuple obj)
-            {
-                return obj.Length;
-            }
-        }
-
         public List<object> GetValues()
         {
             if (_list.Count <= 0) return new List<object>();
@@ -90,15 +90,16 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
                 }
             }
 
+            var list = objects.ToList();
             if (_showDefault)
             {
-                if (!objects.Contains(defaultElement, EqualityComparer<object>.Default))
+                if (!list.Contains(defaultElement, EqualityComparer<object>.Default))
                 {
-                    objects = objects.Prepend(defaultElement);
+                    list.Insert(0, defaultElement);
                 }
             }
 
-            return objects.ToList();
+            return list.ToList();
         }
     }
 }

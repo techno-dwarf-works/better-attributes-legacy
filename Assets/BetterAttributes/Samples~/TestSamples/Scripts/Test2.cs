@@ -15,18 +15,24 @@ namespace Samples
 
         [Dropdown(nameof(testTuple))] [SerializeField]
         private int testInt;
-        
+
         [Dropdown("r:SingletonTest.Instance.GetIDs()")] [SerializeField]
         private int testInt2;
-        
+
         [Dropdown("r:SingletonTest.Instance.GetIDsProperty")] [SerializeField]
         private int testInt3;
-        
+
         [Dropdown("r:SingletonTest.GetIDsPropertyStatic")] [SerializeField]
         private int testInt4;
 
         [Dropdown(nameof(testCollection))] [SerializeReference]
         private ISomeInterface testICollection;
+
+        [SerializeField] private ScriptableObject[] gameObjects;
+
+        [Dropdown(nameof(gameObjects))] [SerializeField]
+        private ScriptableObject testObject;
+
 
         private string[] testArray = new[]
         {
