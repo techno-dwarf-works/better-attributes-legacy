@@ -20,7 +20,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
     public abstract class SelectDrawerBase<TAttribute> : MultiFieldDrawer<BaseSelectWrapper> where TAttribute : SelectAttributeBase
     {
         private bool _needUpdate;
-        private bool _isSetUp;
         private DisplayName _displayName;
         private DisplayGrouping _displayGrouping;
 
@@ -34,13 +33,21 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
         }
 
+        public override void Initialize(FieldDrawer drawer)
+        {
+            base.Initialize(drawer);
+            var attribute = (TAttribute)_attribute;
+            _displayName = attribute.DisplayName;
+            _displayGrouping = attribute.DisplayGrouping;
+        }
+
         protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
         {
             try
             {
                 var attribute = (TAttribute)_attribute;
                 _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(_fieldInfo, property.GetLastNonCollectionContainer(), attribute);
-                if (_setupStrategy == null || (!_setupStrategy.CheckSupported()))
+                if (_setupStrategy == null || !_setupStrategy.CheckSupported())
                 {
                     EditorGUI.BeginChangeCheck();
                     DrawField(position, property, label);
@@ -48,7 +55,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                     return false;
                 }
 
-                PreDrawExtended(position, property, label, attribute);
+                _selectionObjects ??= _setupStrategy.Setup();
+                
+                PreDrawExtended(position, property, label);
             }
             catch (Exception e)
             {
@@ -58,7 +67,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return true;
         }
 
-        private void PreDrawExtended(Rect position, SerializedProperty property, GUIContent label, TAttribute attribute)
+        private void PreDrawExtended(Rect position, SerializedProperty property, GUIContent label)
         {
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
             if (!cache.IsValid)
@@ -67,17 +76,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             }
 
             var popupPosition = GetPopupPosition(position, label);
-            if (!_isSetUp)
-            {
-                _selectionObjects = _setupStrategy.Setup();
-                _displayName = attribute.DisplayName;
-                _displayGrouping = attribute.DisplayGrouping;
-                SetReady();
-            }
 
             var referenceValue = GetCurrentValue(property);
             if (DrawButton(popupPosition, referenceValue))
             {
+                _selectionObjects = _setupStrategy.Setup();
                 ShowDropDown(property.Copy(), popupPosition, referenceValue);
             }
 
@@ -103,6 +106,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             DropdownWindow.CloseInstance();
             _wrappers?.Deconstruct();
+            _selectionObjects = null;
+            _setupStrategy = null;
         }
 
         private bool DrawButton(Rect buttonPosition, object currentValue)
@@ -155,7 +160,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
         protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
+            var cache = ValidateCachedProperties(property, SelectUtility.Instance);
             if (!cache.IsValid)
             {
                 if (cache.Value == null) return HeightCache.GetAdditive(0f);
@@ -213,11 +218,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected void SetNeedUpdate()
         {
             _needUpdate = true;
-        }
-
-        private void SetReady()
-        {
-            _isSetUp = true;
         }
 
         protected override Rect PreparePropertyRect(Rect original)

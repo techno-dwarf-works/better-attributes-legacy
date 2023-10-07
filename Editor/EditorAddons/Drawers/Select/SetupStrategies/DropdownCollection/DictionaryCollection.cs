@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Extensions.Runtime;
+using UnityEngine;
 
-namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.DropdownCollection
+namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public class DictionaryCollection : IDataCollection
     {
@@ -28,7 +29,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
             }
 
             if (_dictionary.Count <= 0) return obj.ToString();
-            
+
             foreach (DictionaryEntry en in _dictionary)
             {
                 if (en.Value.Equals(obj))
@@ -52,17 +53,18 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies.Dropdown
 
             if (type == null) return new List<object>();
             var defaultElement = type.GetDefault();
-            var objects = _dictionary.Values.Cast<object>();
+            var objects = _dictionary.Values.Cast<object>().ToList();
 
             if (_showUniqueKey)
             {
+                Debug.LogWarning($"{nameof(_showUniqueKey)} currently not supported by dictionary collection!");
             }
 
             if (_showDefault)
             {
                 if (!objects.Contains(defaultElement, EqualityComparer<object>.Default))
                 {
-                    objects = objects.Prepend(defaultElement);
+                    objects.Insert(0, defaultElement);
                 }
             }
 
