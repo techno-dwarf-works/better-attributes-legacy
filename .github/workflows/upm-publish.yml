@@ -16,19 +16,41 @@ on:
         type: boolean
 
 jobs:
+ convert_string:
+    name: Prepare String
+    runs-on: ubuntu-latest
+    outputs:
+      converted_string: ${{ steps.convertString.outputs.convertedString }}
+      
+    steps:
+      - name: Set the original string
+        id: setOriginalString
+        run: echo "::set-output name=originalString::${{ github.event.repository.name }}"
+
+      - name: Convert string
+        id: convertString
+        run: |
+          ORIGINAL_STRING="${{ steps.setOriginalString.outputs.originalString }}"
+          IFS='-' read -ra PARTS <<< "$ORIGINAL_STRING"
+          RESULT=""
+          for PART in "${PARTS[@]}"; do
+            RESULT="${RESULT}$(echo "${PART^}")"
+          done
+          echo "::set-output name=convertedString::${RESULT}"
+          
  prepare:
+    needs: convert_string
     name: Prepare
     if: ${{ inputs.run_manually }} || github.event.pull_request.merged == true
     runs-on: ubuntu-latest    
-    steps:
-    
+    steps:   
     - uses: actions/checkout@master
     - name: Copy the README
       run: |
-          cp "README.md" "Assets/${{ github.event.repository.name }}/README.md"
+          cp "README.md" "Assets/${{ needs.convert_string.outputs.converted_string }}/README.md"
     - name: Copy the LICENSE
       run: |
-          cp "LICENSE" "Assets/${{ github.event.repository.name }}/LICENSE"
+          cp "LICENSE" "Assets/${{ needs.convert_string.outputs.converted_string }}/LICENSE"
     - name: Verify Changed files
       uses: tj-actions/verify-changed-files@v11.1
       id: verify-changed-files
@@ -50,9 +72,11 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
  deploy:
+    needs: 
+      - convert_string
+      - prepare
     name: Deploy
     if: ${{ success() }}
-    needs: prepare
     runs-on: ubuntu-latest
     steps:
     # Any prerequisite steps
@@ -69,7 +93,7 @@ jobs:
       env:
         REPO: self
         BRANCH: upm
-        FOLDER: Assets/${{ github.event.repository.name }}
+        FOLDER: Assets/${{ needs.convert_string.outputs.converted_string }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SKIP_EMPTY_COMMITS: true
         MESSAGE: "{msg}"
