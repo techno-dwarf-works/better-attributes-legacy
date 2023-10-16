@@ -28,7 +28,7 @@ private ISomeInterface someInterface;
 [Select] [SerializeReference]
 private SomeAbstractClass someAbstractClass;
 
-[Select(typeof(SomeAbstractClass)] [SerializeReference]
+[Select(typeof(SomeAbstractClass))] [SerializeReference]
 private List<SomeAbstractClass> someAbstractClasses;
 
 [Select(typeof(ISomeInterface))] [SerializeReference]
