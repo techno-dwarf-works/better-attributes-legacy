@@ -8,6 +8,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     public class QuaternionLocalWrapper : GizmoWrapper
     {
+        private const float Size = 1.1f;
         private Quaternion _quaternion;
 
         public override void Apply(SceneView sceneView)
@@ -21,7 +22,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 var worldRotation = (rotation * _quaternion).Validate();
                 DrawLabel($"Local {GetName()}:\n{_quaternion.eulerAngles}", position, worldRotation, sceneView);
                 _quaternion = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
-                Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), position, worldRotation, 1.1f, EventType.Repaint);
+                Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), position, worldRotation, Size * HandleUtility.GetHandleSize(position), EventType.Repaint);
                 SetValueAndApply(_quaternion);
             }
         }
