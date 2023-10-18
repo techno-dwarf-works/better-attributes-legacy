@@ -7,6 +7,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
     public class QuaternionWrapper : GizmoWrapper
     {
+        private const float Size = 1.1f;
         private Quaternion _quaternion;
 
         public override void Apply(SceneView sceneView)
@@ -17,7 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             _quaternion.Validate();
             _quaternion = Handles.RotationHandle(_quaternion, _defaultPosition);
 
-            Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), _defaultPosition, _quaternion, 1.1f, EventType.Repaint);
+            Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), _defaultPosition, _quaternion, Size * HandleUtility.GetHandleSize(_defaultPosition), EventType.Repaint);
             _serializedProperty.quaternionValue = _quaternion;
             SetValueAndApply(_quaternion);
         }
