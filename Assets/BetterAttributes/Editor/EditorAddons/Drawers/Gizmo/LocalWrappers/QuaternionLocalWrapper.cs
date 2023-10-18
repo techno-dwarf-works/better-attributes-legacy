@@ -1,5 +1,6 @@
 ﻿using System;
 using Better.EditorTools;
+using Better.Extensions.Runtime.MathfExtensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,10 +18,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 var transform = component.transform;
                 var rotation = transform.rotation;
                 var position = transform.position;
-                var worldRotation = rotation * _quaternion;
-                DrawLabel($"Local {GetName()}:\n{_quaternion.eulerAngles}", position, worldRotation,
-                    sceneView);
+                var worldRotation = (rotation * _quaternion).Validate();
+                DrawLabel($"Local {GetName()}:\n{_quaternion.eulerAngles}", position, worldRotation, sceneView);
                 _quaternion = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
+                Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), position, worldRotation, 1.1f, EventType.Repaint);
                 SetValueAndApply(_quaternion);
             }
         }

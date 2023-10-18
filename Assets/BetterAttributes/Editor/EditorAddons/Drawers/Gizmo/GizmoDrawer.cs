@@ -9,6 +9,7 @@ using Better.EditorTools.Utilities;
 using Better.Tools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
+
 #if UNITY_2022_1_OR_NEWER
 using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
 #else
@@ -21,6 +22,23 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
     [MultiCustomPropertyDrawer(typeof(GizmoLocalAttribute))]
     public class GizmoDrawer : MultiFieldDrawer<GizmoWrapper>
     {
+        public GizmoDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        {
+        }
+
+        public override void Initialize(FieldDrawer drawer)
+        {
+            base.Initialize(drawer);
+            EditorApplication.delayCall += DelayCall;
+        }
+
+        private void DelayCall()
+        {
+            EditorApplication.delayCall -= DelayCall;
+            SceneView.duringSceneGui += OnSceneGUIDelegate;
+            SceneView.RepaintAll();
+        }
+
         private GizmoWrappers Collection
         {
             get
@@ -73,7 +91,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 Collection.SetProperty(property, fieldType);
             }
 
-            position = PreparePropertyRect(position);  
+            position = PreparePropertyRect(position);
 
             return true;
         }
@@ -129,11 +147,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
 
             return HeightCache.GetAdditive(0);
-        }
-
-        public GizmoDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
-        {
-            SceneView.duringSceneGui += OnSceneGUIDelegate;
         }
     }
 }
