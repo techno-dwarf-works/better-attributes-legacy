@@ -8,21 +8,21 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
     {
         private protected Bounds _bounds;
 
-        private protected void DrawAndSetSize(Vector3 position)
+        private protected Vector3 DrawSize(Vector3 position)
         {
-            _bounds.size = Handles.ScaleHandle(_bounds.size, position, Quaternion.identity,
+            return Handles.ScaleHandle(_bounds.size, position, Quaternion.identity,
                 HandleUtility.GetHandleSize(position) * 0.7f);
         }
 
-        private protected void ValidateSize()
+        private protected void ValidateSize(Vector3 size)
         {
             for (int i = 0; i < 3; i++)
             {
-                if (_bounds.size[i] <= 0)
+                if (size[i] <= 0)
                 {
-                    var boundsSize = _bounds.size;
+                    var boundsSize = size;
                     boundsSize[i] = 0.01f;
-                    _bounds.size = boundsSize;
+                    size = boundsSize;
                 }
             }
         }

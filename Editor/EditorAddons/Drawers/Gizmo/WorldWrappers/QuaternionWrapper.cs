@@ -13,14 +13,30 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         public override void Apply(SceneView sceneView)
         {
             if (!ShowInSceneView) return;
-            DrawLabel($"{GetName()}:\n{_quaternion.eulerAngles}", _defaultPosition, _quaternion,
-                sceneView);
-            _quaternion.Validate();
-            _quaternion = Handles.RotationHandle(_quaternion, _defaultPosition);
+            DrawLabel($"{GetName()}:\n{_quaternion.eulerAngles}", _defaultPosition, _quaternion, sceneView);
+            _quaternion = Vector3Math.Validate(_quaternion);
+            var buffer = Handles.RotationHandle(_quaternion, _defaultPosition);
 
-            Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), _defaultPosition, _quaternion, Size * HandleUtility.GetHandleSize(_defaultPosition), EventType.Repaint);
-            _serializedProperty.quaternionValue = _quaternion;
-            SetValueAndApply(_quaternion);
+            Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), _defaultPosition, buffer, Size * HandleUtility.GetHandleSize(_defaultPosition),
+                EventType.Repaint);
+
+            if (!Vector3Math.Approximately(_quaternion, buffer))
+            {
+                SetValueAndApply(_quaternion);
+            }
+        }
+
+        public override void DrawField(Rect position, GUIContent label)
+        {
+            using (var change = new EditorGUI.ChangeCheckScope())
+            {
+                var eulerRotation = EditorGUI.Vector3Field(position, label, _quaternion.eulerAngles);
+                _quaternion = Quaternion.Euler(eulerRotation);
+                if (change.changed)
+                {
+                    SetValueAndApply(_quaternion);
+                }
+            }
         }
 
         public override void SetProperty(SerializedProperty property, Type fieldType)

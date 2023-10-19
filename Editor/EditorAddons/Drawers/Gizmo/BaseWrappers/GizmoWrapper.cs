@@ -48,6 +48,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             return string.Empty;
         }
 
+        public virtual void DrawField(Rect position, GUIContent label)
+        {
+            EditorGUI.PropertyField(position, _serializedProperty, label, true);
+        }
+
         public void SwitchShowMode()
         {
             _showInSceneView = !ShowInSceneView;
@@ -83,19 +88,21 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
         }
 
-        private protected void SetValueAndApply(object value)
+        private protected void SetValueAndApply<T>(T value) where T : struct
         {
-            if (!Validate()) return;
-            if (_fieldType.IsEquivalentTo(typeof(Vector2)))
-                _serializedProperty.vector2Value = (Vector2)value;
-            else if (_fieldType.IsEquivalentTo(typeof(Vector3)))
-                _serializedProperty.vector3Value = (Vector3)value;
-            else if (_fieldType.IsEquivalentTo(typeof(Bounds)))
-                _serializedProperty.boundsValue = (Bounds)value;
-            else if (_fieldType.IsEquivalentTo(typeof(Quaternion)))
-                _serializedProperty.quaternionValue = (Quaternion)value;
+            if (!Validate())
+            {
+                return;
+            }
+
+            if (_fieldType.IsEquivalentTo(typeof(T)))
+            {
+                _serializedProperty.SetValueNoRecord(value);
+            }
             else
+            {
                 throw new ArgumentOutOfRangeException();
+            }
 
             _serializedProperty.serializedObject.ApplyModifiedProperties();
         }

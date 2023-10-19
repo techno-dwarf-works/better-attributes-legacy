@@ -12,6 +12,7 @@ using UnityEngine;
 
 #if UNITY_2022_1_OR_NEWER
 using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
+
 #else
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 #endif
@@ -98,7 +99,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
-            EditorGUI.PropertyField(position, property, label, true);
+            var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
+            if (!cache.IsValid)
+            {
+                var fieldType = GetFieldOrElementType();
+                Collection.SetProperty(property, fieldType);
+            }
+
+            Collection.DrawField(position, property, label);
         }
 
         protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
