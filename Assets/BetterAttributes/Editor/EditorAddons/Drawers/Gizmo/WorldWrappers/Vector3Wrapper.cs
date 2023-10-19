@@ -1,4 +1,5 @@
 ﻿using System;
+using Better.Extensions.Runtime.MathfExtensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,8 +13,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         {
             if (!ShowInSceneView) return;
             DrawLabel($"{GetName()}:\n{_vector3}", _vector3, _defaultRotation, sceneView);
-            _vector3 = Handles.PositionHandle(_vector3, _defaultRotation);
-            SetValueAndApply(_vector3);
+            var buffer = Handles.PositionHandle(_vector3, _defaultRotation);
+            
+            if (!Vector3Math.Approximately(_vector3, buffer))
+            {
+                SetValueAndApply(_vector3);
+            }
         }
 
         public override void SetProperty(SerializedProperty property, Type fieldType)

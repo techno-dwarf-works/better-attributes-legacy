@@ -19,11 +19,31 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 var transform = component.transform;
                 var rotation = transform.rotation;
                 var position = transform.position;
-                var worldRotation = (rotation * _quaternion).Validate();
+                var worldRotation = Vector3Math.Validate(rotation * _quaternion);
                 DrawLabel($"Local {GetName()}:\n{_quaternion.eulerAngles}", position, worldRotation, sceneView);
-                _quaternion = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
-                Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), position, worldRotation, Size * HandleUtility.GetHandleSize(position), EventType.Repaint);
-                SetValueAndApply(_quaternion);
+                var buffer = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
+
+                Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), position, worldRotation, Size * HandleUtility.GetHandleSize(position),
+                    EventType.Repaint);
+
+                if (!Vector3Math.Approximately(_quaternion, buffer))
+                {
+                    _quaternion = buffer;
+                    SetValueAndApply(_quaternion);
+                }
+            }
+        }
+
+        public override void DrawField(Rect position, GUIContent label)
+        {
+            using (var change = new EditorGUI.ChangeCheckScope())
+            {
+                var eulerRotation = EditorGUI.Vector3Field(position, label, _quaternion.eulerAngles);
+                _quaternion = Quaternion.Euler(eulerRotation);
+                if (change.changed)
+                {
+                    SetValueAndApply(_quaternion);
+                }
             }
         }
 
