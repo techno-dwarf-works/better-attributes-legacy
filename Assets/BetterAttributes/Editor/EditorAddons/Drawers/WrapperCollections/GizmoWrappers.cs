@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.EditorTools.Drawers.Base;
 using UnityEditor;
+using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
 {
@@ -60,6 +61,14 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
             if (TryGetValue(property, out var gizmoWrapper))
             {
                 gizmoWrapper.Wrapper.SwitchShowMode();
+            }
+        }
+
+        public void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        {
+            if (TryGetValue(property, out var gizmoWrapper))
+            {
+                gizmoWrapper.Wrapper.DrawField(position, label);
             }
         }
     }

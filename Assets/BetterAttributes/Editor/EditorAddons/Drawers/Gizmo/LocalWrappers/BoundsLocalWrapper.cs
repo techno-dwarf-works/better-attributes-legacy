@@ -1,4 +1,5 @@
 ﻿using Better.EditorTools;
+using Better.Extensions.Runtime.MathfExtensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,15 +14,18 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             {
                 var transform = component.transform;
                 var worldPosition = transform.TransformPoint(_bounds.center);
-                DrawLabel($"{GetName()}:\nLocal Center: {_bounds.center}\nSize: {_bounds.size}",
-                    worldPosition, _defaultRotation, sceneView);
-                _bounds.center =
-                    transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, Quaternion.identity));
-                DrawAndSetSize(worldPosition);
-                ValidateSize();
-                Handles.DrawWireCube(worldPosition, _bounds.size);
+                DrawLabel($"{GetName()}:\nLocal Center: {_bounds.center}\nSize: {_bounds.size}", worldPosition, _defaultRotation, sceneView);
+                var center = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, Quaternion.identity));
+                var size = DrawSize(worldPosition);
+                ValidateSize(size);
+                Handles.DrawWireCube(worldPosition, size);
 
-                SetValueAndApply(_bounds);
+                if (!Vector3Math.Approximately(_bounds.center, center) || !Vector3Math.Approximately(_bounds.size, size))
+                {
+                    _bounds.center = center;
+                    _bounds.size = size;
+                    SetValueAndApply(_bounds);
+                }
             }
         }
     }

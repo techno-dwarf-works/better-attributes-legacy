@@ -1,5 +1,6 @@
 ﻿using System;
 using Better.EditorTools;
+using Better.Extensions.Runtime.MathfExtensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,8 +18,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 var transform = component.transform;
                 var worldPosition = transform.TransformPoint(_vector2);
                 DrawLabel($"Local {GetName()}:\n{_vector2}", _vector2, _defaultRotation, sceneView);
-                _vector2 = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, _defaultRotation));
-                SetValueAndApply(_vector2);
+                var buffer = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, _defaultRotation));
+                
+                if (!Vector3Math.Approximately(_vector2, (Vector2)buffer))
+                {
+                    SetValueAndApply(_vector2);
+                }
             }
         }
 
