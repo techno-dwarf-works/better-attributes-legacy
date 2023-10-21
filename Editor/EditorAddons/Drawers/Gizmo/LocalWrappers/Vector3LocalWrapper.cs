@@ -22,6 +22,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 
                 if (!Vector3Math.Approximately(_vector3, buffer))
                 {
+                    _vector3 = buffer;
                     SetValueAndApply(_vector3);
                 }
             }

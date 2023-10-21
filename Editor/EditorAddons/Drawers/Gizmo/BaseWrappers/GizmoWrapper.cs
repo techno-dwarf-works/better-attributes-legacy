@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.EditorTools;
+using Better.EditorTools.Drawers.Base;
 using Better.EditorTools.Utilities;
 using UnityEditor;
 using UnityEngine;
@@ -88,21 +89,23 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
         }
 
-        private protected void SetValueAndApply<T>(T value) where T : struct
+        private protected void SetValueAndApply(object value)
         {
             if (!Validate())
             {
                 return;
             }
 
-            if (_fieldType.IsEquivalentTo(typeof(T)))
-            {
-                _serializedProperty.SetValueNoRecord(value);
-            }
+            if (_fieldType.IsEquivalentTo(typeof(Vector2)))
+                _serializedProperty.vector2Value = (Vector2)value;
+            else if (_fieldType.IsEquivalentTo(typeof(Vector3)))
+                _serializedProperty.vector3Value = (Vector3)value;
+            else if (_fieldType.IsEquivalentTo(typeof(Bounds)))
+                _serializedProperty.boundsValue = (Bounds)value;
+            else if (_fieldType.IsEquivalentTo(typeof(Quaternion)))
+                _serializedProperty.quaternionValue = (Quaternion)value;
             else
-            {
                 throw new ArgumentOutOfRangeException();
-            }
 
             _serializedProperty.serializedObject.ApplyModifiedProperties();
         }
@@ -127,6 +130,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         {
             return rotation * (position + Vector3.up * HandleUtility.GetHandleSize(position) +
                                sceneView.camera.transform.right * 0.2f * HandleUtility.GetHandleSize(position));
+        }
+
+        public virtual HeightCache GetHeight(GUIContent label)
+        {
+            return HeightCache.GetAdditive(0f);
         }
     }
 }

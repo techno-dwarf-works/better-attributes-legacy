@@ -1,4 +1,5 @@
 ﻿using System;
+using Better.EditorTools.Drawers.Base;
 using Better.Extensions.Runtime.MathfExtensions;
 using UnityEditor;
 using UnityEngine;
@@ -22,21 +23,27 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
             if (!Vector3Math.Approximately(_quaternion, buffer))
             {
+                _quaternion = buffer;
                 SetValueAndApply(_quaternion);
             }
         }
-
+        
         public override void DrawField(Rect position, GUIContent label)
         {
             using (var change = new EditorGUI.ChangeCheckScope())
             {
                 var eulerRotation = EditorGUI.Vector3Field(position, label, _quaternion.eulerAngles);
-                _quaternion = Quaternion.Euler(eulerRotation);
                 if (change.changed)
                 {
+                    _quaternion = Quaternion.Euler(eulerRotation);
                     SetValueAndApply(_quaternion);
                 }
             }
+        }
+
+        public override HeightCache GetHeight(GUIContent label)
+        {
+            return HeightCache.GetFull(EditorGUIUtility.singleLineHeight);
         }
 
         public override void SetProperty(SerializedProperty property, Type fieldType)

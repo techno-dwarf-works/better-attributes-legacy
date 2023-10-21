@@ -7,7 +7,7 @@ namespace Samples
     {
         [SerializeField] private Sprite sprite;
         [Gizmo] [SerializeField] private Vector3 pos;
-        [Gizmo] [SerializeField] private Quaternion rot;
+        [GizmoLocal] [SerializeField] private Quaternion rot;
         
     }
 }
