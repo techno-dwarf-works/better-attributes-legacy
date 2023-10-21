@@ -15,7 +15,7 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
             foreach (var gizmo in this)
             {
                 var valueWrapper = gizmo.Value.Wrapper;
-                if(valueWrapper.Validate())
+                if (valueWrapper.Validate())
                 {
                     valueWrapper.Apply(sceneView);
                 }
@@ -25,6 +25,7 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
                     {
                         keysToRemove = new List<SerializedProperty>();
                     }
+
                     keysToRemove.Add(gizmo.Key);
                 }
             }
@@ -70,6 +71,26 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
             {
                 gizmoWrapper.Wrapper.DrawField(position, label);
             }
+        }
+
+        public bool IsValid(SerializedProperty property)
+        {
+            if (TryGetValue(property, out var gizmoWrapper))
+            {
+                return gizmoWrapper.Wrapper.Validate();
+            }
+
+            return false;
+        }
+
+        public HeightCache GetHeight(SerializedProperty property, GUIContent label)
+        {
+            if (TryGetValue(property, out var wrapper))
+            {
+                return wrapper.Wrapper.GetHeight(label);
+            }
+
+            return HeightCache.GetAdditive(0);
         }
     }
 }

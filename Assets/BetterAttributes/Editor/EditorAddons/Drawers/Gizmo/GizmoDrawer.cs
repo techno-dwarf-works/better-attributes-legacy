@@ -99,13 +99,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 
         protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
-            var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
-            if (!cache.IsValid)
+            if (!Collection.IsValid(property))
             {
+                var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
+                
                 var fieldType = GetFieldOrElementType();
-                Collection.SetProperty(property, fieldType);
+                cache.Value.Wrapper.SetProperty(property, fieldType);
             }
-
+            
             Collection.DrawField(position, property, label);
         }
 
@@ -154,7 +155,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 return HeightCache.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
             }
 
-            return HeightCache.GetAdditive(0);
+            return Collection.GetHeight(property, label);
         }
     }
 }
