@@ -14,7 +14,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public override HeightCache GetHeight()
         {
-            return HeightCache.GetFull(EditorGUI.GetPropertyHeight(_property, true));
+            var full = HeightCache.GetFull(EditorGUI.GetPropertyHeight(_property, true));
+            return full;
         }
 
         public override void Update(object value)

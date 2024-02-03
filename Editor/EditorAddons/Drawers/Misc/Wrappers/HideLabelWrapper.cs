@@ -18,9 +18,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
 
         public override void DrawField(Rect rect, GUIContent label)
         {
+            var item = new GUIContent(label);
+            item.text = string.Empty;
             if (!_property.hasVisibleChildren)
             {
-                EditorGUI.PropertyField(rect, _property, label, true);
+                EditorGUI.PropertyField(rect, _property, item, true);
                 return;
             }
 
@@ -29,11 +31,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             while (enumerator.MoveNext())
             {
                 if (!(enumerator.Current is SerializedProperty prop)) continue;
-                
+
                 var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
                 copy.height = propertyHeight;
-                
-                EditorGUIHelpers.PropertyFieldSafe(copy, prop, label);
+
+                EditorGUIHelpers.PropertyFieldSafe(copy, prop, item);
                 copy.y += propertyHeight + EditorGUIUtility.standardVerticalSpacing;
             }
         }
@@ -44,7 +46,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             if (!_property.hasVisibleChildren)
             {
                 height = EditorGUI.GetPropertyHeight(_property, label, true);
-                label.text = string.Empty;
                 return HeightCache.GetFull(height);
             }
 
@@ -53,7 +54,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             {
                 var prop = enumerator.Current as SerializedProperty;
                 if (prop == null) continue;
-                //Add your treatment to the current child property...
                 height += EditorGUI.GetPropertyHeight(prop, true) + EditorGUIUtility.standardVerticalSpacing;
             }
 
