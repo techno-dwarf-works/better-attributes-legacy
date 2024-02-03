@@ -8,5 +8,9 @@ namespace Better.Attributes.Runtime.Misc
     [AttributeUsage(AttributeTargets.Field)]
     public class HideLabelAttribute : MiscAttribute
     {
+        public HideLabelAttribute()
+        {
+            order = -999;
+        }
     }
 }

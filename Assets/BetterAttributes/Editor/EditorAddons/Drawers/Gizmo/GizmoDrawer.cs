@@ -102,11 +102,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             if (!Collection.IsValid(property))
             {
                 var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
-                
-                var fieldType = GetFieldOrElementType();
-                cache.Value.Wrapper.SetProperty(property, fieldType);
+
+                if (cache.Value != null)
+                {
+                    var fieldType = GetFieldOrElementType();
+                    cache.Value.Wrapper.SetProperty(property, fieldType);
+                }
             }
-            
+
             Collection.DrawField(position, property, label);
         }
 

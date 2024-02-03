@@ -20,7 +20,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public override HeightCache GetHeight()
         {
-            return HeightCache.GetFull(EditorGUI.GetPropertyHeight(_property, false));
+            var heightCache = HeightCache.GetFull(EditorGUI.GetPropertyHeight(_property, false));
+            return heightCache;
         }
 
         public override void SetProperty(SerializedProperty property, FieldInfo fieldInfo)

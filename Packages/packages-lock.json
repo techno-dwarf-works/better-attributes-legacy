@@ -107,7 +107,7 @@
       "url": "https://package.openupm.com"
     },
     "com.uurha.bettereditortools": {
-      "version": "1.0.67",
+      "version": "1.0.68",
       "depth": 0,
       "source": "registry",
       "dependencies": {

@@ -28,7 +28,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             if (_wrappers.TryGetValue(property, out var value) && value.Wrapper.SkipFieldDraw())
             {
                 var rect = PreparePropertyRect(position);
-                rect.height = value.Wrapper.GetHeight().Value;
+                // rect.height = value.Wrapper.GetHeight().Value;
                 EditorGUI.LabelField(rect, label);
                 return;
             }

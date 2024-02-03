@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Extensions;
+using Better.Attributes.Runtime;
 using Better.Attributes.Runtime.Select;
 using Better.EditorTools.Comparers;
 using Better.Tools.Runtime;
@@ -15,6 +16,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public class DropdownStrategy : SetupStrategy
     {
+        private HashSet<Type> _ignoreNameSplit = new HashSet<Type>()
+        {
+            typeof(float), typeof(decimal), typeof(double)
+        };
+
         private readonly DropdownAttribute _dropdownAttribute;
         private IDataCollection _data = new NoneCollection();
 
@@ -112,10 +118,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 throw new TypeAccessException();
             }
 
-            const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static;
-            var members = type.GetMember(instanceName, bindingFlags);
+            var members = ReflectionHelper.GetMemberByName(type, instanceName);
 
-            return members.Select(GetInstance).FirstOrDefault(bufferInstance => bufferInstance != null);
+            var itemsFrom = GetInstance(members);
+            return itemsFrom;
         }
 
         private static object GetInstance(MemberInfo memberInfo)
@@ -149,6 +155,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             switch (displayName)
             {
                 case DisplayName.Short:
+                    if (_ignoreNameSplit.Contains(value.GetType()))
+                    {
+                        return new GUIContent(name);
+                    }
+
                     var split = name.Split(AttributesDefinitions.NameSeparator);
                     return split.Length <= 1 ? new GUIContent(name) : new GUIContent(split.Last());
                 case DisplayName.Full:
@@ -166,6 +177,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             }
 
             var type = _data.FindName(value);
+
+            if (_ignoreNameSplit.Contains(value.GetType()))
+            {
+                return new GUIContent[] { new GUIContent(type) };
+            }
 
             var split = type.Split(AttributesDefinitions.NameSeparator);
             if (split.Length <= 1)
