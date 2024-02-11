@@ -100,24 +100,24 @@
       "url": "https://packages.unity.com"
     },
     "com.uurha.betterdatastructures": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.uurha.bettereditortools": {
-      "version": "1.0.68",
+      "version": "1.0.69",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.uurha.betterdatastructures": "0.1.1",
-        "com.uurha.betterextensions": "1.1.96"
+        "com.uurha.betterdatastructures": "0.1.2",
+        "com.uurha.betterextensions": "1.1.98"
       },
       "url": "https://package.openupm.com"
     },
     "com.uurha.betterextensions": {
-      "version": "1.1.96",
+      "version": "1.1.98",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
