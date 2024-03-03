@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.EditorTools.Comparers;
+using Better.EditorTools.EditorAddons.Comparers;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {

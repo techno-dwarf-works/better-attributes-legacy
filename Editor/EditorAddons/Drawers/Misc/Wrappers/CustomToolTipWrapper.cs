@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.Drawers.Base;
+using Better.EditorTools.EditorAddons.Drawers.Base;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,9 +36,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
         {
         }
 
-        public override HeightCache GetHeight(GUIContent label)
+        public override HeightCacheValue GetHeight(GUIContent label)
         {
-            return HeightCache.GetAdditive(0);
+            return HeightCacheValue.GetAdditive(0);
         }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
-using Better.EditorTools;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.Extensions.EditorAddons;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 #if UNITY_2022_1_OR_NEWER
 using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
 #endif
@@ -105,7 +103,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             else if (_fieldType.IsEquivalentTo(typeof(Quaternion)))
                 _serializedProperty.quaternionValue = (Quaternion)value;
             else
-                throw new ArgumentOutOfRangeException();
+                DebugUtility.LogException<ArgumentOutOfRangeException>();
 
             _serializedProperty.serializedObject.ApplyModifiedProperties();
         }
@@ -132,9 +130,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                                sceneView.camera.transform.right * 0.2f * HandleUtility.GetHandleSize(position));
         }
 
-        public virtual HeightCache GetHeight(GUIContent label)
+        public virtual HeightCacheValue GetHeight(GUIContent label)
         {
-            return HeightCache.GetAdditive(0f);
+            return HeightCacheValue.GetAdditive(0f);
         }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.Tools.Runtime;
-using Better.Tools.Runtime.Attributes;
-using UnityEngine;
+using Better.EditorTools.Runtime.Attributes;
+using Better.Internal.Core.Runtime;
 
 namespace Better.Attributes.Runtime.DrawInspector
 {
     /// <summary>
     /// Replaces object field with nested inspector
     /// </summary>
-    [Conditional(BetterEditorDefines.Editor)]
+    [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class DrawInspectorAttribute : MultiPropertyAttribute
     {

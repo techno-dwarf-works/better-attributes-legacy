@@ -7,7 +7,7 @@ namespace Better.Attributes.EditorAddons.Extensions
     {
         public static float GetMaxWidth(this GUIContent label)
         {
-            if (string.IsNullOrEmpty(label.text))
+            if (label != null && string.IsNullOrEmpty(label.text))
             {
                 return 0;
             }

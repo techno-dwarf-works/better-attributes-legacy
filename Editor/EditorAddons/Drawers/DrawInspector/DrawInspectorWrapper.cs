@@ -1,6 +1,6 @@
 ﻿using System;
-using Better.EditorTools.Helpers;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Helpers;
+using Better.EditorTools.EditorAddons.Utilities;
 using UnityEditor;
 using UnityEngine;
 

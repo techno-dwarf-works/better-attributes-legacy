@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.Helpers;
+using Better.EditorTools.EditorAddons.Helpers;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies

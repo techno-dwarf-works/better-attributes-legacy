@@ -1,6 +1,6 @@
 ﻿using System;
-using Better.EditorTools;
-using Better.Extensions.Runtime.MathfExtensions;
+using Better.Extensions.EditorAddons;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 DrawLabel($"Local {GetName()}:\n{_vector3}", worldPosition, _defaultRotation, sceneView);
                 var buffer = transform.InverseTransformPoint(Handles.PositionHandle(worldPosition, _defaultRotation));
                 
-                if (!Vector3Math.Approximately(_vector3, buffer))
+                if (!_vector3.Approximately(buffer))
                 {
                     _vector3 = buffer;
                     SetValueAndApply(_vector3);

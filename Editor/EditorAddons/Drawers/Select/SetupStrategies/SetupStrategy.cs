@@ -19,7 +19,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             _propertyContainer = propertyContainer;
             _selectAttributeBase = selectAttributeBase;
         }
-        
+
         public abstract List<object> Setup();
         public abstract GUIContent ResolveName(object value, DisplayName displayName);
         public abstract GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping);
@@ -37,7 +37,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 return t;
             }
 
-            return _fieldInfo.GetFieldOrElementType();
+            var fieldType = _fieldInfo.FieldType;
+            if (fieldType.IsArrayOrList())
+                return fieldType.GetCollectionElementType();
+            return fieldType;
         }
     }
 }

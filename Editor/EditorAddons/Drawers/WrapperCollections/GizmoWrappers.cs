@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
-using Better.EditorTools.Drawers.Base;
+using Better.EditorTools.EditorAddons.Drawers.Base;
 using UnityEditor;
 using UnityEngine;
 
@@ -83,14 +83,14 @@ namespace Better.Attributes.EditorAddons.Drawers.WrapperCollections
             return false;
         }
 
-        public HeightCache GetHeight(SerializedProperty property, GUIContent label)
+        public HeightCacheValue GetHeight(SerializedProperty property, GUIContent label)
         {
             if (TryGetValue(property, out var wrapper))
             {
                 return wrapper.Wrapper.GetHeight(label);
             }
 
-            return HeightCache.GetAdditive(0);
+            return HeightCacheValue.GetAdditive(0);
         }
     }
 }

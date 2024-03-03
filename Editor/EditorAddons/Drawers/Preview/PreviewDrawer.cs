@@ -2,10 +2,10 @@
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Preview;
-using Better.EditorTools.Attributes;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
+using Better.EditorTools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -57,15 +57,15 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             return true;
         }
 
-        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             if (!Collection.ValidateObject(property))
             {
                 var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
-                return HeightCache.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
+                return HeightCacheValue.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
             }
 
-            return HeightCache.GetAdditive(0);
+            return HeightCacheValue.GetAdditive(0);
         }
 
         protected override Rect PreparePropertyRect(Rect original)

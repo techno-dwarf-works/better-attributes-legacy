@@ -1,5 +1,5 @@
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
 using UnityEditor;
 using UnityEngine;
 
@@ -40,13 +40,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             }
         }
 
-        public override HeightCache GetHeight(GUIContent label)
+        public override HeightCacheValue GetHeight(GUIContent label)
         {
             var height = 0f;
             if (!_property.hasVisibleChildren)
             {
                 height = EditorGUI.GetPropertyHeight(_property, label, true);
-                return HeightCache.GetFull(height);
+                return HeightCacheValue.GetFull(height);
             }
 
             var enumerator = _property.GetEnumerator();
@@ -57,7 +57,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 height += EditorGUI.GetPropertyHeight(prop, true) + EditorGUIUtility.standardVerticalSpacing;
             }
 
-            return HeightCache.GetFull(height);
+            return HeightCacheValue.GetFull(height);
         }
     }
 }

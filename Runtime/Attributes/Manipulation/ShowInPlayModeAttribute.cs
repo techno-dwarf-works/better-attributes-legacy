@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.Tools.Runtime;
+using Better.Internal.Core.Runtime;
 
 namespace Better.Attributes.Runtime.Manipulation
 {
 
-    [Conditional(BetterEditorDefines.Editor)]
+    [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class ShowInPlayModeAttribute : ManipulateAttribute
     {

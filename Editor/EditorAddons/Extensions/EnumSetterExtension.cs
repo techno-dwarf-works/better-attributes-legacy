@@ -2,9 +2,9 @@
 
 namespace Better.Attributes.EditorAddons.Extensions
 {
-    public static class EnumSetterExtension
+    public static class EnumCalculator
     {
-        public static int CalculateCurrentValue(int currentValue, bool isFlag, int value, int everythingValue, int flagNone = EnumExtensions.FlagNone)
+        public static int CalculateCurrentValue(int currentValue, bool isFlag, int value, int everythingValue, int flagNone = EnumUtility.DefaultIntFlag)
         {
             if (isFlag)
             {

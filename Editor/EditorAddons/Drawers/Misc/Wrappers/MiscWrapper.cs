@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Utilities;
 using UnityEditor;
 using UnityEngine;
 
@@ -28,6 +28,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
         public abstract void PreDraw(Rect position, GUIContent label);
         public abstract void DrawField(Rect rect, GUIContent label);
         public abstract void PostDraw();
-        public abstract HeightCache GetHeight(GUIContent label);
+        public abstract HeightCacheValue GetHeight(GUIContent label);
     }
 }

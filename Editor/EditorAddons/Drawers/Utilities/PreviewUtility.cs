@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Preview;
 using Better.Attributes.Runtime.Preview;
-using Better.EditorTools.Comparers;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Comparers;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.EditorTools.EditorAddons.WrappersTypeCollection;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities
