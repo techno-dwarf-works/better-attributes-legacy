@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.Tools.Runtime;
-using Better.Tools.Runtime.Attributes;
-using UnityEngine;
+using Better.EditorTools.Runtime.Attributes;
+using Better.Internal.Core.Runtime;
 
 namespace Better.Attributes.Runtime.Select
 {
@@ -19,7 +18,7 @@ namespace Better.Attributes.Runtime.Select
         GroupedFlat = 3
     }
 
-    [Conditional(BetterEditorDefines.Editor)]
+    [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public abstract class SelectAttributeBase : MultiPropertyAttribute
     {

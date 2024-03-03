@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.Attributes.Runtime.Gizmo;
-using Better.EditorTools;
-using Better.EditorTools.CustomEditors;
+using Better.EditorTools.EditorAddons.CustomEditors;
+using Better.Extensions.EditorAddons;
 using UnityEditor;
 using UnityEngine;
 

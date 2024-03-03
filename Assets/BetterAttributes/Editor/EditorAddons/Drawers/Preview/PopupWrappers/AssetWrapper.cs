@@ -1,5 +1,4 @@
-﻿using Better.EditorTools.Helpers;
-using Better.Extensions.Runtime;
+﻿using Better.EditorTools.EditorAddons.Helpers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
                 return false;
             }
 
-            if (!drawnObject.Cast<Component>(out var component))
+            if (!(drawnObject is Component component))
             {
                 DrawersHelper.HelpBox(
                     $"Preview not available for type: {DrawersHelper.FormatBold(drawnObject.GetType().Name)}",

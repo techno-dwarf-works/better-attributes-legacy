@@ -5,10 +5,10 @@ using System.Linq;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Extensions;
-using Better.Attributes.Runtime;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.Comparers;
-using Better.Tools.Runtime;
+using Better.EditorTools.EditorAddons.Comparers;
+using Better.Extensions.Runtime;
+using Better.Internal.Core.Runtime;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -80,7 +80,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         private object FetchResponse(Type type, string memberName, object instance)
         {
-            var member = type.GetMember(memberName, BetterEditorDefines.MethodFlags);
+            var member = type.GetMember(memberName, Defines.MethodFlags);
             object response = null;
             foreach (var memberInfo in member)
             {
@@ -115,10 +115,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
             if (!TryGetType(path, out type))
             {
-                throw new TypeAccessException();
+                DebugUtility.LogException<TypeAccessException>();
+                return null;
             }
 
-            var members = ReflectionHelper.GetMemberByName(type, instanceName);
+            var members = type.GetMemberByNameRecursive(instanceName);
 
             var itemsFrom = GetInstance(members);
             return itemsFrom;
@@ -165,7 +166,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 case DisplayName.Full:
                     return new GUIContent(name);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
+                    DebugUtility.LogException<ArgumentOutOfRangeException>(nameof(displayName));
+                    return null;
             }
         }
 
@@ -196,7 +198,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                 case DisplayGrouping.GroupedFlat:
                     return new GUIContent[] { new GUIContent(split.First()), new GUIContent(split.Last()) };
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(grouping), grouping, null);
+                    DebugUtility.LogException<ArgumentOutOfRangeException>(nameof(grouping));
+                    return Array.Empty<GUIContent>();
             }
         }
 

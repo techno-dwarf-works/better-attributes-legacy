@@ -1,11 +1,10 @@
 ﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
-using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.Attributes;
-using Better.EditorTools.Drawers.Base;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 

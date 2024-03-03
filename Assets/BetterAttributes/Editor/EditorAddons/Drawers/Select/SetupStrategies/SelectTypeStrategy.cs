@@ -90,7 +90,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                     case DisplayGrouping.GroupedFlat:
                         return new GUIContent[] { new GUIContent(split.First()), new GUIContent(split.Last()) };
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(grouping), grouping, null);
+                        DebugUtility.LogException<ArgumentOutOfRangeException>(nameof(grouping));
+                        return Array.Empty<GUIContent>();
                 }
             }
 
@@ -113,7 +114,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                     case DisplayName.Full:
                         return new GUIContent(type.FullName);
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
+                        DebugUtility.LogException<ArgumentOutOfRangeException>(nameof(displayName));
+                        return null;
                 }
             }
 
@@ -132,7 +134,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override List<object> Setup()
         {
-            var selectionObjects = GetFieldOrElementType().GetAllInheritedType().Cast<object>().ToList();
+            var selectionObjects = GetFieldOrElementType().GetAllInheritedTypesWithoutUnityObject().Cast<object>().ToList();
             selectionObjects.Insert(0, null);
             return selectionObjects;
         }

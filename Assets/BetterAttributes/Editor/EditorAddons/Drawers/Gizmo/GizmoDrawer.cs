@@ -1,12 +1,10 @@
 ﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Gizmo;
-using Better.EditorTools;
-using Better.EditorTools.Attributes;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
-using Better.EditorTools.Utilities;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
+using Better.EditorTools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -148,14 +146,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             return copy;
         }
 
-        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var fieldType = GetFieldOrElementType();
             if (!GizmoUtility.Instance.IsSupported(fieldType))
             {
                 var message = DrawersHelper.NotSupportedMessage(property.name, fieldType, _attribute.GetType());
                 var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
-                return HeightCache.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
+                return HeightCacheValue.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
             }
 
             return Collection.GetHeight(property, label);

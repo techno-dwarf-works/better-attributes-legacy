@@ -7,10 +7,10 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
     {
         public void DrawHideTransformButton()
         {
-            var text = UnityEditor.Tools.hidden ? "Show" : "Hide";
+            var text = Tools.hidden ? "Show" : "Hide";
             if (GUILayout.Button($"{text} Transform handles"))
             {
-                UnityEditor.Tools.hidden = !UnityEditor.Tools.hidden;
+                Tools.hidden = !Tools.hidden;
                 SceneView.RepaintAll();
             }
         }

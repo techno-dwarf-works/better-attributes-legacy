@@ -1,5 +1,5 @@
 ﻿using System;
-using Better.Extensions.Runtime.MathfExtensions;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,8 +14,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             if (!ShowInSceneView) return;
             DrawLabel($"{GetName()}:\n{_vector2}", _vector2, _defaultRotation, sceneView);
             var buffer = Handles.PositionHandle(_vector2, _defaultRotation);
-            
-            if (!Vector3Math.Approximately(_vector2, (Vector2)buffer))
+
+            if (!_vector2.Approximately(buffer))
             {
                 _vector2 = buffer;
                 SetValueAndApply(_vector2);

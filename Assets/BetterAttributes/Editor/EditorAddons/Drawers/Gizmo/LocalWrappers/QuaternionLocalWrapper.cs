@@ -1,7 +1,7 @@
 ﻿using System;
-using Better.EditorTools;
-using Better.EditorTools.Drawers.Base;
-using Better.Extensions.Runtime.MathfExtensions;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.Extensions.EditorAddons;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,14 +20,19 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
                 var transform = component.transform;
                 var rotation = transform.rotation;
                 var position = transform.position;
-                var worldRotation = Vector3Math.Validate(rotation * _quaternion);
+                var worldRotation = (rotation * _quaternion);
+                if (!worldRotation.IsNormalized())
+                {
+                    worldRotation = Quaternion.identity;
+                }
+
                 DrawLabel($"Local {GetName()}:\n{_quaternion.eulerAngles}", position, worldRotation, sceneView);
                 var buffer = Quaternion.Inverse(rotation) * Handles.RotationHandle(worldRotation, position);
 
                 Handles.ArrowHandleCap(GUIUtility.GetControlID(FocusType.Passive), position, worldRotation, Size * HandleUtility.GetHandleSize(position),
                     EventType.Repaint);
 
-                if (!Vector3Math.Approximately(_quaternion, buffer))
+                if (!_quaternion.Approximately(buffer))
                 {
                     _quaternion = buffer;
                     SetValueAndApply(_quaternion);
@@ -52,9 +57,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             }
         }
 
-        public override HeightCache GetHeight(GUIContent label)
+        public override HeightCacheValue GetHeight(GUIContent label)
         {
-            return HeightCache.GetFull(EditorGUIUtility.singleLineHeight);
+            return HeightCacheValue.GetFull(EditorGUIUtility.singleLineHeight);
         }
 
         public override void SetProperty(SerializedProperty property, Type fieldType)

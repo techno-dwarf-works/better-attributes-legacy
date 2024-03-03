@@ -1,8 +1,9 @@
 ﻿using System;
 using Better.Attributes.Runtime.Manipulation;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -51,7 +52,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
                     _scope = new EditorGUI.DisabledGroupScope(!satisfied);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                DebugUtility.LogException<ArgumentOutOfRangeException>();
+                break;
             }
 
             return true;
@@ -64,23 +66,24 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
             return Rect.zero;
         }
 
-        public virtual HeightCache GetHeight()
+        public virtual HeightCacheValue GetHeight()
         {
             var satisfied = IsConditionSatisfied();
 
             switch (_attribute.ModeType)
             {
                 case ManipulationMode.Show:
-                    var heightCache = new HeightCache(satisfied, 0);
-                    return satisfied ? heightCache : heightCache.Force();
+                    var heightCacheValue = new HeightCacheValue(satisfied, 0);
+                    return satisfied ? heightCacheValue : heightCacheValue.Force();
                 case ManipulationMode.Hide:
-                    var height = new HeightCache(!satisfied, 0);
+                    var height = new HeightCacheValue(!satisfied, 0);
                     return !satisfied ? height : height.Force();
                 case ManipulationMode.Disable:
                 case ManipulationMode.Enable:
-                    return HeightCache.GetAdditive(0f);
+                    return HeightCacheValue.GetAdditive(0f);
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    DebugUtility.LogException<ArgumentOutOfRangeException>();
+                    return HeightCacheValue.GetAdditive(0f);
             }
         }
 

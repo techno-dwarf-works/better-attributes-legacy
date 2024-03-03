@@ -9,6 +9,7 @@ using Better.Attributes.Runtime.Misc;
 using Better.Attributes.Runtime.Preview;
 using Better.Attributes.Runtime.Rename;
 using Better.Attributes.Runtime.Select;
+using Better.DataStructures.Runtime.SerializedTypes;
 using Better.Extensions.Runtime;
 using Samples.Interfaces;
 using Samples.Models;

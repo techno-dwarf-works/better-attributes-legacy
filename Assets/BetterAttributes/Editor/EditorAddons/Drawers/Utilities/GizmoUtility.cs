@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.Attributes.Runtime.Gizmo;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.EditorTools.EditorAddons.WrappersTypeCollection;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities

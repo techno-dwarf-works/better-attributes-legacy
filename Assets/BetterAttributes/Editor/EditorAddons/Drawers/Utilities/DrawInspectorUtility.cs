@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.DrawInspector;
 using Better.Attributes.Runtime.DrawInspector;
-using Better.EditorTools.Comparers;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Comparers;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.EditorTools.EditorAddons.WrappersTypeCollection;
 using Object = UnityEngine.Object;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities

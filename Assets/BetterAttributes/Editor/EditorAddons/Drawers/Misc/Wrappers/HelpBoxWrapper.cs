@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
 using UnityEditor;
 using UnityEngine;
 
@@ -39,11 +39,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
         {
         }
 
-        public override HeightCache GetHeight(GUIContent label)
+        public override HeightCacheValue GetHeight(GUIContent label)
         {
             _propertyHeight = EditorGUI.GetPropertyHeight(_property, label);
             _helpBoxHeight = DrawersHelper.GetHelpBoxHeight(_helpBoxContent);
-            return HeightCache.GetFull(_propertyHeight + _helpBoxHeight + EditorGUIUtility.standardVerticalSpacing);
+            return HeightCacheValue.GetFull(_propertyHeight + _helpBoxHeight + EditorGUIUtility.standardVerticalSpacing);
         }
     }
 }

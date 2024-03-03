@@ -1,7 +1,7 @@
 ﻿using System;
 using Better.Attributes.Runtime.Manipulation;
-using Better.EditorTools;
-using Better.Tools.Runtime;
+using Better.Extensions.EditorAddons;
+using Better.Internal.Core.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,7 +23,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
         {
             if (_container == null) return false;
             var type = _container.GetType();
-            var field = type.GetField(_userAttribute.MemberName, BetterEditorDefines.FieldsFlags);
+            var field = type.GetField(_userAttribute.MemberName, Defines.FieldsFlags);
             var memberValue = _userAttribute.MemberValue;
             if (field != null)
             {
@@ -31,13 +31,13 @@ namespace Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers
                 return Equals(memberValue, value);
             }
 
-            var method = type.GetMethod(_userAttribute.MemberName, BetterEditorDefines.MethodFlags);
+            var method = type.GetMethod(_userAttribute.MemberName, Defines.MethodFlags);
             if (method != null)
             {
                 return Equals(memberValue, method.Invoke(_container, Array.Empty<object>()));
             }
             
-            var property = type.GetProperty(_userAttribute.MemberName, BetterEditorDefines.FieldsFlags);
+            var property = type.GetProperty(_userAttribute.MemberName, Defines.FieldsFlags);
             var propertyValue = _userAttribute.MemberValue;
             if (property != null)
             {
