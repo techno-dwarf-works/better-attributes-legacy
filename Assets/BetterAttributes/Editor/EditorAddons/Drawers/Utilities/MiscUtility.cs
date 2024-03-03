@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Misc.Wrappers;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.Comparers;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Comparers;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.EditorTools.EditorAddons.WrappersTypeCollection;
 
 namespace Better.Attributes.EditorAddons.Drawers.Utilities
 {

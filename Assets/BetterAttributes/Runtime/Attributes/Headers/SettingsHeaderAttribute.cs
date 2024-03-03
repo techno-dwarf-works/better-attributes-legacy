@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Better.Extensions.Runtime;
-using Better.Tools.Runtime;
+using Better.Internal.Core.Runtime;
 using UnityEngine;
 
 namespace Better.Attributes.Runtime.Headers
@@ -9,7 +9,7 @@ namespace Better.Attributes.Runtime.Headers
     /// <summary>
     /// Replacement for Header("Settings")
     /// </summary>
-    [Conditional(BetterEditorDefines.Editor)]
+    [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class SettingsHeaderAttribute : HeaderAttribute
     {

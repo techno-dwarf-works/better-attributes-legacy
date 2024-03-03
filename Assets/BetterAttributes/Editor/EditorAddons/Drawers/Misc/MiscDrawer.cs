@@ -1,12 +1,10 @@
 ﻿using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Manipulation.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Misc.Wrappers;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
-using Better.Attributes.Runtime.Manipulation;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.Attributes;
-using Better.EditorTools.Drawers.Base;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -50,7 +48,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc
             wrapper.DrawField(position, label);
         }
 
-        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var wrapper = GetWrapper(property);
             return wrapper.GetHeight(label);

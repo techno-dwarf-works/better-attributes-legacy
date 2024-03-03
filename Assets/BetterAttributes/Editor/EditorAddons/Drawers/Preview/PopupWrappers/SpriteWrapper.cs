@@ -1,4 +1,4 @@
-﻿using Better.Extensions.Runtime;
+﻿using Better.Attributes.EditorAddons.Extensions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,10 +8,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
     {
         private protected override Texture GenerateTexture(Object drawnObject, float size)
         {
-            if (drawnObject.Cast<Sprite>(out var sprite))
+            if (drawnObject is Sprite sprite)
             {
                 var spriteRenderer = new GameObject().AddComponent<SpriteRenderer>();
-                spriteRenderer.material = new Material(Shader.Find("Sprites/Default"));
+                var shader = Shader.Find(Constants.SpriteShaderName);
+                spriteRenderer.material = new Material(shader);
                 spriteRenderer.sprite = sprite;
                 SceneManager.MoveGameObjectToScene(spriteRenderer.gameObject, _previewScene.PreviewScene);
                 return _previewScene.GenerateTexture(size);

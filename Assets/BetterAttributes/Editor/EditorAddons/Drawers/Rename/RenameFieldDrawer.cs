@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using Better.Attributes.Runtime.Rename;
-using Better.EditorTools.Attributes;
-using Better.EditorTools.Drawers.Base;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 

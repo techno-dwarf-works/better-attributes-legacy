@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.Tools.Runtime;
-using Better.Tools.Runtime.Attributes;
-using UnityEngine;
+using Better.EditorTools.Runtime.Attributes;
+using Better.Internal.Core.Runtime;
 
 namespace Better.Attributes.Runtime.Gizmo
 {
@@ -10,7 +9,7 @@ namespace Better.Attributes.Runtime.Gizmo
     /// Attribute to draw handles in scene view in local space
     /// This attribute works only for scene objects
     /// </summary>
-    [Conditional(BetterEditorDefines.Editor)]
+    [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
     public class GizmoLocalAttribute : MultiPropertyAttribute
     {

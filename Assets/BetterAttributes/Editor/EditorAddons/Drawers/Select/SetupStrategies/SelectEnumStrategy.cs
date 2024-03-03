@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
 using Better.Extensions.Runtime;
 using UnityEngine;
@@ -13,8 +14,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
     {
         private Type _enumType;
         private bool _isFlag;
-        private PredefinedValues _none = new PredefinedValues("None", EnumExtensions.FlagNone);
-        private PredefinedValues _everythingValue = new PredefinedValues("Everything", -1);
+        private PredefinedValues _none = new PredefinedValues(Constants.NoneEnumName, EnumUtility.DefaultIntFlag);
+        private PredefinedValues _everythingValue = new PredefinedValues(Constants.EverythingEnumName, -1);
         private List<object> _enumValues;
 
         public SelectEnumStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase) : base(fieldInfo, propertyContainer,
@@ -96,17 +97,17 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             _enumType = GetFieldOrElementType();
             _isFlag = _enumType.GetCustomAttribute<FlagsAttribute>() != null;
 
-            var ints = _enumType.GetAllValues();
+            var ints = EnumUtility.GetAllValues(_enumType).Select(x => x.ToFlagInt()).ToList();
             if (_isFlag)
             {
-                _none = new PredefinedValues("None", EnumExtensions.FlagNone);
+                _none = new PredefinedValues(Constants.NoneEnumName, EnumUtility.DefaultIntFlag);
                 if (!ints.Contains(_none.Value))
                 {
                     ints.Insert(0, _none.Value);
                 }
 
-                var everything = _enumType.EverythingFlag().ToFlagInt();
-                _everythingValue = new PredefinedValues("Everything", everything);
+                var everything = EnumUtility.EverythingFlag(_enumType).ToFlagInt();
+                _everythingValue = new PredefinedValues(Constants.EverythingEnumName, everything);
                 if (!ints.Contains(_everythingValue.Value))
                 {
                     ints.Insert(ints.Count, _everythingValue.Value);
@@ -139,7 +140,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
                     case DisplayName.Full:
                         return new GUIContent($"{_enumType.Name}.{eEnum}");
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(displayName), displayName, null);
+                        DebugUtility.LogException<ArgumentOutOfRangeException>(nameof(displayName));
+                        return null;
                 }
             }
 

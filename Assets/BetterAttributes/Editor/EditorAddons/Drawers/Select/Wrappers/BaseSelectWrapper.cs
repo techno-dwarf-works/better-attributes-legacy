@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Better.EditorTools;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.Extensions.EditorAddons;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
@@ -18,7 +18,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public abstract bool SkipFieldDraw();
 
-        public abstract HeightCache GetHeight();
+        public abstract HeightCacheValue GetHeight();
 
         public abstract void Update(object value);
 

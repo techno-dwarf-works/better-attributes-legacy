@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Better.Attributes.Runtime;
-using Better.EditorTools.CustomEditors;
+using Better.EditorTools.EditorAddons.CustomEditors;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace Better.Attributes.EditorAddons.CustomEditors
         public override void OnEnable()
         {
             var type = _target.GetType();
-            _methodButtonsAttributes = type.GetSortedMethodAttributes();
+            _methodButtonsAttributes = EditorButtonUtility.GetSortedMethodAttributes(type);
         }
 
         private void DrawButton(KeyValuePair<MethodInfo, EditorButtonAttribute> button, GUIStyle guiStyle)

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.Tools.Runtime;
+using Better.Internal.Core.Runtime;
 
 namespace Better.Attributes.Runtime
 {
     /// <summary>
     /// Displays Button in Inspector
     /// </summary>
-    [Conditional(BetterEditorDefines.Editor)]
+    [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class EditorButtonAttribute : Attribute
     {

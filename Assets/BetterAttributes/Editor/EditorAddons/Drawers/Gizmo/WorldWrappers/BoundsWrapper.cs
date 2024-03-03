@@ -1,4 +1,4 @@
-﻿using Better.Extensions.Runtime.MathfExtensions;
+﻿using Better.Extensions.Runtime;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
@@ -14,7 +14,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             ValidateSize(size);
             Handles.DrawWireCube(center, size);
             
-            if (!Vector3Math.Approximately(_bounds.center, center) || !Vector3Math.Approximately(_bounds.size, size))
+            if (!_bounds.center.Approximately(center) || !_bounds.size.Approximately(size))
             {
                 _bounds.center = center;
                 _bounds.size = size;

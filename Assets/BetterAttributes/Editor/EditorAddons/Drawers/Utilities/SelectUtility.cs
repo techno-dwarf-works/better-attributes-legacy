@@ -4,12 +4,12 @@ using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.Comparers;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Utilities;
+using Better.DataStructures.Runtime.SerializedTypes;
+using Better.EditorTools.EditorAddons.Comparers;
+using Better.EditorTools.EditorAddons.Utilities;
+using Better.EditorTools.EditorAddons.WrappersTypeCollection;
 using Better.Extensions.Runtime;
 using UnityEditor;
-using UnityEngine;
 
 #pragma warning disable CS0618
 
@@ -79,7 +79,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
                 return dictionary;
             }
 
-            throw new KeyNotFoundException($"Supported types not found for {type}");
+            DebugUtility.LogException<KeyNotFoundException>($"Supported types not found for {type}");
+            return null;
         }
 
         /// <summary>
@@ -91,13 +92,19 @@ namespace Better.Attributes.EditorAddons.Drawers.Utilities
         /// <returns></returns>
         public SetupStrategy GetSetupStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase attribute)
         {
-            var type = fieldInfo.GetFieldOrElementType();
+            var type = fieldInfo.FieldType;
+            if (type.IsArrayOrList())
+            {
+                type = type.GetCollectionElementType();
+            }
+
             if (!IsSupported(type))
             {
                 return null;
             }
 
             var dictionary = GetSetupStrategyDictionary(attribute.GetType());
+            if (dictionary == null) return null;
             var wrapperType = dictionary[type];
 
             return (SetupStrategy)Activator.CreateInstance(wrapperType, new object[] { fieldInfo, propertyContainer, attribute });

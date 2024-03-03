@@ -7,11 +7,11 @@ using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
-using Better.EditorTools.Helpers.DropDown;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
+using Better.EditorTools.EditorAddons.Helpers.DropDown;
+using Better.EditorTools.Runtime.Attributes;
+using Better.Extensions.EditorAddons;
 using UnityEditor;
 using UnityEngine;
 
@@ -56,7 +56,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 }
 
                 _selectionObjects ??= _setupStrategy.Setup();
-                
+
                 PreDrawExtended(position, property, label);
             }
             catch (Exception e)
@@ -136,6 +136,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 foreach (var value in _selectionObjects)
                 {
                     var guiContent = _setupStrategy.ResolveName(value, _displayName);
+                    if (guiContent == null)
+                    {
+                        continue;
+                    }
+
                     if (guiContent.image == null && _setupStrategy.ResolveState(currentValue, value))
                     {
                         guiContent.image = DrawersHelper.GetIcon(IconType.Checkmark);
@@ -158,12 +163,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             return items;
         }
 
-        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
             if (!cache.IsValid)
             {
-                if (cache.Value == null) return HeightCache.GetAdditive(0f);
+                if (cache.Value == null) return HeightCacheValue.GetAdditive(0f);
                 var selectWrapper = cache.Value.Wrapper;
                 selectWrapper.SetProperty(property, _fieldInfo);
                 return selectWrapper.GetHeight();

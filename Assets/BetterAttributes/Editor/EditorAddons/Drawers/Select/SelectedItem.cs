@@ -1,4 +1,4 @@
-﻿using Better.EditorTools.Comparers;
+﻿using Better.EditorTools.EditorAddons.Comparers;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
@@ -23,9 +22,15 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
         public override void SetProperty(SerializedProperty property, FieldInfo fieldInfo, MiscAttribute attribute)
         {
             base.SetProperty(property, fieldInfo, attribute);
-            var enumType = fieldInfo.GetFieldOrElementType();
+            var enumType = _fieldInfo.FieldType;
+            
+            if (enumType.IsArrayOrList())
+            {
+                enumType = enumType.GetCollectionElementType();
+            }
+            
             _isFlag = enumType.GetCustomAttribute<FlagsAttribute>() != null;
-            _everythingValue = enumType.EverythingFlag().ToFlagInt();
+            _everythingValue = EnumUtility.EverythingFlag(enumType).ToFlagInt();
 
             var elements = Enum.GetValues(fieldInfo.FieldType);
             _buttonsLabels = new List<Tuple<int, GUIContent>>(elements.Length);
@@ -78,7 +83,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 {
                     if (currentValue != button.Item1)
                     {
-                        _property.intValue = EnumSetterExtension.CalculateCurrentValue(currentValue, _isFlag, button.Item1, _everythingValue);
+                        _property.intValue = EnumCalculator.CalculateCurrentValue(currentValue, _isFlag, button.Item1, _everythingValue);
                         _property.serializedObject.ApplyModifiedProperties();
                     }
                 }
@@ -93,7 +98,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             return EditorGUIUtility.currentViewWidth - maxLabelWidth - EditorGUIUtility.singleLineHeight * 2f;
         }
 
-        public override HeightCache GetHeight(GUIContent label)
+        public override HeightCacheValue GetHeight(GUIContent label)
         {
             var maxLabelWidth = label.GetMaxWidth();
             var inspectorWidth = GetCurrentViewWidth(maxLabelWidth);
@@ -111,9 +116,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 width += maxWidth;
             }
 
-            return HeightCache.GetFull(linesCount * EditorGUIUtility.singleLineHeight).Force();
+            return HeightCacheValue.GetFull(linesCount * EditorGUIUtility.singleLineHeight).Force();
         }
-        
+
         public override void PostDraw()
         {
         }

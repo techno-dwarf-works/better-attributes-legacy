@@ -1,12 +1,11 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Utilities;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.DrawInspector;
-using Better.EditorTools.Attributes;
-using Better.EditorTools.Drawers.Base;
-using Better.EditorTools.Helpers;
-using Better.Tools.Runtime.Attributes;
+using Better.EditorTools.EditorAddons.Attributes;
+using Better.EditorTools.EditorAddons.Drawers.Base;
+using Better.EditorTools.EditorAddons.Helpers;
+using Better.EditorTools.Runtime.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -56,7 +55,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             return true;
         }
 
-        protected override HeightCache GetPropertyHeight(SerializedProperty property, GUIContent label)
+        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var additionalHeight = 0f;
             if (Collection != null && Collection.IsOpen(property))
@@ -64,7 +63,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
                 additionalHeight = Collection.GetHeight(property);
             }
 
-            return HeightCache.GetAdditive(additionalHeight);
+            return HeightCacheValue.GetAdditive(additionalHeight);
         }
 
         protected override Rect PreparePropertyRect(Rect original)
