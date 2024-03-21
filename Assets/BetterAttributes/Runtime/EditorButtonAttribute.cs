@@ -13,88 +13,23 @@ namespace Better.Attributes.Runtime
     {
         private readonly string _displayName;
 
-        public EditorButtonAttribute()
+        public EditorButtonAttribute() : this(string.Empty, null)
         {
-            _displayName = string.Empty;
         }
 
-        public EditorButtonAttribute(string displayName)
+        public EditorButtonAttribute(string displayName, params object[] invokeParams)
         {
             _displayName = displayName;
-        }
-
-        /// <summary>
-        /// Provides Editor button
-        /// </summary>
-        /// <param name="displayName"></param>
-        /// <param name="invokeParams"></param>
-        public EditorButtonAttribute(string displayName, params object[] invokeParams) : this(displayName, -1, -1,
-            invokeParams)
-        {
-        }
-
-        /// <summary>
-        /// Provides Editor button
-        /// </summary>
-        /// <param name="displayName"></param>
-        /// <param name="captureGroup"></param>
-        /// <param name="priority"></param>
-        /// <param name="invokeParams"></param>
-        public EditorButtonAttribute(string displayName, int captureGroup, int priority, params object[] invokeParams) :
-            this(displayName)
-        {
+            Priority = -1;
+            CaptureGroup = -1;
             InvokeParams = invokeParams;
-            Priority = priority;
-            CaptureGroup = captureGroup;
         }
 
-        /// <summary>
-        /// Provides Editor button
-        /// </summary>
-        /// <param name="invokeParams"></param>
-        public EditorButtonAttribute(params object[] invokeParams) : this(string.Empty, -1, -1, invokeParams)
-        {
-        }
+        public object[] InvokeParams { get; set; }
 
-        /// <summary>
-        /// Provides Editor button
-        /// </summary>
-        /// <param name="captureGroup"></param>
-        /// <param name="invokeParams"></param>
-        public EditorButtonAttribute(int captureGroup, params object[] invokeParams) : this(string.Empty, captureGroup,
-            -1, invokeParams)
-        {
-        }
+        public int Priority { get; set; }
 
-        /// <summary>
-        /// Provides Editor button
-        /// </summary>
-        /// <param name="displayName"></param>
-        /// <param name="captureGroup"></param>
-        /// <param name="invokeParams"></param>
-        public EditorButtonAttribute(string displayName, int captureGroup, params object[] invokeParams) : this(
-            displayName, captureGroup, -1,
-            invokeParams)
-        {
-        }
-
-        /// <summary>
-        /// Provides Editor button
-        /// </summary>
-        /// <param name="captureGroup"></param>
-        /// <param name="priority"></param>
-        /// <param name="invokeParams"></param>
-        public EditorButtonAttribute(int captureGroup, int priority, params object[] invokeParams) : this(string.Empty,
-            captureGroup, priority,
-            invokeParams)
-        {
-        }
-        
-        public object[] InvokeParams { get; }
-
-        public int Priority { get; }
-
-        public int CaptureGroup { get; }
+        public int CaptureGroup { get; set; }
 
         private bool IsValidName()
         {

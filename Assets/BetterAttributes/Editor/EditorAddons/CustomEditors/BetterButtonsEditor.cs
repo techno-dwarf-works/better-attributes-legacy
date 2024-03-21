@@ -36,7 +36,17 @@ namespace Better.Attributes.EditorAddons.CustomEditors
             var methodInfo = button.Key;
 
             if (GUILayout.Button(attribute.GetDisplayName(methodInfo.PrettyMemberName()), guiStyle))
-                methodInfo.Invoke(_target, attribute.InvokeParams);
+            {
+                using (var changeScope = new EditorGUI.ChangeCheckScope())
+                {
+                    methodInfo.Invoke(_target, attribute.InvokeParams);
+                    if (changeScope.changed)
+                    {
+                        EditorUtility.SetDirty(_target);
+                        _serializedObject.ApplyModifiedProperties();
+                    }
+                }
+            }
         }
 
         private void DrawButtons(Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>> buttons)

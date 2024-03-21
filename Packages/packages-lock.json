@@ -116,18 +116,18 @@
       "url": "https://package.openupm.com"
     },
     "com.uurha.bettereditortools": {
-      "version": "1.5.2",
+      "version": "1.5.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.uurha.betterdatastructures": "0.1.7",
-        "com.uurha.betterextensions": "1.5.91",
+        "com.uurha.betterextensions": "1.5.98",
         "com.tdw.better.internal.core": "0.0.2"
       },
       "url": "https://package.openupm.com"
     },
     "com.uurha.betterextensions": {
-      "version": "1.5.91",
+      "version": "1.5.98",
       "depth": 1,
       "source": "registry",
       "dependencies": {
