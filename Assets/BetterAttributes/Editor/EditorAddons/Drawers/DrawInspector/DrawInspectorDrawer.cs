@@ -1,11 +1,14 @@
 ﻿using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utility;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.DrawInspector;
-using Better.EditorTools.EditorAddons.Attributes;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.EditorTools.Runtime.Attributes;
+using Better.Commons.EditorAddons.Drawers.Attributes;
+using Better.Commons.EditorAddons.Drawers.Base;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Enums;
+using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.EditorAddons.Utility;
+using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +32,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             {
                 EditorGUI.BeginChangeCheck();
                 DrawField(position, property, label);
-                DrawersHelper.NotSupportedAttribute(position, property, label, fieldType, _attribute.GetType());
+                ExtendedGUIUtility.NotSupportedAttribute(position, property, label, fieldType, _attribute.GetType());
                 return false;
             }
 
@@ -42,12 +45,12 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
             _isOpen = Collection.IsOpen(property);
             if (property.objectReferenceValue)
             {
-                label.image = DrawersHelper.GetIcon(_isOpen ? IconType.Minus : IconType.PlusMore);
+                label.image = (_isOpen ? IconType.Minus : IconType.PlusMore).GetIcon();
             }
 
-            var copy = DrawersHelper.GetClickRect(position, label);
+            var copy = ExtendedGUIUtility.GetClickRect(position, label);
             copy.height = EditorGUIUtility.singleLineHeight;
-            if (DrawersHelper.IsClickedAt(copy))
+            if (ExtendedGUIUtility.IsClickedAt(copy))
             {
                 Collection.SetOpen(property, !_isOpen);
             }

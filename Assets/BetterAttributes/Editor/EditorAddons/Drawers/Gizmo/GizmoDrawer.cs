@@ -1,18 +1,19 @@
 ﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Gizmo;
-using Better.EditorTools.EditorAddons.Attributes;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.EditorTools.Runtime.Attributes;
+using Better.Commons.EditorAddons.Drawers.Attributes;
+using Better.Commons.EditorAddons.Drawers.Base;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Enums;
+using Better.Commons.EditorAddons.Utility;
+using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
 using UnityEngine;
 
 #if UNITY_2022_1_OR_NEWER
-using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utilities.GizmoUtility;
-
+using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utility.GizmoUtility;
 #else
-using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utility;
 #endif
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
@@ -80,7 +81,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             if (!GizmoUtility.Instance.IsSupported(fieldType))
             {
                 var rect = new Rect(position);
-                DrawersHelper.NotSupportedAttribute(rect, property, label, fieldType, attributeType);
+                ExtendedGUIUtility.NotSupportedAttribute(rect, property, label, fieldType, attributeType);
                 return true;
             }
 
@@ -140,7 +141,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
         private Rect PrepareButtonRect(Rect original)
         {
             var copy = original;
-            copy.x += copy.width + DrawersHelper.SpaceHeight;
+            copy.x += copy.width + ExtendedGUIUtility.SpaceHeight;
             copy.width *= 0.1f;
             copy.height = EditorGUIUtility.singleLineHeight;
             return copy;
@@ -151,9 +152,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             var fieldType = GetFieldOrElementType();
             if (!GizmoUtility.Instance.IsSupported(fieldType))
             {
-                var message = DrawersHelper.NotSupportedMessage(property.name, fieldType, _attribute.GetType());
-                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
-                return HeightCacheValue.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
+                var message = ExtendedGUIUtility.NotSupportedMessage(property.name, fieldType, _attribute.GetType());
+                var additive = ExtendedGUIUtility.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
+                return HeightCacheValue.GetAdditive(additive + ExtendedGUIUtility.SpaceHeight * 2);
             }
 
             return Collection.GetHeight(property, label);

@@ -12,35 +12,29 @@ namespace Samples
     [CreateAssetMenu(menuName = "Create TestScriptableObject", fileName = "TestScriptableObject", order = 0)]
     public class TestScriptableObject : ScriptableObject
     {
-        
         [Select] [SerializeField] private KeyCode keyCode;
         [Select] [SerializeField] private KeyCode keyCode1;
-        
-        [Gizmo]
-        [SerializeField] private Bounds bounds;
-        
-        [Gizmo]
-        [SerializeField] private Vector3 vector3;
-        
-        [Gizmo]
-        [SerializeField] private Quaternion quaternion;
+
+        [Gizmo] [SerializeField] private Bounds bounds;
+
+        [Gizmo] [SerializeField] private Vector3 vector3;
+
+        [Gizmo] [SerializeField] private Quaternion quaternion;
 
         [ReadOnly] [SerializeField] private SomeClass someClass;
 
         [ReadOnly] [SerializeField] private float someFloat;
 
-        [SelectImplementation] [SerializeReference]
-        private ISomeInterface someInterface;
+        [Select] [SerializeReference] private ISomeInterface someInterface;
 
-        [SelectImplementation] [SerializeReference]
-        private SomeAbstractClass someAbstractClass;
+        [Select] [SerializeReference] private SomeAbstractClass someAbstractClass;
 
-        [SelectImplementation(typeof(SomeAbstractClass))] [SerializeReference]
+        [Select(typeof(SomeAbstractClass))] [SerializeReference]
         private List<SomeAbstractClass> someAbstractClasses;
 
-        [SelectImplementation(typeof(ISomeInterface))] [SerializeReference]
+        [Select(typeof(ISomeInterface))] [SerializeReference]
         private List<ISomeInterface> someInterfaces;
-        
+
         ///Default usage of attribute.
         [EditorButton]
         private void SomeMethod()
@@ -50,7 +44,7 @@ namespace Samples
 
         ///This button will call method with predefined parameters. 
         ///When invokeParams not specified will call with null.
-        [EditorButton(invokeParams: 10f)]
+        [EditorButton(InvokeParams = new object[] { 10f })]
         private void SomeMethod(float floatValue)
         {
             Debug.Log($"{nameof(SomeMethod)}({floatValue})");
@@ -58,7 +52,7 @@ namespace Samples
 
         ///This button will call method with predefined parameters. 
         ///When invokeParams not specified will call with null.
-        [EditorButton(invokeParams: new object[] { 10f, 10 })]
+        [EditorButton(InvokeParams = new object[] { 10f, 10 })]
         private void SomeMethod(float floatValue, int intValue)
         {
             Debug.Log($"{nameof(SomeMethod)}({floatValue}, {intValue})");
@@ -68,13 +62,13 @@ namespace Samples
         /// But will be in the second position.
         /// When captureGroup not specified each button placed in separate row.
         /// When priority not specified buttons in one row sorted by order in code.
-        [EditorButton(captureGroup: 1, priority: 2)]
+        [EditorButton(CaptureGroup = 1, Priority = 2)]
         private void SomeMethod1()
         {
             Debug.Log($"{nameof(SomeMethod1)}");
         }
 
-        [EditorButton(captureGroup: 1, priority: 1)]
+        [EditorButton(CaptureGroup = 1, Priority = 1)]
         private void SomeMethod2()
         {
             Debug.Log($"{nameof(SomeMethod2)}");

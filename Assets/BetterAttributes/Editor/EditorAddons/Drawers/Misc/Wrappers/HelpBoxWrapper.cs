@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,7 +27,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             copy.height = _helpBoxHeight;
             copy.y += _propertyHeight + EditorGUIUtility.standardVerticalSpacing;
 
-            DrawersHelper.HelpBox(copy, _helpBoxContent);
+            ExtendedGUIUtility.HelpBox(copy, _helpBoxContent);
         }
 
         public override void DrawField(Rect rect, GUIContent label)
@@ -42,7 +42,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
         public override HeightCacheValue GetHeight(GUIContent label)
         {
             _propertyHeight = EditorGUI.GetPropertyHeight(_property, label);
-            _helpBoxHeight = DrawersHelper.GetHelpBoxHeight(_helpBoxContent);
+            _helpBoxHeight = ExtendedGUIUtility.GetHelpBoxHeight(_helpBoxContent);
             return HeightCacheValue.GetFull(_propertyHeight + _helpBoxHeight + EditorGUIUtility.standardVerticalSpacing);
         }
     }

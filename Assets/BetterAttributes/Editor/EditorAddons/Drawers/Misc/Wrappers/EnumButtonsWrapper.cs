@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.Extensions.Runtime;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Helpers;
+using Better.Commons.Runtime.Extensions;
+using Better.Commons.Runtime.Utility;
 using UnityEditor;
 using UnityEngine;
 

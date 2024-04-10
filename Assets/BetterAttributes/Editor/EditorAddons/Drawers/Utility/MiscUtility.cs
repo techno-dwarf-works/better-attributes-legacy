@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Better.Attributes.EditorAddons.Comparers;
 using Better.Attributes.EditorAddons.Drawers.Misc.Wrappers;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.EditorAddons.Comparers;
-using Better.EditorTools.EditorAddons.Utilities;
-using Better.EditorTools.EditorAddons.WrappersTypeCollection;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.Runtime.Comparers;
 
-namespace Better.Attributes.EditorAddons.Drawers.Utilities
+namespace Better.Attributes.EditorAddons.Drawers.Utility
 {
     public class MiscUtility : BaseUtility<MiscUtility>
     {

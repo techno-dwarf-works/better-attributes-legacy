@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Better.Attributes.EditorAddons.Comparers;
 using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
 using Better.Attributes.Runtime.Select;
-using Better.DataStructures.Runtime.SerializedTypes;
-using Better.EditorTools.EditorAddons.Comparers;
-using Better.EditorTools.EditorAddons.Utilities;
-using Better.EditorTools.EditorAddons.WrappersTypeCollection;
-using Better.Extensions.Runtime;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.Runtime.Comparers;
+using Better.Commons.Runtime.DataStructures.SerializedTypes;
+using Better.Commons.Runtime.Extensions;
+using Better.Commons.Runtime.Utility;
 using UnityEditor;
 
 #pragma warning disable CS0618
 
-namespace Better.Attributes.EditorAddons.Drawers.Utilities
+namespace Better.Attributes.EditorAddons.Drawers.Utility
 {
     public class SelectUtility : BaseUtility<SelectUtility>
     {

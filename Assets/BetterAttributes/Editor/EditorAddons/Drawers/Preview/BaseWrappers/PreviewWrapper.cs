@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Better.EditorTools.EditorAddons.Helpers;
+using Better.Commons.EditorAddons.EditorPopups;
+using Better.Commons.EditorAddons.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -56,14 +57,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
         private void CheckInteraction(Rect position, SerializedProperty serializedProperty, float size)
         {
             var contains = position.Contains(_currentMousePosition);
-            if (contains && DrawersHelper.IsLeftButtonDown())
+            if (contains && ExtendedGUIUtility.IsLeftButtonDown())
             {
                 MouseDownCase(serializedProperty, size);
             }
             else
             {
-                var isLeftDrag = DrawersHelper.IsMouseButton(EventType.MouseDrag, DrawersHelper.MouseButtonLeft);
-                var isLeftUp = DrawersHelper.IsLeftButtonUp();
+                var isLeftDrag = ExtendedGUIUtility.IsMouseButton(EventType.MouseDrag, ExtendedGUIUtility.MouseButtonLeft);
+                var isLeftUp = ExtendedGUIUtility.IsLeftButtonUp();
                 if (isLeftUp || isLeftDrag && !contains && _isMouseDown)
                 {
                     Deconstruct();

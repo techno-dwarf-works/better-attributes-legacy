@@ -1,15 +1,16 @@
 ﻿using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.Attributes.Runtime.Gizmo;
-using Better.EditorTools.EditorAddons.CustomEditors;
-using Better.Extensions.EditorAddons;
+using Better.Commons.EditorAddons.CustomEditors.Attributes;
+using Better.Commons.EditorAddons.CustomEditors.Base;
+using Better.Commons.EditorAddons.Extensions;
 using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.CustomEditors
 {
     [MultiEditor(typeof(Object), true, Order = -999)]
-    public class GizmosEditor : EditorExtension
+    public class GizmosEditor : ExtendedEditor
     {
         private HideTransformButtonUtility _hideTransformDrawer;
 

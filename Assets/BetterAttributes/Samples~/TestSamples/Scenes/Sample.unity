@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
+    _fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   keyCode: 8
   myFlagEnumTest: 2
@@ -166,7 +166,7 @@ MonoBehaviour:
   - {fileID: 0}
   scriptableObject: {fileID: 0}
   vector3Local: {x: 0, y: 0, z: 0}
-  quaternion: {x: 0, y: 0, z: 0, w: 0}
+  quaternion: {x: 0, y: 0, z: 0, w: 1}
   some:
     intField: 0
     intField1: 0

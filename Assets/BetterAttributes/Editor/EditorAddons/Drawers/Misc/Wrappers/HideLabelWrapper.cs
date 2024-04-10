@@ -1,5 +1,5 @@
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,7 +35,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
                 copy.height = propertyHeight;
 
-                EditorGUIHelpers.PropertyFieldSafe(copy, prop, item);
+                PropertyFieldUtility.PropertyFieldSafe(copy, prop, item);
                 copy.y += propertyHeight + EditorGUIUtility.standardVerticalSpacing;
             }
         }

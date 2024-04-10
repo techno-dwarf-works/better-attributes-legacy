@@ -7,7 +7,7 @@ namespace Samples
 {
     public class RemovableTest : MonoBehaviour
     {
-        [SelectImplementation] [SerializeReference]
+        [Select] [SerializeReference]
         private ISomeInterface someInterface;
 
         [EditorButton]
