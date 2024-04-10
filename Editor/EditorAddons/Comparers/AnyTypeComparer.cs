@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.EditorTools.EditorAddons.Comparers;
+using Better.Commons.Runtime.Comparers;
 
-namespace Better.Attributes.EditorAddons.Drawers.Utilities
+namespace Better.Attributes.EditorAddons.Comparers
 {
     public class AnyTypeComparer : BaseComparer<AnyTypeComparer,Type>, IEqualityComparer<Type>
     {

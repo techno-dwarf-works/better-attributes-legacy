@@ -1,7 +1,7 @@
 ﻿using System;
-using Better.DataStructures.Runtime.SerializedTypes;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.Extensions.EditorAddons;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.Runtime.DataStructures.SerializedTypes;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers

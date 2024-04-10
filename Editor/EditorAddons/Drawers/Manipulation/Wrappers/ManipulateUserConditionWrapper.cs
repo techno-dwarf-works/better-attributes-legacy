@@ -1,6 +1,6 @@
 ﻿using System;
 using Better.Attributes.Runtime.Manipulation;
-using Better.Extensions.EditorAddons;
+using Better.Commons.EditorAddons.Extensions;
 using Better.Internal.Core.Runtime;
 using UnityEditor;
 using UnityEngine;

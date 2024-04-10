@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.EditorAddons.Helpers;
+using Better.Commons.EditorAddons.Enums;
+using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.EditorAddons.Utility;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
@@ -43,7 +45,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         private static GUIContent GUIContent(Type type)
         {
-            var resolveName = DrawersHelper.GetIconGUIContent(IconType.ErrorMessage);
+            var resolveName = IconType.ErrorMessage.GetIconGUIContent();
             resolveName.text = $"{type.Name}";
             resolveName.tooltip = "Type has not parameterless constructor!";
             return resolveName;
