@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Utilities;
-using Better.Extensions.EditorAddons;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Extensions;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers

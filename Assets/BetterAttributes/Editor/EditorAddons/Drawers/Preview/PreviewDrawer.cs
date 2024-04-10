@@ -1,11 +1,14 @@
 ﻿using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utility;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.Runtime.Preview;
-using Better.EditorTools.EditorAddons.Attributes;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.EditorTools.Runtime.Attributes;
+using Better.Commons.EditorAddons.Drawers.Attributes;
+using Better.Commons.EditorAddons.Drawers.Base;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Enums;
+using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.EditorAddons.Utility;
+using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,7 +34,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             var attributeType = _attribute.GetType();
             if (!PreviewUtility.Instance.IsSupported(fieldType))
             {
-                DrawersHelper.NotSupportedAttribute(position, property, label, fieldType, attributeType);
+                ExtendedGUIUtility.NotSupportedAttribute(position, property, label, fieldType, attributeType);
                 return false;
             }
 
@@ -44,12 +47,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             _previewSize = ((PreviewAttribute)_attribute).PreviewSize;
             if (!Collection.ValidateObject(property))
             {
-                DrawersHelper.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage);
+                ExtendedGUIUtility.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage);
                 return true;
             }
 
-            label.image = DrawersHelper.GetIcon(IconType.View);
-            var copy = DrawersHelper.GetClickRect(position, label);
+            label.image = IconType.View.GetIcon();
+            var copy = ExtendedGUIUtility.GetClickRect(position, label);
             copy.height = EditorGUIUtility.singleLineHeight;
 
             Collection.PreDraw(copy, property, _previewSize, _objectChanged);
@@ -61,8 +64,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
         {
             if (!Collection.ValidateObject(property))
             {
-                var additive = DrawersHelper.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
-                return HeightCacheValue.GetAdditive(additive + DrawersHelper.SpaceHeight * 2);
+                var additive = ExtendedGUIUtility.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
+                return HeightCacheValue.GetAdditive(additive + ExtendedGUIUtility.SpaceHeight * 2);
             }
 
             return HeightCacheValue.GetAdditive(0);

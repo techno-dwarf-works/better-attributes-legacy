@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Reflection;
 using Better.Attributes.Runtime;
-using Better.EditorTools.EditorAddons.CustomEditors;
-using Better.Extensions.Runtime;
+using Better.Commons.EditorAddons.CustomEditors.Attributes;
+using Better.Commons.EditorAddons.CustomEditors.Base;
+using Better.Commons.Runtime.Extensions;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -11,7 +12,7 @@ using Object = UnityEngine.Object;
 namespace Better.Attributes.EditorAddons.CustomEditors
 {
     [MultiEditor(typeof(Object), true, Order = 999)]
-    public class BetterButtonsEditor : EditorExtension
+    public class BetterButtonsEditor : ExtendedEditor
     {
         private Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>> _methodButtonsAttributes =
             new Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>>();

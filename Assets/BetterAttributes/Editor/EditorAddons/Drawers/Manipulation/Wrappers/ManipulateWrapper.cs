@@ -1,9 +1,9 @@
 ﻿using System;
 using Better.Attributes.Runtime.Manipulation;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.EditorTools.EditorAddons.Utilities;
-using Better.Extensions.Runtime;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Utility;
+using Better.Commons.Runtime.Utility;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
 ﻿using System;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.EditorTools.EditorAddons.Utilities;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Utility;
 using UnityEditor;
 using UnityEngine;
 
@@ -51,7 +51,7 @@ namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
         public void SetOpen(bool value)
         {
             _isOpen = value;
-            ReorderableListHelpers.RepaintAllInspectors(_property);
+            ReorderableListUtility.RepaintAllInspectors(_property);
         }
 
         public bool IsOpen()

@@ -17,6 +17,10 @@ namespace Better.Attributes.Runtime
         {
         }
 
+        public EditorButtonAttribute(string displayName) : this(displayName, null)
+        {
+        }
+
         public EditorButtonAttribute(string displayName, params object[] invokeParams)
         {
             _displayName = displayName;

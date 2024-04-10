@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Better.Attributes.Runtime.Misc;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Utilities;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Drawers.Utility;
 using UnityEditor;
 using UnityEngine;
 

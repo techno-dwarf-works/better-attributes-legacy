@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using Better.Attributes.Runtime;
 using Better.Attributes.Runtime.DrawInspector;
 using Better.Attributes.Runtime.Gizmo;
-using Better.Attributes.Runtime.Headers;
 using Better.Attributes.Runtime.Manipulation;
 using Better.Attributes.Runtime.Misc;
 using Better.Attributes.Runtime.Preview;
 using Better.Attributes.Runtime.Rename;
 using Better.Attributes.Runtime.Select;
-using Better.DataStructures.Runtime.SerializedTypes;
-using Better.Extensions.Runtime;
+using Better.Commons.Runtime.DataStructures.SerializedTypes;
 using Samples.Interfaces;
 using Samples.Models;
 using UnityEngine;
@@ -181,7 +179,7 @@ namespace Samples
         /// This button will have name "Some Cool Button".
         /// When displayName not specified or null/empty/whitespace button 
         /// will have name same as method.
-        [EditorButton(displayName: "Some Cool Button")]
+        [EditorButton("Some Cool Button")]
         private void SomeMethod3()
         {
             Debug.Log($"{nameof(SomeMethod3)}");

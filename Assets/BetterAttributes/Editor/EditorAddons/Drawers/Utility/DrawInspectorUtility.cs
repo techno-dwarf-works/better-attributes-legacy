@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.DrawInspector;
 using Better.Attributes.Runtime.DrawInspector;
-using Better.EditorTools.EditorAddons.Comparers;
-using Better.EditorTools.EditorAddons.Utilities;
-using Better.EditorTools.EditorAddons.WrappersTypeCollection;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.Runtime.Comparers;
 using Object = UnityEngine.Object;
 
-namespace Better.Attributes.EditorAddons.Drawers.Utilities
+namespace Better.Attributes.EditorAddons.Drawers.Utility
 {
     public class DrawInspectorUtility : BaseUtility<DrawInspectorUtility>
     {

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Reflection;
 using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Drawers.Select.Wrappers;
-using Better.Attributes.EditorAddons.Drawers.Utilities;
+using Better.Attributes.EditorAddons.Drawers.Utility;
 using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Helpers;
-using Better.EditorTools.EditorAddons.Helpers.DropDown;
-using Better.EditorTools.Runtime.Attributes;
-using Better.Extensions.EditorAddons;
+using Better.Commons.EditorAddons.Drawers.Base;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.DropDown;
+using Better.Commons.EditorAddons.Enums;
+using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.EditorAddons.Helpers;
+using Better.Commons.EditorAddons.Utility;
+using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -51,7 +54,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 {
                     EditorGUI.BeginChangeCheck();
                     DrawField(position, property, label);
-                    DrawersHelper.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType());
+                    ExtendedGUIUtility.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType());
                     return false;
                 }
 
@@ -112,7 +115,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
         private bool DrawButton(Rect buttonPosition, object currentValue)
         {
-            var content = DrawersHelper.GetIconGUIContent(IconType.GrayDropdown);
+            var content = IconType.GrayDropdown.GetIconGUIContent();
 
             content.text = _setupStrategy.GetButtonName(currentValue);
             return GUI.Button(buttonPosition, content, Styles.Button);
@@ -143,7 +146,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
                     if (guiContent.image == null && _setupStrategy.ResolveState(currentValue, value))
                     {
-                        guiContent.image = DrawersHelper.GetIcon(IconType.Checkmark);
+                        guiContent.image = IconType.Checkmark.GetIcon();
                     }
 
                     var item = new DropdownItem(guiContent, OnSelectItem, new SelectedItem<object>(serializedProperty, value));

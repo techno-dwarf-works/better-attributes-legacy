@@ -1,4 +1,5 @@
-﻿using Better.EditorTools.EditorAddons.Helpers;
+﻿using Better.Commons.EditorAddons.Enums;
+using Better.Commons.EditorAddons.Utility;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +21,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
 
             if (!(drawnObject is Component component))
             {
-                DrawersHelper.HelpBox(
-                    $"Preview not available for type: {DrawersHelper.FormatBold(drawnObject.GetType().Name)}",
+                ExtendedGUIUtility.HelpBox(
+                    $"Preview not available for type: {ExtendedGUIUtility.FormatBold(drawnObject.GetType().Name)}",
                     IconType.ErrorMessage, false);
                 return false;
             }
@@ -34,8 +35,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
 
             if (!_state)
             {
-                DrawersHelper.HelpBox(
-                    $"Preview not available for objects without {DrawersHelper.FormatBold($"{nameof(Renderer)}s")} in children",
+                ExtendedGUIUtility.HelpBox(
+                    $"Preview not available for objects without {ExtendedGUIUtility.FormatBold($"{nameof(Renderer)}s")} in children",
                     IconType.ErrorMessage, false);
                 return false;
             }

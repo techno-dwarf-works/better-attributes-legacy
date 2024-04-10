@@ -1,4 +1,4 @@
-﻿using Better.Extensions.Runtime;
+﻿using Better.Commons.Runtime.Utility;
 
 namespace Better.Attributes.EditorAddons.Extensions
 {

@@ -1,9 +1,9 @@
 ﻿using System;
-using Better.Attributes.EditorAddons.Drawers.Utilities;
-using Better.EditorTools.EditorAddons.Drawers.Base;
-using Better.EditorTools.EditorAddons.Utilities;
-using Better.Extensions.EditorAddons;
-using Better.Extensions.Runtime;
+using Better.Attributes.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Drawers.Utility;
+using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.Runtime.Utility;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2022_1_OR_NEWER
