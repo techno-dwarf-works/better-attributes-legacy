@@ -55,8 +55,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override bool CheckSupported()
         {
-            var baseType = GetFieldOrElementType();
-            return baseType.IsAbstract || baseType.IsInterface;
+            return true;
         }
 
         public override GUIContent GenerateHeader()
@@ -135,7 +134,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override List<object> Setup()
         {
-            var selectionObjects = GetFieldOrElementType().GetAllInheritedTypesWithoutUnityObject().Cast<object>().ToList();
+            var selectionObjects = GetFieldOrElementType().GetAllInheritedTypes().Cast<object>().ToList();
             selectionObjects.Insert(0, null);
             return selectionObjects;
         }

@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
+using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
+using Better.Attributes.Runtime.Select;
 using Better.Commons.EditorAddons.Drawers.Caching;
 using Better.Commons.EditorAddons.Drawers.Utility;
 using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
@@ -10,6 +13,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
     {
         protected SerializedProperty _property;
         protected FieldInfo _fieldInfo;
+        protected MultiPropertyAttribute _attribute;
+        protected SetupStrategy _setupStrategy;
 
         public override void Deconstruct()
         {
@@ -22,10 +27,12 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
         public abstract void Update(object value);
 
-        public virtual void SetProperty(SerializedProperty property, FieldInfo fieldInfo)
+        public virtual void Setup(SerializedProperty property, FieldInfo fieldInfo, MultiPropertyAttribute attribute, SetupStrategy setupStrategy)
         {
             _property = property;
             _fieldInfo = fieldInfo;
+            _attribute = attribute;
+            _setupStrategy = setupStrategy;
         }
 
         public virtual bool Verify()
