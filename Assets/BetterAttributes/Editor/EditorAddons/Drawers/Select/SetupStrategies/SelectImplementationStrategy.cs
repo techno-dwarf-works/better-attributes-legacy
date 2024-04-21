@@ -1,18 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Better.Attributes.Runtime.Select;
 using Better.Commons.EditorAddons.Enums;
 using Better.Commons.EditorAddons.Extensions;
-using Better.Commons.EditorAddons.Utility;
+using Better.Commons.Runtime.Extensions;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
-    public class SelectImplementationStrategy : SelectTypeStrategy
+    public class SelectImplementationStrategy : SelectSerializedTypeStrategy
     {
         public SelectImplementationStrategy(FieldInfo fieldInfo, object container, SelectAttributeBase selectAttributeBase) : base(fieldInfo, container,
             selectAttributeBase)
         {
+        }
+        
+        public override List<object> Setup()
+        {
+            var selectionObjects = GetFieldOrElementType().GetAllInheritedTypesWithoutUnityObject().Cast<object>().ToList();
+            selectionObjects.Insert(0, null);
+            return selectionObjects;
+        }
+        
+        public override bool SkipFieldDraw()
+        {
+            return false;
+        }
+
+        public override bool CheckSupported()
+        {
+            var baseType = GetFieldOrElementType();
+            return baseType.IsAbstract || baseType.IsInterface;
         }
 
         public override GUIContent[] ResolveGroupedName(object value, DisplayGrouping grouping)

@@ -11,9 +11,14 @@ using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
-    public class SelectTypeStrategy : SetupStrategy
+    public class SelectSerializedTypeStrategy : SetupStrategy
     {
-        public SelectTypeStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase) : base(fieldInfo, propertyContainer,
+        public override bool SkipFieldDraw()
+        {
+            return true;
+        }
+        
+        public SelectSerializedTypeStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase) : base(fieldInfo, propertyContainer,
             selectAttributeBase)
         {
         }
@@ -55,8 +60,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override bool CheckSupported()
         {
-            var baseType = GetFieldOrElementType();
-            return baseType.IsAbstract || baseType.IsInterface;
+            return false;
         }
 
         public override GUIContent GenerateHeader()
@@ -135,7 +139,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override List<object> Setup()
         {
-            var selectionObjects = GetFieldOrElementType().GetAllInheritedTypesWithoutUnityObject().Cast<object>().ToList();
+            var selectionObjects = GetFieldOrElementType().GetAllInheritedTypes().Cast<object>().ToList();
             selectionObjects.Insert(0, null);
             return selectionObjects;
         }

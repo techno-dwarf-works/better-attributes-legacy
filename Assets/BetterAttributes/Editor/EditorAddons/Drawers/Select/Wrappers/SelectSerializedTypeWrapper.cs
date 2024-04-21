@@ -1,5 +1,4 @@
 ﻿using System;
-using Better.Commons.EditorAddons.Drawers.Caching;
 using Better.Commons.EditorAddons.Extensions;
 using Better.Commons.Runtime.DataStructures.SerializedTypes;
 using UnityEditor;
@@ -8,16 +7,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
     public class SelectSerializedTypeWrapper : BaseSelectWrapper
     {
-        public override bool SkipFieldDraw()
-        {
-            return true;
-        }
-
-        public override HeightCacheValue GetHeight()
-        {
-            var full = HeightCacheValue.GetFull(EditorGUI.GetPropertyHeight(_property, false));
-            return full;
-        }
 
         public override void Update(object value)
         {

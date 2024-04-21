@@ -36,6 +36,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             public int Value { get; }
         }
 
+        public override bool SkipFieldDraw()
+        {
+            return true;
+        }
+
         public override string GetButtonName(object currentValue)
         {
             var intValue = (int)currentValue;

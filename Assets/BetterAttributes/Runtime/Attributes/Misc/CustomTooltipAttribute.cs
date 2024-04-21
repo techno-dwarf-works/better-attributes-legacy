@@ -15,6 +15,7 @@ namespace Better.Attributes.Runtime.Misc
         public CustomTooltipAttribute(string tooltip)
         {
             Tooltip = tooltip;
+            order = -999;
         }
     }
 }
