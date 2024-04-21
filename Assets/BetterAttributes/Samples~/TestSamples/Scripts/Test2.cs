@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Samples
 {
-    public class Test2 : MonoBehaviour
+    public class Test2 : MonoBehaviour, ISomeInterface
     {
         [Dropdown(nameof(testArray))] [SerializeField]
         private string testStr;
