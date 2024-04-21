@@ -54,7 +54,17 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 {
                     EditorGUI.BeginChangeCheck();
                     DrawField(position, property, label);
-                    ExtendedGUIUtility.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType());
+                    var offset = 0f;
+                    if (_setupStrategy != null)
+                    {
+                        if (!_setupStrategy.SkipFieldDraw())
+                        {
+                            var includeChildren = property.isExpanded;
+                            offset = EditorGUI.GetPropertyHeight(property, includeChildren) + ExtendedGUIUtility.SpaceHeight;
+                        }
+                    }
+
+                    ExtendedGUIUtility.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType(), offset);
                     return false;
                 }
 
@@ -176,7 +186,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 if (cache.Value == null) return HeightCacheValue.GetAdditive(0f);
                 var selectWrapper = cache.Value.Wrapper;
                 selectWrapper.Setup(property, _fieldInfo, _attribute, _setupStrategy);
-                return selectWrapper.GetHeight();
+                var value = selectWrapper.GetHeight();
+                return value;
             }
 
             var valueWrapper = cache.Value.Wrapper;
@@ -185,7 +196,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
                 valueWrapper.Setup(property, _fieldInfo, _attribute, _setupStrategy);
             }
 
-            return valueWrapper.GetHeight();
+            var height = valueWrapper.GetHeight();
+            return height;
         }
 
         private void InitializeSetupStrategy(SerializedProperty property, TAttribute attribute)

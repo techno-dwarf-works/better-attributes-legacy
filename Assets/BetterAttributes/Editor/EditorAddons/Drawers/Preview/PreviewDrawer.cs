@@ -47,14 +47,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             _previewSize = ((PreviewAttribute)_attribute).PreviewSize;
             if (!Collection.ValidateObject(property))
             {
-                ExtendedGUIUtility.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage);
+                var offset = EditorGUI.GetPropertyHeight(property, label, true) + ExtendedGUIUtility.SpaceHeight;
+                ExtendedGUIUtility.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage, offset);
                 return true;
             }
 
             label.image = IconType.View.GetIcon();
             var copy = ExtendedGUIUtility.GetClickRect(position, label);
             copy.height = EditorGUIUtility.singleLineHeight;
-
             Collection.PreDraw(copy, property, _previewSize, _objectChanged);
 
             return true;
@@ -65,7 +65,8 @@ namespace Better.Attributes.EditorAddons.Drawers.Preview
             if (!Collection.ValidateObject(property))
             {
                 var additive = ExtendedGUIUtility.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
-                return HeightCacheValue.GetAdditive(additive + ExtendedGUIUtility.SpaceHeight * 2);
+                var height = HeightCacheValue.GetAdditive(additive + ExtendedGUIUtility.SpaceHeight * 2);
+                return height;
             }
 
             return HeightCacheValue.GetAdditive(0);

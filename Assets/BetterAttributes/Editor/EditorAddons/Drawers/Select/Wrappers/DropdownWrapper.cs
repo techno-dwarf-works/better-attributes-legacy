@@ -1,20 +1,9 @@
-﻿using Better.Commons.EditorAddons.Drawers.Caching;
-using Better.Commons.EditorAddons.Extensions;
-using UnityEditor;
+﻿using Better.Commons.EditorAddons.Extensions;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 {
     public class DropdownWrapper : BaseSelectWrapper
     {
-        public override bool SkipFieldDraw()
-        {
-            return true;
-        }
-
-        public override HeightCacheValue GetHeight()
-        {
-            return HeightCacheValue.GetFull(EditorGUI.GetPropertyHeight(_property, false));
-        }
 
         public override void Update(object value)
         {

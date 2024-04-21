@@ -24,7 +24,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         
         protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
-            if (_wrappers.TryGetValue(property, out var value) && value.Wrapper.SkipFieldDraw())
+            if (_setupStrategy.SkipFieldDraw())
             {
                 var rect = PreparePropertyRect(position);
                 // rect.height = value.Wrapper.GetHeight().Value;

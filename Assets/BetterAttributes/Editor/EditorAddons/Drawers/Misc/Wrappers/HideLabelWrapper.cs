@@ -1,3 +1,4 @@
+using System;
 using Better.Commons.EditorAddons.Drawers.Caching;
 using Better.Commons.EditorAddons.Utility;
 using UnityEditor;
@@ -26,17 +27,23 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 return;
             }
 
-            var enumerator = _property.GetEnumerator();
-            var copy = new Rect(rect);
-            while (enumerator.MoveNext())
+            var serializedProperty = _property.Copy();
+            var enumerator = serializedProperty.GetEnumerator();
+            using (var disposable = enumerator as IDisposable)
             {
-                if (!(enumerator.Current is SerializedProperty prop)) continue;
+                var copy = new Rect(rect);
+                while (enumerator.MoveNext())
+                {
+                    if (!(enumerator.Current is SerializedProperty prop)) continue;
 
-                var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
-                copy.height = propertyHeight;
+                    var propertyHeight = EditorGUI.GetPropertyHeight(prop, true);
+                    copy.height = propertyHeight;
 
-                PropertyFieldUtility.PropertyFieldSafe(copy, prop, item);
-                copy.y += propertyHeight + EditorGUIUtility.standardVerticalSpacing;
+                    PropertyFieldUtility.PropertyFieldSafe(copy, prop, item);
+                    copy.y += propertyHeight + EditorGUIUtility.standardVerticalSpacing;
+                }
+
+                serializedProperty.Dispose();
             }
         }
 
@@ -49,15 +56,20 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
                 return HeightCacheValue.GetFull(height);
             }
 
-            var enumerator = _property.GetEnumerator();
-            while (enumerator.MoveNext())
+            var serializedProperty = _property.Copy();
+            var enumerator = serializedProperty.GetEnumerator();
+            using (var disposable = enumerator as IDisposable)
             {
-                var prop = enumerator.Current as SerializedProperty;
-                if (prop == null) continue;
-                height += EditorGUI.GetPropertyHeight(prop, true) + EditorGUIUtility.standardVerticalSpacing;
-            }
+                while (enumerator.MoveNext())
+                {
+                    var prop = enumerator.Current as SerializedProperty;
+                    if (prop == null) continue;
+                    height += EditorGUI.GetPropertyHeight(prop, true) + EditorGUIUtility.standardVerticalSpacing;
+                }
 
-            return HeightCacheValue.GetFull(height);
+                serializedProperty.Dispose();
+                return HeightCacheValue.GetFull(height);
+            }
         }
     }
 }

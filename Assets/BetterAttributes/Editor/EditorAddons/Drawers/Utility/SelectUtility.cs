@@ -32,7 +32,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Utility
                 {
                     typeof(SelectAttribute), new Dictionary<Type, Type>(TypeComparer.Instance)
                     {
-                        { typeof(SerializedType), typeof(SelectTypeStrategy) },
+                        { typeof(SerializedType), typeof(SelectSerializedTypeStrategy) },
                         { typeof(Enum), typeof(SelectEnumStrategy) },
                         { typeof(Type), typeof(SelectImplementationStrategy) }
                     }

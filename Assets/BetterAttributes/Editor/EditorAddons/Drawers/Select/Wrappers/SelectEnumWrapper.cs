@@ -4,7 +4,9 @@ using Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies;
 using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
 using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Enums;
 using Better.Commons.EditorAddons.Extensions;
+using Better.Commons.EditorAddons.Utility;
 using Better.Commons.Runtime.Drawers.Attributes;
 using Better.Commons.Runtime.Extensions;
 using Better.Commons.Runtime.Utility;
@@ -17,17 +19,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
         private bool _isFlag;
         private int _everythingValue;
 
-        public override bool SkipFieldDraw()
-        {
-            return true;
-        }
-
-        public override HeightCacheValue GetHeight()
-        {
-            var heightCacheValue = HeightCacheValue.GetFull(EditorGUI.GetPropertyHeight(_property, false));
-            return heightCacheValue;
-        }
-
         public override void Setup(SerializedProperty property, FieldInfo fieldInfo, MultiPropertyAttribute attribute, SetupStrategy setupStrategy)
         {
             base.Setup(property, fieldInfo, attribute, setupStrategy);
@@ -36,8 +27,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
             {
                 enumType = enumType.GetCollectionElementType();
             }
+
             _everythingValue = EnumUtility.EverythingFlag(enumType).ToFlagInt();
             _isFlag = fieldInfo.FieldType.GetCustomAttribute<FlagsAttribute>() != null;
+        }
+
+        protected override float GetPropertyHeight(SerializedProperty copy)
+        {
+            return EditorGUI.GetPropertyHeight(copy, true);
         }
 
         public override void Update(object objValue)
@@ -49,7 +46,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
 
             _property.intValue = currentValue;
         }
-        
+
         public override object GetCurrentValue()
         {
             return _property.intValue;
