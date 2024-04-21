@@ -28,6 +28,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
         public abstract bool Validate(object item);
         public abstract bool CheckSupported();
         public abstract GUIContent GenerateHeader();
+        public abstract bool SkipFieldDraw();
 
         public virtual Type GetFieldOrElementType()
         {

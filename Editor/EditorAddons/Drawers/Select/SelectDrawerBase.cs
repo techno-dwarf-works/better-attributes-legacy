@@ -49,12 +49,22 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             try
             {
                 var attribute = (TAttribute)_attribute;
-                _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(_fieldInfo, property.GetLastNonCollectionContainer(), attribute);
+                InitializeSetupStrategy(property, attribute);
                 if (_setupStrategy == null || !_setupStrategy.CheckSupported())
                 {
                     EditorGUI.BeginChangeCheck();
                     DrawField(position, property, label);
-                    ExtendedGUIUtility.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType());
+                    var offset = 0f;
+                    if (_setupStrategy != null)
+                    {
+                        if (!_setupStrategy.SkipFieldDraw())
+                        {
+                            var includeChildren = property.isExpanded;
+                            offset = EditorGUI.GetPropertyHeight(property, includeChildren) + ExtendedGUIUtility.SpaceHeight;
+                        }
+                    }
+
+                    ExtendedGUIUtility.NotSupportedAttribute(position, property, label, GetFieldOrElementType(), _attribute.GetType(), offset);
                     return false;
                 }
 
@@ -75,7 +85,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
             if (!cache.IsValid)
             {
-                cache.Value.Wrapper.SetProperty(property, _fieldInfo);
+                cache.Value.Wrapper.Setup(property, _fieldInfo, _attribute, _setupStrategy);
             }
 
             var popupPosition = GetPopupPosition(position, label);
@@ -169,21 +179,30 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             var cache = ValidateCachedProperties(property, SelectUtility.Instance);
+            var attribute = (TAttribute)_attribute;
+            InitializeSetupStrategy(property, attribute);
             if (!cache.IsValid)
             {
                 if (cache.Value == null) return HeightCacheValue.GetAdditive(0f);
                 var selectWrapper = cache.Value.Wrapper;
-                selectWrapper.SetProperty(property, _fieldInfo);
-                return selectWrapper.GetHeight();
+                selectWrapper.Setup(property, _fieldInfo, _attribute, _setupStrategy);
+                var value = selectWrapper.GetHeight();
+                return value;
             }
 
             var valueWrapper = cache.Value.Wrapper;
             if (!valueWrapper.Verify())
             {
-                valueWrapper.SetProperty(property, _fieldInfo);
+                valueWrapper.Setup(property, _fieldInfo, _attribute, _setupStrategy);
             }
 
-            return valueWrapper.GetHeight();
+            var height = valueWrapper.GetHeight();
+            return height;
+        }
+
+        private void InitializeSetupStrategy(SerializedProperty property, TAttribute attribute)
+        {
+            _setupStrategy ??= SelectUtility.Instance.GetSetupStrategy(_fieldInfo, property.GetLastNonCollectionContainer(), attribute);
         }
 
         private object GetCurrentValue(SerializedProperty property)
