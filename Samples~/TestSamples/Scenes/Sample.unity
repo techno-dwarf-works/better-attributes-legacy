@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 123298862}
-  - component: {fileID: 123298861}
+  - component: {fileID: 123298863}
   m_Layer: 0
   m_Name: TestObject
   m_TagString: Untagged
@@ -140,7 +140,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &123298861
+--- !u!4 &123298862
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123298860}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.66, z: 1.96}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &123298863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,17 +168,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializedType:
-    _fullQualifiedName: Samples.Models.SomeInterfaceImplementation21, Assembly-CSharp,
-      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  keyCode: 8
-  myFlagEnumTest: 2
+    _fullQualifiedName: 
+  serializedTypeTest:
+  - _type:
+      _fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation1, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  keyCode: 0
+  myFlagEnumTest: 0
   myEnumTest: 0
-  component: {fileID: -745862845828164141, guid: 8929c6f090ecb854da923536f6ace092, type: 3}
-  texture: {fileID: 2800000, guid: 78b772f3f305147419de3cc97ca72bd7, type: 3}
+  component: {fileID: 0}
+  texture: {fileID: 0}
   scriptableObjectList:
-  - {fileID: 0}
-  scriptableObjectArray:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ac831e4d15607c1468b51a2ca7a39284, type: 2}
+  scriptableObjectArray: []
   scriptableObject: {fileID: 0}
   vector3Local: {x: 0, y: 0, z: 0}
   quaternion: {x: 0, y: 0, z: 0, w: 1}
@@ -174,25 +191,22 @@ MonoBehaviour:
     intField3: 0
     intField4: 0
   someClass:
-    intField: 53
+    intField: 0
     intField1: 0
     intField2: 0
     intField3: 0
-    intField4: 203
+    intField4: 0
   someFloat: 0
   someInterface:
-    rid: 0
+    rid: -2
   someAbstractClass:
-    rid: 1
+    rid: -2
   someAbstractClasses: []
-  someInterfaces:
-  - rid: 2
+  someInterfaces: []
   bounds:
-    m_Center: {x: 0, y: -3.7256675, z: 0}
-    m_Extent: {x: 1.0894362, y: 1.2339233, z: 3.5291336}
-  _vector3s:
-  - {x: 0, y: -2.0571938, z: 6.2717056}
-  - {x: 0, y: -2.9847207, z: -7.380436}
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
+  _vector3s: []
   showInEditorMode: 0
   hideInEditorMode: 0
   hideInPlayMode: 0
@@ -209,34 +223,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 0
-      type: {class: SomeInterfaceImplementation14, ns: Samples.OtherModels, asm: Assembly-CSharp}
-      data:
-        intField: 0
-    - rid: 1
-      type: {class: SomeAbstractClassImplementation2, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        baseIntField: 0
-        boolField: 0
-    - rid: 2
-      type: {class: SomeInterfaceImplementation21, ns: Samples.Models, asm: Assembly-CSharp}
-      data:
-        intField: 0
---- !u!4 &123298862
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123298860}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.66, z: 1.96}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

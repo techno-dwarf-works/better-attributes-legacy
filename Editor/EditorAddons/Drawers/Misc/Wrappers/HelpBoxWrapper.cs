@@ -30,11 +30,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Misc.Wrappers
             ExtendedGUIUtility.HelpBox(copy, _helpBoxContent);
         }
 
-        public override void DrawField(Rect rect, GUIContent label)
-        {
-            EditorGUI.PropertyField(rect, _property, label, true);
-        }
-
         public override void PostDraw()
         {
         }

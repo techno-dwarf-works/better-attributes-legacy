@@ -109,6 +109,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             var popupPosition = new Rect(currentPosition);
             var width = label.GetMaxWidth();
+            
             popupPosition.width -= width;
             popupPosition.x += width;
             popupPosition.height = EditorGUIUtility.singleLineHeight;
@@ -135,6 +136,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             var copy = popupPosition;
             copy.y += EditorGUIUtility.singleLineHeight;
+
             var popup = DropdownWindow.ShowWindow(GUIUtility.GUIToScreenRect(copy), _setupStrategy.GenerateHeader());
             var items = GenerateItemsTree(serializedProperty, currentValue);
 
