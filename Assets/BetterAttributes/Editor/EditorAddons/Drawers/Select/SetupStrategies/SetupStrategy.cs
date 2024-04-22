@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Better.Attributes.Runtime.Select;
+using Better.Commons.EditorAddons.Utility;
 using Better.Commons.Runtime.Extensions;
+using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
@@ -42,6 +44,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             if (fieldType.IsArrayOrList())
                 return fieldType.GetCollectionElementType();
             return fieldType;
+        }
+
+        public virtual void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.PropertyField(position, property, label, true);
         }
     }
 }

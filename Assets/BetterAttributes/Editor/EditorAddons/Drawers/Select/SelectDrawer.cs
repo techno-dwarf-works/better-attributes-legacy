@@ -24,15 +24,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         
         protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
         {
+            var rect = PreparePropertyRect(position);
             if (_setupStrategy.SkipFieldDraw())
             {
-                var rect = PreparePropertyRect(position);
                 // rect.height = value.Wrapper.GetHeight().Value;
                 EditorGUI.LabelField(rect, label);
                 return;
             }
-
-            base.DrawField(position, property, label);
+            _setupStrategy.DrawField(rect, property, label);
         }
 
         public SelectDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
