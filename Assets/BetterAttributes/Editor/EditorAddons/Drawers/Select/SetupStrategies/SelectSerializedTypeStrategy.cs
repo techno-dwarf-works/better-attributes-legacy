@@ -7,17 +7,13 @@ using Better.Attributes.EditorAddons.Extensions;
 using Better.Attributes.Runtime.Select;
 using Better.Commons.Runtime.Extensions;
 using Better.Commons.Runtime.Utility;
+using UnityEditor;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 {
     public class SelectSerializedTypeStrategy : SetupStrategy
     {
-        public override bool SkipFieldDraw()
-        {
-            return true;
-        }
-        
         public SelectSerializedTypeStrategy(FieldInfo fieldInfo, object propertyContainer, SelectAttributeBase selectAttributeBase) : base(fieldInfo, propertyContainer,
             selectAttributeBase)
         {
@@ -43,6 +39,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
             return constructor != null;
         }
 
+        public override bool SkipFieldDraw()
+        {
+            return true;
+        }
+
         public override bool Validate(object item)
         {
             if (item == null)
@@ -60,7 +61,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.SetupStrategies
 
         public override bool CheckSupported()
         {
-            return false;
+            return true;
         }
 
         public override GUIContent GenerateHeader()

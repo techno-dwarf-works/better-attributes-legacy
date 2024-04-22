@@ -23,6 +23,11 @@ namespace Better.Attributes.EditorAddons.Drawers.Select.Wrappers
             }
         }
 
+        protected override float GetPropertyHeight(SerializedProperty copy)
+        {
+            return EditorGUIUtility.singleLineHeight;
+        }
+
         public override object GetCurrentValue()
         {
             var objectOfProperty = _property.GetValue();
