@@ -1,91 +1,59 @@
-﻿using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Utility;
-using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
-using Better.Attributes.Runtime.DrawInspector;
-using Better.Commons.EditorAddons.Drawers.Attributes;
-using Better.Commons.EditorAddons.Drawers.Base;
-using Better.Commons.EditorAddons.Drawers.Caching;
+﻿using Better.Attributes.Runtime.DrawInspector;
+using Better.Commons.EditorAddons.Drawers;
 using Better.Commons.EditorAddons.Enums;
 using Better.Commons.EditorAddons.Extensions;
-using Better.Commons.EditorAddons.Utility;
-using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
-using UnityEngine;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
 
 namespace Better.Attributes.EditorAddons.Drawers.DrawInspector
 {
-    [MultiCustomPropertyDrawer(typeof(DrawInspectorAttribute))]
-    public class DrawInspectorDrawer : MultiFieldDrawer<DrawInspectorWrapper>
+    [CustomPropertyDrawer(typeof(DrawInspectorAttribute), true)]
+    public class DrawInspectorDrawer : BasePropertyDrawer<DrawInspectorHandler, DrawInspectorAttribute>
     {
-        private bool _isOpen;
-        private DrawInspectors Collection => _wrappers as DrawInspectors;
-
-        protected override void Deconstruct()
-        {
-            _wrappers?.Deconstruct();
-        }
-
-        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
+        protected override void PopulateContainer(ElementsContainer container)
         {
             var fieldType = GetFieldOrElementType();
-            if (!DrawInspectorUtility.Instance.IsSupported(fieldType))
+            var property = container.SerializedProperty;
+            if (!TypeHandlersBinder.IsSupported(fieldType))
             {
-                EditorGUI.BeginChangeCheck();
-                DrawField(position, property, label);
-                ExtendedGUIUtility.NotSupportedAttribute(position, property, label, fieldType, _attribute.GetType());
-                return false;
+                container.AddNotSupportedBox(fieldType, Attribute.GetType());
+                return;
             }
 
-            var cache = ValidateCachedProperties(property, DrawInspectorUtility.Instance);
-            if (!cache.IsValid)
-            {
-                Collection.SetProperty(property);
-            }
+            container.SerializedPropertyChanged += OnPropertyChanged;
+            var handler = GetHandler(property);
 
-            _isOpen = Collection.IsOpen(property);
-            if (property.objectReferenceValue)
-            {
-                label.image = (_isOpen ? IconType.Minus : IconType.PlusMore).GetIcon();
-            }
+            var inspectorElement = handler.GetInspectorContainer(property);
+            container.CreateElementFrom(inspectorElement);
+            handler.SetupInspector();
 
-            var copy = ExtendedGUIUtility.GetClickRect(position, label);
-            copy.height = EditorGUIUtility.singleLineHeight;
-            if (ExtendedGUIUtility.IsClickedAt(copy))
-            {
-                Collection.SetOpen(property, !_isOpen);
-            }
-
-            return true;
+            var isOpen = handler.IsOpen();
+            handler.SetOpen(isOpen);
+            var iconType = isOpen ? IconType.Minus : IconType.PlusMore;
+            container.AddClickableIcon(iconType, property, OnIconClickEvent);
         }
 
-        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
+        private void OnPropertyChanged(ElementsContainer elementsContainer)
         {
-            var additionalHeight = 0f;
-            if (Collection != null && Collection.IsOpen(property))
-            {
-                additionalHeight = Collection.GetHeight(property);
-            }
-
-            return HeightCacheValue.GetAdditive(additionalHeight);
+            var handler = GetHandler(elementsContainer.SerializedProperty);
+            handler.SetupInspector();
         }
 
-        protected override Rect PreparePropertyRect(Rect original)
+        private void OnIconClickEvent(ClickEvent clickEvent, (SerializedProperty property, Image icon) data)
         {
-            return original;
+            UpdateState(data.property, data.icon);
         }
 
-        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        private void UpdateState(SerializedProperty property, Image icon)
         {
-            Collection.PostDraw(property, position);
-        }
+            var handler = GetHandler(property);
+            if (!handler.CanOpen()) return;
+            var isOpen = !handler.IsOpen();
 
-        protected override WrapperCollection<DrawInspectorWrapper> GenerateCollection()
-        {
-            return new DrawInspectors();
-        }
-
-        public DrawInspectorDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
-        {
+            var iconType = isOpen ? IconType.Minus : IconType.PlusMore;
+            icon.image = iconType.GetIcon();
+            handler.SetOpen(isOpen);
         }
     }
 }

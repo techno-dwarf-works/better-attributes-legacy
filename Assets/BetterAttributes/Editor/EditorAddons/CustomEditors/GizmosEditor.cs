@@ -6,13 +6,14 @@ using Better.Commons.EditorAddons.CustomEditors.Base;
 using Better.Commons.EditorAddons.Extensions;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Better.Attributes.EditorAddons.CustomEditors
 {
     [MultiEditor(typeof(Object), true, Order = -999)]
     public class GizmosEditor : ExtendedEditor
     {
-        private HideTransformButtonUtility _hideTransformDrawer;
+        private HideTransformButtonHelper _hideTransformHelper;
 
         public GizmosEditor(Object target, SerializedObject serializedObject) : base(target, serializedObject)
         {
@@ -29,15 +30,15 @@ namespace Better.Attributes.EditorAddons.CustomEditors
 
         private void CheckAttribute()
         {
-            var attributeFound = AttributeFound();
+            var attributeFound = IsAttributeFound();
 
             if (attributeFound && !(_serializedObject.targetObject is ScriptableObject))
             {
-                _hideTransformDrawer = new HideTransformButtonUtility();
+                _hideTransformHelper = new HideTransformButtonHelper();
             }
         }
 
-        private bool AttributeFound()
+        private bool IsAttributeFound()
         {
             var iterator = _serializedObject.GetIterator().Copy();
             var attributeFound = false;
@@ -57,15 +58,17 @@ namespace Better.Attributes.EditorAddons.CustomEditors
             return attributeFound;
         }
 
-        public override void OnInspectorGUI()
+        public override VisualElement CreateInspectorGUI()
         {
-            if (_hideTransformDrawer != null)
+            if (_hideTransformHelper != null)
             {
-                _hideTransformDrawer.DrawHideTransformButton();
+                return _hideTransformHelper.DrawHideTransformButton();
             }
+
+            return null;
         }
 
-        public override void OnChanged()
+        public override void OnChanged(SerializedObject serializedObject)
         {
             CheckAttribute();
         }

@@ -1,35 +1,25 @@
-﻿using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+﻿using System.Collections.Generic;
 using Better.Attributes.Runtime.Gizmo;
-using Better.Commons.EditorAddons.Drawers.Attributes;
-using Better.Commons.EditorAddons.Drawers.Base;
-using Better.Commons.EditorAddons.Drawers.Caching;
-using Better.Commons.EditorAddons.Enums;
-using Better.Commons.EditorAddons.Utility;
-using Better.Commons.Runtime.Drawers.Attributes;
+using Better.Commons.EditorAddons.Comparers;
+using Better.Commons.EditorAddons.Drawers;
+using Better.Commons.EditorAddons.Extensions;
 using UnityEditor;
-using UnityEngine;
-
-#if UNITY_2022_1_OR_NEWER
-using GizmoUtility = Better.Attributes.EditorAddons.Drawers.Utility.GizmoUtility;
-#else
-using Better.Attributes.EditorAddons.Drawers.Utility;
-#endif
+using UnityEngine.UIElements;
 
 namespace Better.Attributes.EditorAddons.Drawers.Gizmo
 {
-    [MultiCustomPropertyDrawer(typeof(GizmoAttribute))]
-    [MultiCustomPropertyDrawer(typeof(GizmoLocalAttribute))]
-    public class GizmoDrawer : MultiFieldDrawer<GizmoWrapper>
+    [CustomPropertyDrawer(typeof(BaseGizmoAttribute), true)]
+    public class GizmoDrawer : BasePropertyDrawer<GizmoHandler, BaseGizmoAttribute>
     {
-        public GizmoDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
-        {
-        }
+        public const string Hide = "Hide";
+        public const string Show = "Show";
 
-        public override void Initialize(FieldDrawer drawer)
+        private Dictionary<SerializedProperty, BehavioredElement<Button>> _behavioredElements;
+
+        public GizmoDrawer()
         {
-            base.Initialize(drawer);
             EditorApplication.delayCall += DelayCall;
+            _behavioredElements = new Dictionary<SerializedProperty, BehavioredElement<Button>>(SerializedPropertyComparer.Instance);
         }
 
         private void DelayCall()
@@ -39,125 +29,97 @@ namespace Better.Attributes.EditorAddons.Drawers.Gizmo
             SceneView.RepaintAll();
         }
 
-        private GizmoWrappers Collection
-        {
-            get
-            {
-                if (_wrappers == null)
-                {
-                    _wrappers = GenerateCollection();
-                }
-
-                return _wrappers as GizmoWrappers;
-            }
-        }
-
         private void OnSceneGUIDelegate(SceneView sceneView)
         {
             if (sceneView.drawGizmos)
             {
-                if (_wrappers == null)
-                {
-                    _wrappers = GenerateCollection();
-                }
+                ValidationUtility.ValidateCachedProperties(Handlers);
+                Apply(sceneView);
+            }
+        }
 
-                GizmoUtility.Instance.ValidateCachedProperties(_wrappers);
-                Collection?.Apply(sceneView);
+        private void Apply(SceneView sceneView)
+        {
+            List<SerializedProperty> keysToRemove = null;
+            foreach (var gizmo in Handlers)
+            {
+                var valueWrapper = gizmo.Value.Handler;
+                if (valueWrapper.Validate())
+                {
+                    valueWrapper.Apply(sceneView);
+                }
+                else
+                {
+                    if (keysToRemove == null)
+                    {
+                        keysToRemove = new List<SerializedProperty>();
+                    }
+
+                    keysToRemove.Add(gizmo.Key);
+                }
+            }
+
+            if (keysToRemove != null)
+            {
+                foreach (var property in keysToRemove)
+                {
+                    Handlers.Remove(property);
+                }
             }
         }
 
         protected override void Deconstruct()
         {
+            base.Deconstruct();
             SceneView.duringSceneGui -= OnSceneGUIDelegate;
-            _wrappers?.Deconstruct();
         }
 
-        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
+        protected override void PopulateContainer(ElementsContainer container)
         {
             var fieldType = GetFieldOrElementType();
-            var attributeType = _attribute.GetType();
+            var serializedProperty = container.SerializedProperty;
 
-            EditorGUI.BeginChangeCheck();
-            if (!GizmoUtility.Instance.IsSupported(fieldType))
+            if (!TypeHandlersBinder.IsSupported(fieldType))
             {
-                var rect = new Rect(position);
-                ExtendedGUIUtility.NotSupportedAttribute(rect, property, label, fieldType, attributeType);
-                return true;
+                container.AddNotSupportedBox(fieldType, Attribute.GetType());
+                return;
             }
 
-            var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
-            if (!cache.IsValid)
+            var handler = GetHandler(serializedProperty);
+            handler.SetProperty(serializedProperty, fieldType);
+
+            
+            if (!_behavioredElements.TryGetValue(serializedProperty, out var element))
             {
-                Collection.SetProperty(property, fieldType);
+                element = CreateBehavioredElement(serializedProperty);
+                _behavioredElements.Add(serializedProperty, element);
             }
-
-            position = PreparePropertyRect(position);
-
-            return true;
+            
+            var text = handler.ShowInSceneView ? Hide : Show;
+            element.SubElement.text = text;
+            element.Attach(container.RootElement);
         }
 
-        protected override void DrawField(Rect position, SerializedProperty property, GUIContent label)
+        private void OnClicked(ClickEvent clickEvent, SerializedProperty property)
         {
-            if (!Collection.IsValid(property))
+            var handler = GetHandler(property);
+            handler.SetMode(!handler.ShowInSceneView);
+            if (!_behavioredElements.TryGetValue(property, out var element))
             {
-                var cache = ValidateCachedProperties(property, GizmoUtility.Instance);
-
-                if (cache.Value != null)
-                {
-                    var fieldType = GetFieldOrElementType();
-                    cache.Value.Wrapper.SetProperty(property, fieldType);
-                }
+                element = CreateBehavioredElement(property);
+                _behavioredElements.Add(property, element);
             }
-
-            Collection.DrawField(position, property, label);
+            
+            var text = handler.ShowInSceneView ? Hide : Show;
+            element.SubElement.text = text;
+            SceneView.RepaintAll();
         }
 
-        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        private BehavioredElement<Button> CreateBehavioredElement(SerializedProperty property)
         {
-            if (EditorGUI.EndChangeCheck())
-            {
-                Collection.SetProperty(property, _fieldInfo.FieldType);
-            }
-
-            if (GUI.Button(PrepareButtonRect(position), Collection.ShowInSceneView(property) ? "Hide" : "Show"))
-            {
-                Collection.SwitchShowMode(property);
-                SceneView.RepaintAll();
-            }
-        }
-
-        protected override WrapperCollection<GizmoWrapper> GenerateCollection()
-        {
-            return new GizmoWrappers();
-        }
-
-        protected override Rect PreparePropertyRect(Rect original)
-        {
-            var copy = original;
-            copy.width *= 0.9f;
-            return copy;
-        }
-
-        private Rect PrepareButtonRect(Rect original)
-        {
-            var copy = original;
-            copy.x += copy.width + ExtendedGUIUtility.SpaceHeight;
-            copy.width *= 0.1f;
-            copy.height = EditorGUIUtility.singleLineHeight;
-            return copy;
-        }
-
-        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            var fieldType = GetFieldOrElementType();
-            if (!GizmoUtility.Instance.IsSupported(fieldType))
-            {
-                var message = ExtendedGUIUtility.NotSupportedMessage(property.name, fieldType, _attribute.GetType());
-                var additive = ExtendedGUIUtility.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, message, IconType.WarningMessage);
-                return HeightCacheValue.GetAdditive(additive + ExtendedGUIUtility.SpaceHeight * 2);
-            }
-
-            return Collection.GetHeight(property, label);
+            var element = new BehavioredElement<Button>(new GizmoElementBehaviour());
+            element.RegisterCallback<ClickEvent, SerializedProperty>(OnClicked, property);
+            return element;
         }
     }
 }
