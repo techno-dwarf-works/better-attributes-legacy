@@ -15,12 +15,12 @@ using Object = UnityEngine.Object;
 namespace Better.Attributes.EditorAddons.CustomEditors
 {
     [MultiEditor(typeof(Object), true, Order = 999)]
-    public class BetterButtonsEditor : ExtendedEditor
+    public class ButtonsEditor : ExtendedEditor
     {
         private Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>> _methodButtonsAttributes =
             new Dictionary<int, IEnumerable<KeyValuePair<MethodInfo, EditorButtonAttribute>>>();
 
-        public BetterButtonsEditor(Object target, SerializedObject serializedObject) : base(target, serializedObject)
+        public ButtonsEditor(Object target, SerializedObject serializedObject) : base(target, serializedObject)
         {
         }
 
@@ -38,8 +38,10 @@ namespace Better.Attributes.EditorAddons.CustomEditors
         {
             var button = new Button
             {
-                text = attribute.GetDisplayName(methodInfo.PrettyMemberName())
+                text = attribute.GetDisplayName(methodInfo.PrettyMemberName()),
+                name = methodInfo.PrettyMemberName()
             };
+            button.style.FlexGrow(StyleDefinition.OneStyleFloat);
             button.RegisterCallback<ClickEvent, (MethodInfo, EditorButtonAttribute)>(OnClick, (methodInfo, attribute));
             return button;
         }
@@ -64,6 +66,7 @@ namespace Better.Attributes.EditorAddons.CustomEditors
                     var grouped = button.Value.GroupBy(key => key.Key, pair => pair.Value,
                         (info, attributes) => new KeyValuePair<MethodInfo, IEnumerable<EditorButtonAttribute>>(info, attributes));
                     var verticalElement = VisualElementUtility.CreateVerticalGroup();
+                    container.Add(verticalElement);
 
                     foreach (var group in grouped)
                     {
@@ -80,6 +83,7 @@ namespace Better.Attributes.EditorAddons.CustomEditors
                 else
                 {
                     var horizontalElement = VisualElementUtility.CreateHorizontalGroup();
+                    container.Add(horizontalElement);
                     foreach (var (key, value) in button.Value)
                     {
                         var element = DrawButton(key, value);
