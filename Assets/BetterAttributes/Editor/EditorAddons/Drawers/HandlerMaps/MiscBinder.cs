@@ -4,7 +4,7 @@ using Better.Attributes.EditorAddons.Comparers;
 using Better.Attributes.EditorAddons.Drawers.Misc;
 using Better.Attributes.Runtime.Misc;
 using Better.Commons.EditorAddons.Drawers.Handlers;
-using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.EditorAddons.Drawers.HandlersTypeCollection;
 using Better.Commons.Runtime.Comparers;
 
 namespace Better.Attributes.EditorAddons.Drawers.HandlerMaps

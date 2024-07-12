@@ -4,7 +4,7 @@ using Better.Attributes.EditorAddons.Comparers;
 using Better.Attributes.EditorAddons.Drawers.Select;
 using Better.Attributes.Runtime.Select;
 using Better.Commons.EditorAddons.Drawers.Handlers;
-using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.EditorAddons.Drawers.HandlersTypeCollection;
 using Better.Commons.Runtime.Comparers;
 using Better.Commons.Runtime.DataStructures.SerializedTypes;
 

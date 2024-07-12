@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Gizmo;
 using Better.Attributes.Runtime.Gizmo;
 using Better.Commons.EditorAddons.Drawers.Handlers;
-using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.EditorAddons.Drawers.HandlersTypeCollection;
 using UnityEngine;
 
 namespace Better.Attributes.EditorAddons.Drawers.HandlerMaps

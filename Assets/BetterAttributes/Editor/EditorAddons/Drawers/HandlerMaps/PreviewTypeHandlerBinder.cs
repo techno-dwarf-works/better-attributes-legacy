@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Better.Attributes.EditorAddons.Drawers.Preview;
 using Better.Attributes.Runtime.Preview;
 using Better.Commons.EditorAddons.Drawers.Handlers;
-using Better.Commons.EditorAddons.Drawers.WrappersTypeCollection;
+using Better.Commons.EditorAddons.Drawers.HandlersTypeCollection;
 using Better.Commons.Runtime.Comparers;
 using UnityEngine;
 
