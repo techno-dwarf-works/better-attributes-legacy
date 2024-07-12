@@ -6,28 +6,28 @@ namespace Better.Attributes.Runtime.Select
 {
     [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class DropdownAttribute : SelectAttributeBase
+    public class DropdownAttribute : BaseSelectAttribute
     {
-        private readonly string _selectorName;
+        private readonly string _selector;
 
         public bool ShowDefault { get; set; } = true;
         public bool ShowUniqueKey { get; set; }
 
-        public DropdownAttribute(string selectorName) : base(null)
+        public DropdownAttribute(string selector) : base(null)
         {
-            _selectorName = selectorName;
+            _selector = selector;
         }
 
-        public DropdownAttribute(string selectorName, DisplayName displayName) : base(null, displayName)
+        public DropdownAttribute(string selector, DisplayName displayName) : base(null, displayName)
         {
-            _selectorName = selectorName;
+            _selector = selector;
         }
 
-        public DropdownAttribute(string selectorName, DisplayGrouping displayGrouping) : base(null, displayGrouping)
+        public DropdownAttribute(string selector, DisplayGrouping displayGrouping) : base(null, displayGrouping)
         {
-            _selectorName = selectorName;
+            _selector = selector;
         }
 
-        public string SelectorName => _selectorName;
+        public string Selector => _selector;
     }
 }

@@ -15,9 +15,9 @@ MonoBehaviour:
   keyCode: 0
   keyCode1: 0
   bounds:
-    m_Center: {x: -2.7433968, y: 0, z: -3.7149725}
-    m_Extent: {x: 0.3425991, y: 1.365941, z: 1.180402}
-  vector3: {x: 2.5506158, y: 0, z: 0}
+    m_Center: {x: -2.7433968, y: -3.286371, z: 4.1867504}
+    m_Extent: {x: 4.8725214, y: 1.365941, z: 6.1675816}
+  vector3: {x: 2.5506158, y: 0, z: 8.741775}
   quaternion: {x: -0.14694317, y: 0.7518092, z: 0.61739206, w: 0.1789353}
   someClass:
     intField: 0

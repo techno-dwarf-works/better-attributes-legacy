@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Better.Commons.Runtime.Drawers.Attributes;
 using Better.Internal.Core.Runtime;
 namespace Better.Attributes.Runtime.Gizmo
 {
@@ -9,7 +8,7 @@ namespace Better.Attributes.Runtime.Gizmo
     /// </summary>
     [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class GizmoAttribute : MultiPropertyAttribute
+    public class GizmoAttribute : BaseGizmoAttribute
     {
     }
 }

@@ -11,7 +11,7 @@ namespace Better.Attributes.Runtime.Gizmo
     /// </summary>
     [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class GizmoLocalAttribute : MultiPropertyAttribute
+    public class GizmoLocalAttribute : BaseGizmoAttribute
     {
     }
 }

@@ -10,7 +10,7 @@ namespace Better.Attributes.Runtime.Select
     /// </summary>
     [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public class SelectAttribute : SelectAttributeBase
+    public class SelectAttribute : BaseSelectAttribute
     {
         public SelectAttribute(Type type) : base(type)
         {
