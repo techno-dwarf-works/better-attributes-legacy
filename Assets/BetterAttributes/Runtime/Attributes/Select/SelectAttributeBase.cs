@@ -20,36 +20,36 @@ namespace Better.Attributes.Runtime.Select
 
     [Conditional(Defines.Editor)]
     [AttributeUsage(AttributeTargets.Field)]
-    public abstract class SelectAttributeBase : MultiPropertyAttribute
+    public abstract class BaseSelectAttribute : MultiPropertyAttribute
     {
         private readonly Type _type;
         public DisplayName DisplayName { get; } = DisplayName.Short;
         public DisplayGrouping DisplayGrouping { get; } = DisplayGrouping.None;
 
-        protected SelectAttributeBase(Type type)
+        protected BaseSelectAttribute(Type type)
         {
             _type = type;
         }
 
-        protected SelectAttributeBase(Type type, DisplayName displayName)
+        protected BaseSelectAttribute(Type type, DisplayName displayName)
         {
             _type = type;
             DisplayName = displayName;
         }
 
-        protected SelectAttributeBase(Type type, DisplayGrouping displayGrouping)
+        protected BaseSelectAttribute(Type type, DisplayGrouping displayGrouping)
         {
             _type = type;
             DisplayName = DisplayName.Short;
             DisplayGrouping = displayGrouping;
         }
 
-        protected SelectAttributeBase(DisplayName displayName)
+        protected BaseSelectAttribute(DisplayName displayName)
         {
             DisplayName = displayName;
         }
 
-        protected SelectAttributeBase(DisplayGrouping displayGrouping)
+        protected BaseSelectAttribute(DisplayGrouping displayGrouping)
         {
             DisplayName = DisplayName.Short;
             DisplayGrouping = displayGrouping;
@@ -60,7 +60,7 @@ namespace Better.Attributes.Runtime.Select
             return _type;
         }
 
-        protected SelectAttributeBase()
+        protected BaseSelectAttribute()
         {
         }
     }

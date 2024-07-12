@@ -1,94 +1,71 @@
-﻿using System.Reflection;
-using Better.Attributes.EditorAddons.Drawers.Utility;
-using Better.Attributes.EditorAddons.Drawers.WrapperCollections;
+﻿using System;
 using Better.Attributes.Runtime.Preview;
-using Better.Commons.EditorAddons.Drawers.Attributes;
-using Better.Commons.EditorAddons.Drawers.Base;
-using Better.Commons.EditorAddons.Drawers.Caching;
+using Better.Commons.EditorAddons.Drawers;
+using Better.Commons.EditorAddons.Drawers.Container;
 using Better.Commons.EditorAddons.Enums;
 using Better.Commons.EditorAddons.Extensions;
-using Better.Commons.EditorAddons.Utility;
-using Better.Commons.Runtime.Drawers.Attributes;
 using UnityEditor;
-using UnityEngine;
+using UnityEditor.UIElements;
+using UnityEngine.UIElements;
 
 namespace Better.Attributes.EditorAddons.Drawers.Preview
 {
-    [MultiCustomPropertyDrawer(typeof(PreviewAttribute))]
-    public class PreviewDrawer : MultiFieldDrawer<BasePreviewWrapper>
+    [CustomPropertyDrawer(typeof(PreviewAttribute))]
+    public class PreviewDrawer : BasePropertyDrawer<PreviewHandler, PreviewAttribute>
     {
-        private protected bool _objectChanged;
-        private float _previewSize;
-        public PreviewWrappers Collection => _wrappers as PreviewWrappers;
-
-        private const string Message = "Preview not available for empty field";
-
-        protected override void Deconstruct()
+        protected override void PopulateContainer(ElementsContainer container)
         {
-            _wrappers.Deconstruct();
-        }
-
-        protected override bool PreDraw(ref Rect position, SerializedProperty property, GUIContent label)
-        {
-            var fieldType = _fieldInfo.FieldType;
-            var attributeType = _attribute.GetType();
-            if (!PreviewUtility.Instance.IsSupported(fieldType))
+            var fieldType = FieldInfo.FieldType;
+            var attributeType = Attribute.GetType();
+            var property = container.SerializedProperty;
+            if (!TypeHandlersBinder.IsSupported(fieldType))
             {
-                ExtendedGUIUtility.NotSupportedAttribute(position, property, label, fieldType, attributeType);
-                return false;
+                container.AddNotSupportedBox(fieldType, attributeType);
+                return;
             }
 
-            var cache = ValidateCachedProperties(property, PreviewUtility.Instance);
-            if (!cache.IsValid)
-            {
-            }
+            container.SerializedPropertyChanged += OnPropertyChanged;
+            var handler = GetHandler(property);
 
-            EditorGUI.BeginChangeCheck();
-            _previewSize = ((PreviewAttribute)_attribute).PreviewSize;
-            if (!Collection.ValidateObject(property))
-            {
-                var offset = EditorGUI.GetPropertyHeight(property, label, true) + ExtendedGUIUtility.SpaceHeight;
-                ExtendedGUIUtility.HelpBoxFromRect(position, property, label, Message, IconType.WarningMessage, offset);
-                return true;
-            }
+            var previewSize = Attribute.PreviewSize;
 
-            label.image = IconType.View.GetIcon();
-            var copy = ExtendedGUIUtility.GetClickRect(position, label);
-            copy.height = EditorGUIUtility.singleLineHeight;
-            Collection.PreDraw(copy, property, _previewSize, _objectChanged);
+            handler.ProcessElementsContainer(container);
 
-            return true;
+            var image = container.AddIcon(IconType.View);
+            image.RegisterCallback<PointerDownEvent, ValueTuple<SerializedProperty, float>>(OnPointerDown, (property, previewSize));
+            image.RegisterCallback<PointerUpEvent, SerializedProperty>(OnPointerUp, property);
+            image.RegisterCallback<PointerLeaveEvent, SerializedProperty>(OnPointerLeave, property);
+            image.RegisterCallback<PointerMoveEvent, SerializedProperty>(OnPointerMove, property);
         }
 
-        protected override HeightCacheValue GetPropertyHeight(SerializedProperty property, GUIContent label)
+        private void OnPointerMove(PointerMoveEvent moveEvent, SerializedProperty property)
         {
-            if (!Collection.ValidateObject(property))
-            {
-                var additive = ExtendedGUIUtility.GetHelpBoxHeight(EditorGUIUtility.currentViewWidth, Message, IconType.WarningMessage);
-                var height = HeightCacheValue.GetAdditive(additive + ExtendedGUIUtility.SpaceHeight * 2);
-                return height;
-            }
-
-            return HeightCacheValue.GetAdditive(0);
+            var cache = GetHandler(property);
+            cache.UpdatePreviewWindow(moveEvent.position);
         }
 
-        protected override Rect PreparePropertyRect(Rect original)
+        private void OnPointerLeave(PointerLeaveEvent leaveEvent, SerializedProperty property)
         {
-            return original;
+            var cache = GetHandler(property);
+            cache.ClosePreviewWindow();
         }
 
-        protected override void PostDraw(Rect position, SerializedProperty property, GUIContent label)
+        private void OnPointerUp(PointerUpEvent upEvent, SerializedProperty property)
         {
-            _objectChanged = EditorGUI.EndChangeCheck();
+            var cache = GetHandler(property);
+            cache.ClosePreviewWindow();
         }
 
-        protected override WrapperCollection<BasePreviewWrapper> GenerateCollection()
+        private void OnPointerDown(PointerDownEvent downEvent, (SerializedProperty property, float previewSize) data)
         {
-            return new PreviewWrappers();
+            var cache = GetHandler(data.property);
+            cache.OpenPreviewWindow(data.property, downEvent.position, data.previewSize);
         }
 
-        public PreviewDrawer(FieldInfo fieldInfo, MultiPropertyAttribute attribute) : base(fieldInfo, attribute)
+        private void OnPropertyChanged(ElementsContainer container)
         {
+            var cache = GetHandler(container.SerializedProperty);
+            cache.UpdatePropertyPreviewWindow(container);
         }
     }
 }

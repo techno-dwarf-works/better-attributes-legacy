@@ -167,64 +167,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b3ec95f197def4081b17762f1fd41c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializedType:
-    _fullQualifiedName: 
-  serializedTypeTest:
-  - _type:
-      _fullQualifiedName: Samples.OtherModels.SomeInterfaceImplementation1, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   keyCode: 0
-  myFlagEnumTest: 0
-  myEnumTest: 0
-  component: {fileID: 0}
-  texture: {fileID: 0}
-  scriptableObjectList:
-  - {fileID: 11400000, guid: ac831e4d15607c1468b51a2ca7a39284, type: 2}
-  scriptableObjectArray: []
-  scriptableObject: {fileID: 0}
-  vector3Local: {x: 0, y: 0, z: 0}
-  quaternion: {x: 0, y: 0, z: 0, w: 1}
-  some:
-    intField: 0
-    intField1: 0
-    intField2: 0
-    intField3: 0
-    intField4: 0
-  someClass:
-    intField: 0
-    intField1: 0
-    intField2: 0
-    intField3: 0
-    intField4: 0
-  someFloat: 0
   someInterface:
-    rid: -2
-  someAbstractClass:
-    rid: -2
-  someAbstractClasses: []
-  someInterfaces: []
-  bounds:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.05, y: 0.05, z: 0.05}
-  _vector3s: []
-  showInEditorMode: 0
-  hideInEditorMode: 0
-  hideInPlayMode: 0
-  showInPlayMode: 0
-  enableInPlayMode: 0
-  disableInEditorMode: 0
-  enableInEditorMode: 0
-  disableInPlayMode: 0
-  boolField: 0
-  showIfBool: 0
-  hideIfBool: 0
-  disableIfBool: 0
-  enableIfBool: 0
+    rid: 4433848005717393408
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 4433848005717393408
+      type: {class: SomeInterfaceImplementation14, ns: Samples.OtherModels, asm: Assembly-CSharp}
+      data:
+        intField: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
