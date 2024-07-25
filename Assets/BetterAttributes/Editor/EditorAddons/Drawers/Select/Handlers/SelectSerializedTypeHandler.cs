@@ -43,7 +43,14 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
         {
             var property = _container.SerializedProperty;
             var objectOfProperty = property.GetValue();
-            var type = objectOfProperty.GetType();
+            Type type = null;
+            if (objectOfProperty == null)
+            {
+                type = GetFieldOrElementType();
+                return type;
+            }
+            
+            type = objectOfProperty.GetType();
             if (type == typeof(SerializedType))
             {
                 type = (objectOfProperty as SerializedType)?.Type;
