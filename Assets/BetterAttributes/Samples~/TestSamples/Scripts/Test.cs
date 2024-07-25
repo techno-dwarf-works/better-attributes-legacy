@@ -61,11 +61,27 @@ namespace Samples
         private int testIntLog;
     }
 
+    [Serializable]
+    public class TestSerializableType : ITestSerializableType
+    {
+        [Select(typeof(ISomeInterface))] 
+        [SerializeField]
+        private List<SerializedType> serializedTypes;
+    }
+
+    public interface ITestSerializableType
+    {
+    }
+
     public class Test : MonoBehaviour
     {
         [HideLabel] [Select(typeof(ISomeInterface))] 
         [SerializeField]
         private SerializedType serializedType;
+        
+        [Select] 
+        [SerializeReference]
+        private List<ITestSerializableType> serializedTypes;
         
         [Select(typeof(ISomeInterface))] 
         [SerializeField]
