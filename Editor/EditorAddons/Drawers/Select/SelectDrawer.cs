@@ -21,7 +21,6 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
     {
         //TODO: Consider to use Locators
         private Dictionary<SerializedProperty, BehavioredElement<Button>> _behavioredElements;
-        private Guid g = Guid.NewGuid();
 
         public SelectDrawer()
         {
