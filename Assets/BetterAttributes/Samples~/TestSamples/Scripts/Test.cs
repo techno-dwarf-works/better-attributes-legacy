@@ -64,9 +64,20 @@ namespace Samples
     [Serializable]
     public class TestSerializableType : ITestSerializableType
     {
-        [Select(typeof(ISomeInterface))] 
-        [SerializeField]
+        [Select(typeof(ISomeInterface))] [SerializeField]
         private List<SerializedType> serializedTypes;
+
+        protected TestSerializableType()
+        {
+        }
+    }
+    
+    [Serializable]
+    public class TestSerializableType<T> : ITestSerializableType
+    {
+        protected TestSerializableType()
+        {
+        }
     }
 
     public interface ITestSerializableType
@@ -75,44 +86,36 @@ namespace Samples
 
     public class Test : MonoBehaviour
     {
-        [HideLabel] [Select(typeof(ISomeInterface))] 
-        [SerializeField]
+        [HideLabel] [Select(typeof(ISomeInterface))] [SerializeField]
         private SerializedType serializedType;
-        
-        [Select] 
-        [SerializeReference]
-        private List<ITestSerializableType> serializedTypes;
-        
-        [Select(typeof(ISomeInterface))] 
-        [SerializeField]
+
+        [Select] [SerializeReference] private List<ITestSerializableType> serializedTypes;
+
+        [Select(typeof(ISomeInterface))] [SerializeField]
         private SerializedType serializedType2;
-        
+
         [Select] [SerializeField] private KeyCode keyCode;
 
-        
-        [DisableIf(nameof(keyCode), KeyCode.D)] [Select] 
-        [SerializeField]
+
+        [DisableIf(nameof(keyCode), KeyCode.D)] [Select] [SerializeField]
         private MyFlagEnum myFlagEnumTest;
-        
-        [EnumButtons] [HideLabel] 
-        [SerializeField]
+
+        [EnumButtons] [HideLabel] [SerializeField]
         private TestEnum myEnumTest;
+
         //
-        [ShowIf(nameof(keyCode), KeyCode.Backspace)] [Preview] [DrawInspector] 
-        [SerializeField]
+        [ShowIf(nameof(keyCode), KeyCode.Backspace)] [Preview] [DrawInspector] [SerializeField]
         private PreviewTest component;
-        
-        [Preview] [CustomTooltip("Test tooltip")] 
-        [SerializeField] private Texture2D texture;
-        
-        [HelpBox("It's help box")] [DrawInspector] 
-        [SerializeField] private List<TestScriptableObject> scriptableObjectList;
-        
-        [DrawInspector] 
-        [SerializeField] private TestScriptableObject[] scriptableObjectArray;
-        [DrawInspector] 
-        [SerializeField] private TestScriptableObject scriptableObject;
-        
+
+        [Preview] [CustomTooltip("Test tooltip")] [SerializeField]
+        private Texture2D texture;
+
+        [HelpBox("It's help box")] [DrawInspector] [SerializeField]
+        private List<TestScriptableObject> scriptableObjectList;
+
+        [DrawInspector] [SerializeField] private TestScriptableObject[] scriptableObjectArray;
+        [DrawInspector] [SerializeField] private TestScriptableObject scriptableObject;
+
         [GizmoLocal] [SerializeField] private Vector3 vector3Local;
         [SerializeField] private Vector3 vector3Local2;
 
@@ -136,58 +139,47 @@ namespace Samples
         [Dropdown("r:SingletonTest.Instance.GetIDs()")] [SerializeField]
         private int testInt2;
 
-        [HideLabel]
-        [SerializeField] private TestInner _testInner;
-        
+        [HideLabel] [SerializeField] private TestInner _testInner;
 
-        [Select(typeof(ISomeInterface), DisplayGrouping.Grouped)] 
-        [SerializeReference] private List<ISomeInterface> someInterfaces;
-        
-        [GizmoLocal] 
-        [SerializeField] private Bounds bounds;
-        
-        [DisableInEditorMode] 
-        [SerializeField] private List<Vector3> _vector3s;
-        
-        [ShowInEditorMode] 
-        [SerializeField] private int showInEditorMode;
-        
-        [HideInEditorMode] 
-        [SerializeField] private int hideInEditorMode;
-        
-        [HideInPlayMode] 
-        [SerializeField] private int hideInPlayMode;
-        
-        [ShowInPlayMode] 
-        [SerializeField] private int showInPlayMode;
-        
-        [EnableInPlayMode] 
-        [SerializeField] private int enableInPlayMode;
-        
-        [DisableInEditorMode] 
-        [SerializeField] private int disableInEditorMode;
-        
-        [EnableInEditorMode] 
-        [SerializeField] private int enableInEditorMode;
-        
-        [DisableInPlayMode] 
-        [SerializeField] private int disableInPlayMode;
-        
-        [HelpBox("TestHelpBox()")]
-        [SerializeField] private bool boolField;
-        
-        [ShowIf(nameof(boolField), true)] 
-        [SerializeField] private int showIfBool;
-        
-        [HideIf(nameof(boolField), true)] 
-        [SerializeField] private int hideIfBool;
-        
-        [DisableIf(nameof(boolField), true)] 
-        [SerializeField] private int disableIfBool;
-        
-        [EnableIf(nameof(boolField), true)] 
-        [SerializeField] private int enableIfBool;
-        
+
+        [Select(typeof(ISomeInterface), DisplayGrouping.Grouped)] [SerializeReference]
+        private List<ISomeInterface> someInterfaces;
+
+        [GizmoLocal] [SerializeField] private Bounds bounds;
+
+        [DisableInEditorMode] [SerializeField] private List<Vector3> _vector3s;
+
+        [ShowInEditorMode] [SerializeField] private int showInEditorMode;
+
+        [HideInEditorMode] [SerializeField] private int hideInEditorMode;
+
+        [HideInPlayMode] [SerializeField] private int hideInPlayMode;
+
+        [ShowInPlayMode] [SerializeField] private int showInPlayMode;
+
+        [EnableInPlayMode] [SerializeField] private int enableInPlayMode;
+
+        [DisableInEditorMode] [SerializeField] private int disableInEditorMode;
+
+        [EnableInEditorMode] [SerializeField] private int enableInEditorMode;
+
+        [DisableInPlayMode] [SerializeField] private int disableInPlayMode;
+
+        [HelpBox("TestHelpBox()")] [SerializeField]
+        private bool boolField;
+
+        [ShowIf(nameof(boolField), true)] [SerializeField]
+        private int showIfBool;
+
+        [HideIf(nameof(boolField), true)] [SerializeField]
+        private int hideIfBool;
+
+        [DisableIf(nameof(boolField), true)] [SerializeField]
+        private int disableIfBool;
+
+        [EnableIf(nameof(boolField), true)] [SerializeField]
+        private int enableIfBool;
+
 
         ///Default usage of attribute.
         [EditorButton]
