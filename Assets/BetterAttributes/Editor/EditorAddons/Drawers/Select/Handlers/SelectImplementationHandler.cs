@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Better.Attributes.Runtime.Select;
 using Better.Commons.EditorAddons.Enums;
 using Better.Commons.EditorAddons.Extensions;
 using Better.Commons.Runtime.Extensions;
-using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Better.Attributes.EditorAddons.Drawers.Select
 {
@@ -21,7 +20,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             var property = _container.SerializedProperty;
             if (!property.Verify()) return;
             var typeValue = (Type)value;
-            property.managedReferenceValue = typeValue == null ? null : Activator.CreateInstance(typeValue);
+            property.managedReferenceValue = typeValue == null ? null : Activator.CreateInstance(typeValue, true);
 
             base.Update(value);
         }
@@ -38,7 +37,9 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
 
         protected override IEnumerable<Type> GetInheritedTypes(Type fieldType)
         {
-            return fieldType.GetAllInheritedTypesWithoutUnityObject();
+            var inheritedTypes = fieldType.GetAllInheritedTypesWithoutUnityObject()
+                .Where(type => !type.IsGenericType && !type.IsGenericTypeDefinition);
+            return inheritedTypes;
         }
 
         public override bool IsSkippingFieldDraw()
