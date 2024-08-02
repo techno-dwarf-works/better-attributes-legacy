@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.tdw.better.commons": "0.0.26",
+    "com.tdw.better.commons": "0.0.32",
     "com.tdw.better.internal.core": "0.0.2",
     "com.unity.ai.navigation": "1.1.4",
     "com.unity.collab-proxy": "2.0.7",
