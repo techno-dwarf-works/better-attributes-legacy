@@ -54,7 +54,7 @@ namespace Better.Attributes.EditorAddons.Drawers.Select
             container.SerializedPropertyChanged += UpdateElement;
 
             handler.OnPopulateContainer();
-            container.RootElement.OnElementAppear<Label>(behavioredElement.Attach);
+            container.RootElement.OnElementAppear<Label>(behavioredElement.Attach).Until(null).Every(100).Resume();
         }
 
         private void OnReferenceTypeChange(ReferenceTypeChangeEvent changeEvent, ElementsContainer container)
