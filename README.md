@@ -1,4 +1,7 @@
-# Better Attributes
+# [Deprecated] Better Attributes
+
+> [!CAUTION]
+> Package deprecated and replaced with - [Better Attributes](https://github.com/techno-dwarf-works/better-attributes)
 
 [![openupm](https://img.shields.io/npm/v/com.uurha.betterattributes?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.uurha.betterattributes/)
 
