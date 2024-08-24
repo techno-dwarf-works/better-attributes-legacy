@@ -36,6 +36,8 @@ jobs:
           for PART in "${PARTS[@]}"; do
             RESULT="${RESULT}$(echo "${PART^}")"
           done
+          # Remove "Legacy" from the result
+          RESULT="${RESULT//Legacy/}"
           echo "::set-output name=convertedString::${RESULT}"
           
  prepare:
